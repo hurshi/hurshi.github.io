@@ -1,37 +1,51 @@
-## Welcome to GitHub Pages
+# Hurshi's Doc Center
 
-You can use the [editor on GitHub](https://github.com/hurshi/hurshi.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+![](_medias/lufei.png)
 
-### Markdown
+未满18周岁请速速离去
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+* 这里有[Android](blog/android),[ Java](blog/Java) 等个人博客
+* 对文档有不同意见请**千万要提 [issues](https://github.com/hurshi/hurshi.github.io/issues)**，咱唠叨唠叨就能理清了
+* 本文档比较个性化，内容比较杂，请君挑着看。
+* 本文档采用[docsify](https://docsify.js.org/#/)方案，Thanks for docsify.
 
-- Bulleted
-- List
+# 目录
 
-1. Numbered
-2. List
+- [**Android**](blog/android/README.md)
+  - [IntentService](blog/android/IntentService.md)
+  - [屏幕适配 dp, px, dpi ...](blog/android/screen_adapt/ScreenAdapt.md)
+  - [Handler 跨进程 以及 内存泄漏 分析](blog/android/Handler.md)
+  - [Android 微信智能心跳方案](blog/android/WechatLongHttp/WechatLongHttp.md)
+  - [ADB 指令](blog/android/adb.md)
+  - [ClassLoader](blog/android/ClassLoader.md)
+  - [Dagger 深入理解](blog/android/More_Dagger.md)
 
-**Bold** and _Italic_ and `Code` text
+- [**Java**](blog/java/README.md)
+  - [SingleInstance](blog/java/SingleInstance.md)
+  - [双亲委托么](blog/java/Parents_Delegation_Model/Parents_Delegation_Model.md)
+  - [Rxjava 捡捡漏](blog/java/Rxjava.md)
+  - [简化 Dagger 注入流程](blog/java/SimplifyDagger2.md)
 
-[Link](url) and ![Image](src)
-```
+- **Flutter**
+  - [WanAndroid](blog/flutter/wanandroid.md)
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+- **Net**
+  - [趣解三次握手](blog/net/three_way_handshake.md)
 
-### Jekyll Themes
+- **Gradle**
+  - [Gradle 看过来](blog/gradle/gradle.md)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/hurshi/hurshi.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+- **Shell** 
+  - [shell 技巧](blog/shell/shell_skills.md)
+  - [ubuntu 基础](blog/shell/ubuntu.md)
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+- **Tools**
+  - [Mac 环境](blog/tools/mac_env/Mac_env.md)
+  - [Android Studio 配置](blog/tools/Android_Studio.md)
+  - [Markdown 黑与白](blog/tools/Markdown.md)
+  - [PPT 搞起来](blog/tools/ppt.md)
+  - [讲真, 搜索正确的打开姿势](blog/tools/search.md)
+  - [常用链接](blog/tools/CommonUrls.md)
