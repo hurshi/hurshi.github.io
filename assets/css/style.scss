@@ -1,1 +1,16 @@
-@import 'jekyll-theme-cayman-hurshi';
+@import 'jekyll-theme-cayman';
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,700');
+
+body {
+    font-family: "Noto Sans SC", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.main-content {
+    p {
+        margin-top: 1em;
+        margin-bottom: 0em;
+    }
+}
+li {
+    font-weight: normal;
+}
