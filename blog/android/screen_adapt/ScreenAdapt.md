@@ -64,19 +64,15 @@
 
 * 下面表格为**5.0英寸的设计稿**匹配的
 
-<div style="margin-left: 1.5rem;">
-
-| 目录     | 倍数   | dpi          | 分辨率        | 描述         |
-| -------- | ------ | ------------ | ------------- | ------------ |
-| ldpi     |        | ~  120dpi    |               |              |
-| **mdpi** | **1x** | **~ 160dpi** | **320 * 480** |              |
-| hdpi     | 1.5x   | ~ 240dpi     | 480 * 800     |              |
-| xdpi     | 2x     | ~ 320dpi     | 720 * 1280    | 主流设计尺寸 |
-| xxdpi    | 3x     | ~ 480dpi     | 1080 * 1920   | 主流设计尺寸 |
-| xxxdpi   | 4x     | ~ 640dpi     |               |              |
-| nodpi    |        |              |               | 不缩放图片   |
-
-</div>
+    | 目录     | 倍数   | dpi          | 分辨率        | 描述         |
+    | -------- | ------ | ------------ | ------------- | ------------ |
+    | ldpi     |        | ~  120dpi    |               |              |
+    | **mdpi** | **1x** | **~ 160dpi** | **320 * 480** |              |
+    | hdpi     | 1.5x   | ~ 240dpi     | 480 * 800     |              |
+    | xdpi     | 2x     | ~ 320dpi     | 720 * 1280    | 主流设计尺寸 |
+    | xxdpi    | 3x     | ~ 480dpi     | 1080 * 1920   | 主流设计尺寸 |
+    | xxxdpi   | 4x     | ~ 640dpi     |               |              |
+    | nodpi    |        |              |               | 不缩放图片   |
 
 
 ### Android 屏幕适配方案
@@ -122,15 +118,11 @@
 
 2. [今日头条提出了个方案](https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA),通过修改`Resources#getDisplayMetrics#density`来适配屏幕，利用了上述源码中dp -> px的转换，更改density值，来达到自己控制屏幕适配。看起来很美好，但这种方案其实是和Google的设计相违背的，比如
 
-<div style="margin-left: 1.5rem;">
+    |                         Google 方案                          | 今日头条方案 [Github](https://github.com/JessYanCoding/AndroidAutoSize) |
+    | :----------------: | :-----------------: |
+    | ![](https://developer.android.com/images/training/layout-hvga.png ':size=300') | ![](jrtt_layout.jpg ':size=300') |
 
-|                         Google 方案                          | 今日头条方案 [Github](https://github.com/JessYanCoding/AndroidAutoSize) |
-| :----------------: | :-----------------: |
-| ![](https://developer.android.com/images/training/layout-hvga.png ':size=300') | ![](jrtt_layout.jpg ':size=300') |
-
-看出问题来了吧，虽然可以通过其他方式解决问题，但是这始终非官方推荐的设计方式。
-
-</div>
+    看出问题来了吧，虽然可以通过其他方式解决问题，但是这始终非官方推荐的设计方式。
 
 3. 今日头条只提出了方案，并没有开源，所以就有大佬依据头条的方案写了开源库[AndroidAutoSize](https://github.com/JessYanCoding/AndroidAutoSize)
 
