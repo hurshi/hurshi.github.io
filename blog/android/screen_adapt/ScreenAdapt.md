@@ -78,7 +78,8 @@
 ### Android 屏幕适配方案
 
 1. Google官方推荐方案，先看看在Android中`DP`这个单位的魔法：
-   ```java
+
+   ```
    // 源码位于：TypedValue#applyDimension
    /**
     * Converts an unpacked complex data value holding a dimension to its final floating
