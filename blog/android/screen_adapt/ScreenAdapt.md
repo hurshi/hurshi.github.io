@@ -120,8 +120,8 @@
 2. [今日头条提出了个方案](https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA),通过修改`Resources#getDisplayMetrics#density`来适配屏幕，利用了上述源码中dp -> px的转换，更改density值，来达到自己控制屏幕适配。看起来很美好，但这种方案其实是和Google的设计相违背的，比如
 
     |                         Google 方案                          | 今日头条方案 [Github](https://github.com/JessYanCoding/AndroidAutoSize) |
-    | :----------------: | :-----------------: |
-    | ![](https://developer.android.com/images/training/layout-hvga.png ':size=300') | ![](jrtt_layout.jpg ':size=300') |
+    | :----------------------------------------------------------: | :----------------------------------------------------------: |
+    | ![](https://developer.android.com/images/training/layout-hvga.png \| width=300) |                ![](jrtt_layout.jpgwidth=300)                 |
 
     看出问题来了吧，虽然可以通过其他方式解决问题，但是这始终非官方推荐的设计方式。
 
