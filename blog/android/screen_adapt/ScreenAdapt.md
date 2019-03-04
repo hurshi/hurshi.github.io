@@ -121,7 +121,7 @@
 
     |                         Google 方案                          | 今日头条方案 [Github](https://github.com/JessYanCoding/AndroidAutoSize) |
     | :----------------------------------------------------------: | :----------------------------------------------------------: |
-    | ![](https://developer.android.com/images/training/layout-hvga.png \| width=300) |                ![](jrtt_layout.jpgwidth=300)                 |
+    | <img src="https://developer.android.com/images/training/layout-hvga.png" width=300> |            <img src="jrtt_layout.jpg" width=300>             |
 
     看出问题来了吧，虽然可以通过其他方式解决问题，但是这始终非官方推荐的设计方式。
 
