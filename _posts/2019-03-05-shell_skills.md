@@ -6,7 +6,7 @@ tags:
     - Shell
 ---
 
-
+### 看表
 | 命令  | 描述  | 备注  |
 | --- | --- | --- |
 | 官网 | [Ubuntu 官方命令行指南](https://wiki.ubuntu.com.cn/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8C%87%E5%8D%97) |  |
