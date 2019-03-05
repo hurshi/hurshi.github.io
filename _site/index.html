@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="这里是 Hurshi 的个人博客，与你一起发现更大的世界。">
+    <meta name="keywords"  content="Hurshi blog android kotlin java">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Hurshi Blog">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="我干了什么 究竟拿了时间换了什么">
+    
+    <meta property="og:image" content="http://localhost:4000/img/avatar.jpg">
+    <meta property="og:url" content="http://localhost:4000/">
+    <meta property="og:site_name" content="Hurshi Blog">
+    
+    <title>Hurshi Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Hurshi Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/archive/">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Page Header -->
+
+
+
+
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="site-heading">
+        
+          <h1>Hurshi Blog</h1>
+          <span class="subheading">我干了什么 究竟拿了时间换了什么</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2019/03/05/ubuntu/">
+        <h2 class="post-title">
+            Ubuntu
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                定时任务 Crontab
+
+
+  
+    打开：sudo crontab -e
+  
+  
+    使用规则
+
+    
+      
+        
+          m
+          h
+          dom
+          mon
+          dow
+          command
+        
+      
+      
+        
+   ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/three_way_handshake/">
+        <h2 class="post-title">
+            趣解三次握手
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                转自知乎 – TCP 为什么是三次握手，而不是两次或四次？
+三次握手
+
+  A: 喂,你听得见么?
+  B: 我听得见呀,你听得到我么?
+  
+    A: 我能听到你
+
+    
+      旁白: 于是,他们愉快地聊了起来
+    
+  
+
+
+四次挥手
+
+  A: 我要挂电话了哈,你还有什么事情么?
+  
+    B: 哦,稍等会,你刚说的我还没搞清楚.
+
+    
+      旁白: ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/shell_skills/">
+        <h2 class="post-title">
+            Shell 技巧
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                | 命令  | 描述  | 备注  |
+| — | — | — |
+| 官网 | Ubuntu 官方命令行指南 |  |
+| alt + 鼠标左键  | 光标快速定位  |  |
+| Find  | ` find [path][options][expression]  |    find . -name ‘*.txt’ |
+| kill pid  | 杀掉进程 | kill -9 pid:...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/search/">
+        <h2 class="post-title">
+            讲真，搜索正确的打开姿势
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                
+  
+    逻辑与或非操作
+
+    + , - , OR
+  
+  
+    文字通配
+
+    
+      * ：匹配任意字符。比如”Android *“可以搜索到 Android studio / Android UI等
+      .. (2个点 + 1个空格)：区间通配。比如搜索2012-2016年就可以“2012.. 2016年”
+    
+  
+  
+    搜索语法
+
+...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/ppt/">
+        <h2 class="post-title">
+            PPT 搞起来
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                
+  
+    
+      reveal.js
+      在线编辑器：https://slides.com/  👈👈 简单点就用这个吧
+    
+  
+  impress.js
+    
+      Strut:  impress.js编辑器
+    
+  
+
+
+
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/gradle/">
+        <h2 class="post-title">
+            Gradle 看过来
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                小白指令
+
+  清除缓存，强制刷新依赖库：./gradlew --refresh-dependencies
+
+
+加速构建
+
+查看Gradle性能：./gradlew assembleDebug -profile
+
+
+  
+    使用缓存：
+
+    1
+2
+3
+4
+5
+6
+7
+// gradle.properties:
+org.gradle.caching=true
+//build.gra...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/WechatLongHttp/">
+        <h2 class="post-title">
+            Android 微信智能心跳方案
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                
+
+
+  查看微信原文
+
+
+前言
+
+  在13年11月中旬时，因为基础组件组人手紧张，Leo安排我和春哥去广州轮岗支援。刚到广州的时候，Ray让我和春哥对Line和WhatsApp的心跳机制进行分析。我和春哥抓包测试了差不多两个多礼拜，在我们基本上摸清了Line和WhatsApp的心跳机制后，Ray才告诉我们真正的任务——对微信的固定心跳进行优化，并告诉我们这不是一件容易的事情。于是我和春哥...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/SingleInstance/">
+        <h2 class="post-title">
+            单例
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                原文：@程序员小灰
+
+单例模式第一版
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+public class Singleton {
+    private Singleton() {}  //私有构造函数
+    private static Singleton instance;  //单例对象
+    //静态工厂方法
+    public static Singleton getI...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/ScreenAdapt/">
+        <h2 class="post-title">
+            屏幕适配 dp, px, dpi ...
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                概念理理清:
+
+
+  
+    px
+
+    
+      全称：pixel / 像素
+    
+  
+  
+    dot
+
+    
+      全称：墨点（物理点）
+    
+  
+  
+    ppi
+
+    
+      全称：pixle per inch （图像分辨率）
+      解释：每英寸包含像素(px)的个数
+    
+  
+  
+    dpi
+
+    
+    ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2019/03/05/Rxjava/">
+        <h2 class="post-title">
+            Rxjava 捡漏
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                操作符
+
+
+  Interval: 按固定时间间隔发射整数序列，相当于定时器
+  range: 发射指定范围的整数序列 比如Observable.range(10,2) 结果 10，11
+  concatMap: 在 map 基础上保持数据的顺序
+  buffer: 将指定个数的数据包装成数据列表一次性发射
+  groupBy: 将数据分组排序后依次发射
+  distinct: 去重，只允许...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hurshi Blog on March 5, 2019
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+    <li class="next">
+        <a href="/page2">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
+
+
+    		</div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    
+    <h5><a href="/archive/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+        
+        
+        </a>
+        
+        
+                <a data-sort="0011" 
+                    href="/archive/?tag=Android"
+                    title="Android"
+                    rel="10">Android</a>
+        
+                <a data-sort="0015" 
+                    href="/archive/?tag=tools"
+                    title="tools"
+                    rel="6">tools</a>
+        
+                <a data-sort="0018" 
+                    href="/archive/?tag=Java"
+                    title="Java"
+                    rel="3">Java</a>
+        
+                <a data-sort="0019" 
+                    href="/archive/?tag=%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"
+                    title="操作系统"
+                    rel="2">操作系统</a>
+        
+                <a data-sort="0019" 
+                    href="/archive/?tag=%E6%BA%90%E7%A0%81"
+                    title="源码"
+                    rel="2">源码</a>
+        
+                <a data-sort="0019" 
+                    href="/archive/?tag=http"
+                    title="http"
+                    rel="2">http
+    </div>
+</section>
+
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+  <hr>
+  <h5><a href="/about/">ABOUT ME</a></h5>
+  <div class="short-about">
+    
+    <img src="/img/avatar.jpg" />
+    
+    
+    <!-- SNS Link -->
+    
+
+
+<ul class="list-inline">
+
+
+  
+  
+  
+  
+  
+  
+  
+</ul>
+  </div>
+</section>
+
+                <!-- Friends Blog -->
+                
+    		</div>
+        
+	</div>
+</div>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+                <!-- <p class="copyright text-muted">
+                    Copyright &copy; Hurshi Blog 2019
+                    <br>
+                    Powered by <a href="http://huangxuan.me">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p> -->
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script src="/js/snackbar.js "></script>
+<script src="/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+
+
+<!-- Multi-Lingual -->
+
+
+
+
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0" /> -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
