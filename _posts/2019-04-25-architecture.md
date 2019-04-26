@@ -3,7 +3,7 @@ layout: post
 title: 我的 MVVM 模块化架构
 catalog: false
 tags:
-    - 设计模式
+    - 架构
 ---
 
 ### 序
@@ -96,9 +96,9 @@ tags:
    2. shell 脚本
    
       ```
-      ../gradlew clean -p ../
-      ../gradlew assembleDebug -p ../
-      ../gradlew publish -p ../
+      ./gradlew clean -p ../
+      ./gradlew assembleDebug -p ../
+      ./gradlew publish -p ../
       ```
    
    3. 在需要使用这个模块的 build.gradle 中添加：
@@ -109,7 +109,10 @@ tags:
    
    4. 这样，我们就将`_apis_`文件夹下的 interface 都暴露出去了，以此完成模块间的通信。
 
-3. 模块间通信原理：我们写一个 interface，然后把实现这个 interface 的`实例Z`交给 dagger,当其他模块拿着这个interface 问dagger要实例的时候，dagger 就会把`实例Z`返回，其实是Dagger在帮你把`实例Z`从模块A拿到了其他模块。而`_apis_`相当于把`实例Z`的"key"拿到了其他模块（interface相当于是`实例Z`的"key").
+3. **模块间通信原理**：我们写一个 interface，然后把实现这个 interface 的`实例Z`交给 dagger,当其他模块拿着这个interface 问dagger要实例的时候，dagger 就会把`实例Z`返回，其实是Dagger在帮你把`实例Z`从模块A拿到了其他模块。而`_apis_`相当于把`实例Z`的"key"拿到了其他模块（interface相当于是`实例Z`的"key").
 
 
 
+### 其他
+
+1. 理论上使用上述的方案已经能完成模块间通信的需求了，但对于 Activity 的跳转，还是使用 ARouter 比较方便。（如果觉得Arouter比较重，完全可以不用，只要Dagger就能实现模块化开发了）
