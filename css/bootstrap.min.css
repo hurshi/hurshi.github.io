@@ -1747,9 +1747,12 @@ code,kbd,pre,samp {
 code {
 	padding: 2px 4px;
 	font-size: 90%;
-	color: #c7254e;
-	background-color: #f9f2f4;
-	border-radius: 4px
+	color: #404040;
+	background-color: #f3f4f4;
+	border-radius: 5px;
+	border-color: #e7eaed;
+	border-style: solid;
+	border-width: 1px;
 }
 
 kbd {
@@ -1790,7 +1793,7 @@ pre code {
 	color: inherit;
 	white-space: pre-wrap;
 	background-color: transparent;
-	border-radius: 0
+	border-radius: 5px
 }
 
 .pre-scrollable {
