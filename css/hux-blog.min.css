@@ -607,7 +607,7 @@ button.paper-button {
 
 .highlighter-rouge .highlight .table {
 	margin: 0;
-	table-layout: fixed
+	table-layout: auto
 }
 
 .highlighter-rouge .highlight table>tbody>tr>td {
@@ -621,7 +621,7 @@ button.paper-button {
 }
 
 .highlighter-rouge .highlight td.rouge-gutter {
-	width: 56px
+	width: 1%
 }
 
 .highlighter-rouge .highlight .lineno {
