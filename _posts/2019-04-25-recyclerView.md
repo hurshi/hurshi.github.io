@@ -35,7 +35,7 @@ A --> D(Adapter)
    > 防止重复执行 findViewById，以提升效率
 
 ViewHolder 和 **复用**没有必然关系，拿 ListView  来举例，即使不用 ViewHolder，只是如下代码，也已经起到了**复用**的效果
-```
+```java
 public View getView(int position, View convertView, VireGroup parent){
 	//只在 convertView 为 null时才创建，就是复用了View
 	if(convertView == null){
@@ -91,7 +91,7 @@ G -.-> B
 
 3. `RecyclerView.setHasFixedSize()`如果Adapter 的数据变化不会导致 RecyclerView 的大小变化，可以使用`RecyclerView.setHasFixedSize(true)`
 
-   ```
+   ```java
    //伪代码
    void onContentsChanged() {
    	if(mHasFixedSize) {
@@ -104,7 +104,7 @@ G -.-> B
 
 4. **很简单很厉害：**多个 RecyclerView 共用 RecycledViewPool：
 
-   ```
+   ```java
    RecyclerView.RecycledViewPool recycledViewPool = new RecyclerView.RecycledViewPool();
    recyclerView1.setRecycledViewPool(recycledViewPool);
    recyclerView2.setRecycledViewPool(recycledViewPool);
@@ -113,7 +113,7 @@ G -.-> B
 
 5. **DiffUtil：**适用于整个页面需要更新，但是有部分数据是相同的。
 
-   ```
+   ```kotlin
    // Step1: 非必须，只有当Item内部有属性更新的时候需要重写
    // Adapter中重写 onBindViewHolder(holder: Any, position: Int, payloads: MutableList<Any>)方法
    class Adapter() : RecyclerView.Adapter<Any>() {

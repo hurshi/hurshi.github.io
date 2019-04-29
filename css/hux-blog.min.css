@@ -341,7 +341,7 @@ button.paper-button {
 }
 
 .highlight .k {
-	color: #c678dd
+	color: #8b1215
 }
 
 .highlight .l {
@@ -349,15 +349,15 @@ button.paper-button {
 }
 
 .highlight .n {
-	color: #abb2bf
+	color: #404040
 }
 
 .highlight .o {
-	color: #abb2bf
+	color: #404040
 }
 
 .highlight .p {
-	color: #abb2bf
+	color: #404040
 }
 
 .highlight .cm {
@@ -371,7 +371,7 @@ button.paper-button {
 }
 
 .highlight .c1 {
-	color: #5c6370;
+	color: #999989;
 	font-style: italic
 }
 
@@ -393,7 +393,7 @@ button.paper-button {
 }
 
 .highlight .kd {
-	color: #c678dd
+	color: #8b1215
 }
 
 .highlight .kn {
@@ -421,43 +421,43 @@ button.paper-button {
 }
 
 .highlight .s {
-	color: #98c379
+	color: #d81c47
 }
 
 .highlight .na {
-	color: #d19a66
+	color: #1b7e12
 }
 
 .highlight .nb {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .nc {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .no {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .nd {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .ni {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .ne {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .nf {
-	color: #abb2bf
+	color: #1b7e12
 }
 
 .highlight .nl {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .nn {
@@ -469,7 +469,7 @@ button.paper-button {
 }
 
 .highlight .py {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .nt {
@@ -477,7 +477,7 @@ button.paper-button {
 }
 
 .highlight .nv {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .ow {
@@ -517,7 +517,7 @@ button.paper-button {
 }
 
 .highlight .s2 {
-	color: #98c379
+	color: #6c865b
 }
 
 .highlight .se {
@@ -541,7 +541,7 @@ button.paper-button {
 }
 
 .highlight .s1 {
-	color: #98c379
+	color: #6c865b
 }
 
 .highlight .ss {
@@ -549,15 +549,15 @@ button.paper-button {
 }
 
 .highlight .bp {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .vc {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .vg {
-	color: #e5c07b
+	color: #1b7e12
 }
 
 .highlight .vi {

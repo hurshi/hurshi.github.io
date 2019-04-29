@@ -9,7 +9,7 @@ tags:
 
 1. 先看看一段伪代码，以便快速了解 AsyncTask 的架构。
 
-   ```
+   ```kotlin
    class MyAsyncTask {
        private val callable = object : Callable {
            override fun call(): RESULT {

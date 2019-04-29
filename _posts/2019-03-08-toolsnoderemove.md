@@ -10,7 +10,7 @@ tags:
 
 1. WorkManager 初始化是这样的
 
-   ```
+   ```java
    WorkManager.initialize(context,configuration)
    
    public static void initialize(Context context, Configuration configuration) {
@@ -30,7 +30,7 @@ tags:
 
 2. 那么有没有对 AndroidManifest.xml 中的这段代码存在疑惑？
 
-	```
+	```xml
    <provider
        android:name="androidx.work.impl.WorkManagerInitializer"
        android:authorities="${applicationId}.workmanager-init"
@@ -42,7 +42,7 @@ tags:
 
 	```
 
-	```
+	```java
    public class WorkManagerInitializer extends ContentProvider {
        @Override
        public boolean onCreate() {
@@ -57,7 +57,7 @@ tags:
 
 3. 这里的秘诀在于  tools:node="remove" 添加这个标签意味着将不会出现在 Merged Menifest 中，拓展一下，这个方法可以删除第三方SDK中申明的权限，比如
 
-   ```
+   ```xml
    <uses-permission android:name="android.permission.INTERNET" tools:node="remove"/>
    ```
 

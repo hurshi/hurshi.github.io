@@ -15,7 +15,7 @@ tags:
 
 1. ViewModel 是要交给 Dagger 来管理的，比如：
 
-   ```
+   ```kotlin
    class UserActivityVM @Inject constructor(application: Application): BaseViewModel() {}
    ```
 
@@ -27,7 +27,7 @@ tags:
 
 1. 使用 Dagger2 将需要的 ViewModel Inject进来，因为这个是通用操作，可以写在 BaseActivity/BaseFragment中，例如：
 
-   ```
+   ```kotlin
    @Inject
    lateinit var factory: ViewModelProvider.Factory
    
@@ -40,7 +40,7 @@ tags:
 
 2. 在 Activity/Fragment 中订阅 ViewModel 中的 LiveData,以获取需要的数据。比如：
 
-   ```
+   ```kotlin
    viewModel.nickName.observe(this, Observer { if (null != it) nickName.text = it })
    ```
 
@@ -58,7 +58,7 @@ tags:
 
 1. 若模块A想暴露某个功能给其他模块使用，则在`_apis_`文件夹下写一个 interface,然后在其他地方实现这个 interface,然后交给 dagger：
 
-   ```
+   ```kotlin
    @AppScope
    @Binds
    public abstract UserInfo privideUserInfo(UserInfoImpl impl);
@@ -68,7 +68,7 @@ tags:
 
    1. gradle脚本
    
-      ```
+      ```groovy
       apply plugin: 'maven-publish'
          
          task sourceJar(type: Jar) {
@@ -95,7 +95,7 @@ tags:
    
    2. shell 脚本
    
-      ```
+      ```shell
       ./gradlew clean -p ../
       ./gradlew assembleDebug -p ../
       ./gradlew publish -p ../
@@ -103,7 +103,7 @@ tags:
    
    3. 在需要使用这个模块的 build.gradle 中添加：
    
-      ```
+      ```groovy
       compileOnly "io.github.hurshi:UserInfo:1.0"
       ```
    
