@@ -32,7 +32,8 @@ layout: default
 				{{ content }}
 
                 <hr style="visibility: hidden;">
-                <ul class="pager">
+                <!--显示上一篇，下一篇-->
+                <!--  <ul class="pager">
                     {% if page.previous.url %}
                     <li class="previous">
                         <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">
@@ -49,7 +50,7 @@ layout: default
                         </a>
                     </li>
                     {% endif %}
-                </ul>
+                </ul> -->
                 <hr style="visibility: hidden;">
 
                 {% if site.disqus_username %}
