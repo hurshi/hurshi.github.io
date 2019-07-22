@@ -1,7 +1,25 @@
-![](img/avatar.jpg | width=100)
+### About
+Hello, I'm Hurshi，**未满18周岁请速速离去**
 
-Hello, I'm Hurshi, **未满18周岁请速速离去**
-
-* 这里有[Android](blog/android),[ Java](blog/Java) 等个人博客
-* 对文档有不同意见请**千万要提 [issues](https://github.com/hurshi/hurshi.github.io/issues)**，咱唠叨唠叨就能理清了
+* 对文档有不同理解请**千万要提 [issues](https://github.com/hurshi/hurshi.github.io/issues)**，咱唠叨唠叨就能理清了
 * This blog theme Powered by [Hux Blog](http://huangxuan.me/), Thanks for [Hux](https://github.com/Huxpro/huxpro.github.io)
+
+
+
+### License
+
+```
+Copyright 2018 Hurshi
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
