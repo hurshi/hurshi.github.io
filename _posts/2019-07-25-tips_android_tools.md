@@ -56,9 +56,9 @@ tags:
 
 #### 技巧2：使用 ADB
 
-1. 安装 apk:`adb install -r ...apk`
+1. 安装 apk：`adb install -r ...apk`
 
-2. 查看系统事件日志 `adb -d logcat -b events -v time -d`
+2. 查看系统事件日志：`adb -d logcat -b events -v time -d`
 
 3. 清空应用数据：`adb shell pm clean com.package.name`
 
@@ -75,6 +75,6 @@ tags:
 #### 技巧3：ANR 了怎么办
 
 1. 不要 kill 进程，等待2～3分钟，日志需要收集以及读写时间。
-2. 导出手机ANR信息:`adb pull /data/anr/traces.txt ~/Desktop/`
+2. 导出手机ANR信息：`adb pull /data/anr/traces.txt ~/Desktop/`
 3.  详细信息见：[ANR 问题一般解决思路](https://www.jianshu.com/p/3959a601cea6)
 
