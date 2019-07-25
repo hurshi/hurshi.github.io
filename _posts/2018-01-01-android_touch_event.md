@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Touch事件分发
+title: Android 事件分发
 catalog: false
 tags:
     - Android

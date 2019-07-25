@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android Studio 配置
+title: 偏好设置 — AndroidStudio
 catalog: true
 tags:
     - Android

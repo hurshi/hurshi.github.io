@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 双亲委托么
+title: Java 双亲委托机制
 catalog: true
 tags:
     - Java

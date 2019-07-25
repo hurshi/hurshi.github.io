@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Handler跨进程 以及 内存泄漏分析
+title: Android Handler跨进程 以及 内存泄漏分析
 catalog: true
 tags:
     - Android

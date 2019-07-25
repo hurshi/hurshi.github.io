@@ -1,6 +1,6 @@
 ---
 layout: post
-title: View.post
+title: Android View.post
 catalog: false
 tags:
     - Android

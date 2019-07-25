@@ -1,6 +1,6 @@
 ---
 layout: post
-title: View 的绘制
+title: Android View 的绘制
 catalog: false
 tags:
     - Android

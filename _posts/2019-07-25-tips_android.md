@@ -1,12 +1,12 @@
 ---
 layout: post
-title: tools:node='remove' 标签
-catalog: false
+title: Android 开发小技巧
+catalog: true
 tags:
     - Android
 ---
 
-### `tools:node="remove"`
+#### 技巧1: tools:node="remove"
 
 1. WorkManager 初始化是这样的
 
@@ -65,10 +65,12 @@ tags:
 	1. [掘金 tools:node="remove"](https://juejin.im/entry/5c0f10496fb9a04a102f1f50)
 	2. [官方文档](https://developer.android.com/studio/build/manifest-merge)
 
-### 其他
 
-1. 这里还有一个黑科技，ContentProvider 是在 Application 之前就去初始化的，利用这点可以干很多事，尤其是 SDK 开发，很多时候都要在文档中要求开发者在 Application 初始化，这时候完全可以定义一个 ContentProvider 自己去初始化，对接入的开发者无感了。
 
-   同时，对付这样的利器就是上面提到的 `tools:node="remove"`
+#### 技巧2: 开发第三方类库自己初始化
 
-    
+1. 知识普及：ContentProvider 是在 Application 之前就去初始化的。
+2. 能干啥事：利用这点可以干很多事，尤其是 SDK 开发，很多时候都要在文档中要求开发者在 Application 初始化，这时候完全可以定义一个 ContentProvider 自己去初始化，对接入的**开发者无感**了。
+3. 有攻就有防：对付它就用上面的 **技巧1**。
+
+

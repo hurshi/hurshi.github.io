@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Rxjava 捡漏
+title: Rxjava 知识补充
 catalog: true
 tags:
     - Android

@@ -1,35 +1,29 @@
 ---
 layout: post
-title: Gradle 看过来
+title: Android 工具使用小技巧
 catalog: true
 tags:
     - Android
-    - gradle
 ---
 
+#### 技巧1: 加速 Gradle 构建
 
-### 小白指令
-* 清除缓存，强制刷新依赖库：`./gradlew --refresh-dependencies`
+1. 清除构建缓存，强制刷新依赖库： `./gradlew --refresh-dependencies`
 
+2. 查看Gradle性能：`./gradlew assembleDebug -profile`
 
-
-### 加速构建
-
-查看Gradle性能：`./gradlew assembleDebug -profile`
-
-1. 使用缓存：
+3. 使用缓存
 
    ```groovy
    // gradle.properties:
    org.gradle.caching=true
    //build.gradle:
    kapt {
-   	useBuildCache = true
+   useBuildCache = true
    }
-   	
    ```
 
-2. 增加系统资源
+4. 增加系统资源
 
    ```groovy
    // gradle.properties:
@@ -45,10 +39,11 @@ tags:
    }
    ```
 
-3. **Debug** 时跳过某些步骤
+5. Debug 时跳过某些步骤
 
-   1. 跳过 lint
-      1. `./gradlew assembleDebug -x lint` ：在gradle命令后面跟上` -x lint`
+   1. 跳过 lint: 
+
+      1. `./gradlew assembleDebug -x lint` 
       2. `project.gradle.startParameter.excludedTaskNames.add('lint')`
 
    2. 跳过 AAPT
@@ -59,16 +54,21 @@ tags:
       }
       ```
 
+#### 技巧2：ADB
 
+1. 安装 apk:`adb install -r ...apk`
 
+2. 清空应用数据：`adb shell pm clean com.package.name`
 
+3. 导出手机ANR信息:`adb pull /data/anr/traces.txt ~/Desktop/`
 
-### QA
+4. 无线调试
 
-* <u>build.gradle 中的 gradle 版本号</u> 和 <u>gradle-wrapper.properties 中的版本号</u>有什么区别
+   ```shell
+   # 连接设备
+   adb connect 192.168.1.1:5555
+   # 断开连接
+   adb disconnect 192.168.1.1:5555
+   ```
 
-  **答**：build.gradle中描述的是Google为Android开发的Gradle插件版本，而wrapper中描述的是由[gradle.org](https://gradle.org)维护的Gradle的版本。
-
-  有点类似于：有一个lib库依赖于java版本，build.gradle对应于lib版本，而wrapper对应于java版本。
-
-
+   

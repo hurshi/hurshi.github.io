@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ubuntu
+title: Ubuntu 小技巧
 catalog: true
 tags:
     - 操作系统
@@ -58,6 +58,17 @@ tags:
      ```
 
   3. 开机启动：`sudo systemctl enable first`
+
+#### SSH 超时
+
+  ```
+# 客户端设置定时心跳，比如每60秒发一次心跳，失败3次就不再发送
+# /etc/ssh/ssh_config
+  
+ServerAliveInterval 60
+ServerAliveCountMax 3
+  ```
+
 
 
 #### 其他

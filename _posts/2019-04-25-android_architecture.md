@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 我的 MVVM 模块化架构
+title: Android MVVM 模块化架构
 catalog: false
 tags:
     - 架构

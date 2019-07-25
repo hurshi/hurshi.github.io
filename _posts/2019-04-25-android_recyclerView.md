@@ -1,6 +1,6 @@
 ---
 layout: post
-title: RecyclerView 进阶
+title: Android RecyclerView 知识点补充
 catalog: false
 tags:
     - Android

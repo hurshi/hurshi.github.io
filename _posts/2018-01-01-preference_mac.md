@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Mac 环境
+title: 偏好设置 — Mac
 catalog: true
 tags:
     - tools
