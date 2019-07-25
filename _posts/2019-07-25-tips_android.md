@@ -6,7 +6,7 @@ tags:
     - Android
 ---
 
-#### 技巧1: tools:node="remove"
+#### 技巧1：tools:node="remove"
 
 1. WorkManager 初始化是这样的
 
@@ -67,10 +67,43 @@ tags:
 
 
 
-#### 技巧2: 开发第三方类库自己初始化
+#### 技巧2：开发第三方类库自己初始化
 
 1. 知识普及：ContentProvider 是在 Application 之前就去初始化的。
 2. 能干啥事：利用这点可以干很多事，尤其是 SDK 开发，很多时候都要在文档中要求开发者在 Application 初始化，这时候完全可以定义一个 ContentProvider 自己去初始化，对接入的**开发者无感**了。
 3. 有攻就有防：对付它就用上面的 **技巧1**。
 
+#### 技巧3：Message.obtain()
 
+1. 使用 `Message.obtain()` 来**复用** Message 对象。
+
+2. 简单源码：
+
+   ```java
+   public final class Message implements Parcelable {
+   
+       Message next;
+       private static Message sPool;
+   
+       public static Message obtain() {
+           synchronized (sPoolSync) {
+               if (sPool != null) {
+                   Message m = sPool;
+                   sPool = m.next;
+                   m.next = null;
+                   m.flags = 0; // clear in-use flag
+                   sPoolSize--;
+                   return m;
+               }
+           }
+           return new Message();
+       }
+   
+       //回收Message
+       public void recycle() {
+           ...
+       }
+   }
+   ```
+
+   
