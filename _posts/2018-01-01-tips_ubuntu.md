@@ -69,6 +69,19 @@ ServerAliveInterval 60
 ServerAliveCountMax 3
   ```
 
+### 给 ATP 设置代理
+
+```
+sudo vi /etc/apt/apt.conf.d/proxy.conf
+# paste
+Acquire {
+  HTTP::proxy "http://127.0.0.1:8080";
+  HTTPS::proxy "http://127.0.0.1:8080";
+}
+```
+
+
+
 
 
 #### 其他
