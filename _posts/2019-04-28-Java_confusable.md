@@ -39,8 +39,22 @@ tags:
 * **HashSet**:
   1. 底层使用 HashMap 实现，将数据保存在 HashMap 的 key 中。
 
+### Vector / ArrayList / LinkedList / CopyOnWriteArrayList
 
+* **Vector**:
+  1. 线程安全。
+* **ArrayList**:
+  1. 线程不安全。
+  2. 内部使用数组实现。
+* **LinkedList**:
+  1. 线程不安全。
+  2. 内部使用链表实现。
+* **CopyOnWriteArrayList**:
+  1. 线程安全。使用 ReentrantLock。
+  2. 内部使用的是用 volatile transient 声明的数组Array。
+  3. 读写分离，写时复制出一个新数组，完成插入、修改或移除操作后将新的数组赋值给 array。
 
 ### 参考
 
 1. [极客学院 -- Java集合学习指南](http://wiki.jikexueyuan.com/project/java-collection/)
+2. 鱼哥的知识星球
