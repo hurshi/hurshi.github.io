@@ -78,3 +78,17 @@ tags:
 2. 导出手机ANR信息：`adb pull /data/anr/traces.txt ~/Desktop/`
 3.  详细信息见：[ANR 问题一般解决思路](https://www.jianshu.com/p/3959a601cea6)
 
+#### 技巧4: 代码爆红怎么办
+
+```shell
+#!/bin/bash
+# 1. 关闭本项目
+# 2. 在 Android Studio 中删除本项目
+# 3. 关掉 Android Studio
+# 4. 执行本 Shell 脚本
+
+rm -rf .idea/ && rm -rf .gradle/ && find ./ -name '*.iml' -type f -delete
+
+# 5. 然后在 Android Studio 中重新 open 就行了
+```
+
