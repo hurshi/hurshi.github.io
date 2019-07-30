@@ -106,4 +106,22 @@ tags:
    }
    ```
 
+#### 技巧4: Tint 着色器
+
+为 ImageView 添加属性`andorid:tint="@color/colorAccent"`即可改变 ImageView 上图片的显示颜色。
+
+#### 技巧5: 移除无用 String
+
+* `appcompat-v7` 等三方库中包含大量的国际化资源，可以选择性的移除掉：
+
+  ```groovy
+  defaultConfig {
+  	...
+  	resConfigs('zh-rCN')
+  }
+  ```
+
+* 参考：[Android 性能优化系列一 :APK极致优化](https://www.jianshu.com/p/147b54f53e10)    [使用resConfigs去除无用语言资源](https://www.jianshu.com/p/8796ad90fcc6)
+
    
+
