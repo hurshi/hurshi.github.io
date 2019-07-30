@@ -54,6 +54,12 @@ tags:
   2. 内部使用的是用 volatile transient 声明的数组Array。
   3. 读写分离，写时复制出一个新数组，完成插入、修改或移除操作后将新的数组赋值给 array。
 
+### 乐观锁 / 悲观锁
+
+* 乐观锁：总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会阻塞直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。Java中`synchronized`和`ReentrantLock`等独占锁就是悲观锁思想的实现。
+* 悲观锁：总是假设最好的情况，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号机制和CAS算法实现。**乐观锁适用于多读的应用类型，这样可以提高吞吐量**，在Java中`java.util.concurrent.atomic`包下面的原子变量类就是使用了乐观锁的一种实现方式**CAS**实现的。
+* 摘录自： [可能是全网最好的MySQL重要知识点 | 面试必备](https://mp.weixin.qq.com/s/S9jiO_e-_CKRgNnzAU5Z0Q)   /    [面试必备之乐观锁与悲观锁](https://github.com/Snailclimb/JavaGuide/tree/master/docs/essential-content-for-interview)
+
 ### 参考
 
 1. [极客学院 -- Java集合学习指南](http://wiki.jikexueyuan.com/project/java-collection/)
