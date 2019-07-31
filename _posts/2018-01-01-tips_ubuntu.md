@@ -7,7 +7,7 @@ tags:
     - shell
 ---
 
-#### 定时任务 Crontab
+#### 技巧1: 定时任务 Crontab
 
 1. 打开：`sudo crontab -e`
 
@@ -25,41 +25,43 @@ tags:
     | -    | 代表从某个数字到某个数字（“1-4”，表示1-4个单位） |
     | ,    | 分开几个离散的数字；                             |
 
-#### Ubuntu 18.04 启动服务/开机自启
+#### 技巧2: Ubuntu 18.04 启动服务/开机自启
 
-* 参考：[How to Enable or Disable Services in Ubuntu Systemd/Upstart](https://linoxide.com/linux-how-to/enable-disable-services-ubuntu-systemd-upstart/)
+1. systemctl 命令：
 
-* | 描述     | 命令                           |
-  | -------- | ------------------------------ |
-  | 启动/关闭/重启 服务 | `systemctl start/stop/restart service-name` |
-  |查看状态|`systemctl status service-name`|
-  |开机启动| `systemctl enable service-name`             |
-  |取消开机启动| `systemctl disable service-name`            |
-  |开机启动状态|`systemctl is-enabled service-name`|
+    | 描述                | 命令                                        |
+    | ------------------- | ------------------------------------------- |
+    | 启动/关闭/重启 服务 | `systemctl start/stop/restart service-name` |
+    | 查看状态            | `systemctl status service-name`             |
+    | 开机启动            | `systemctl enable service-name`             |
+    | 取消开机启动        | `systemctl disable service-name`            |
+    | 开机启动状态        | `systemctl is-enabled service-name`         |
   
-#### Ubuntu 18.04 启动执行 shell 脚本
-* 参考[How do I run a single command at startup using systemd?](https://askubuntu.com/questions/919054/how-do-i-run-a-single-command-at-startup-using-systemd)
+2. 参考自：[How to Enable or Disable Services in Ubuntu Systemd/Upstart](https://linoxide.com/linux-how-to/enable-disable-services-ubuntu-systemd-upstart/)
 
-* 步骤
 
-  1. 新建 shell 脚本，并赋予执行权限 `chmod u+x /path/to/shell/start.sh`
+#### 技巧3: Ubuntu 18.04 启动执行 shell 脚本
 
-  2. 在 `/etc/systemd/system`文件夹下新建 `.service` 文件 `start.service`,格式如下：
+1. 新建 shell 脚本，并赋予执行权限 `chmod u+x /path/to/shell/start.sh
 
-     ```
-     [Unit]
-     Description=Auto Start service
-     
-     [Service]
-     ExecStart=/path/to/shell/start.sh
-     
-     [Install]
-     WantedBy=multi-user.target
-     ```
+2. 在 `/etc/systemd/system`文件夹下新建 `.service` 文件 `start.service`,格式如下：
 
-  3. 开机启动：`sudo systemctl enable first`
+   ```
+   [Unit]
+   Description=Auto Start service
+   
+   [Service]
+   ExecStart=/path/to/shell/start.sh
+   
+   [Install]
+   WantedBy=multi-user.target
+   ```
 
-#### SSH 超时
+3. 开机启动：`sudo systemctl enable first`
+
+4. 参考自：[How do I run a single command at startup using systemd?](https://askubuntu.com/questions/919054/how-do-i-run-a-single-command-at-startup-using-systemd)
+
+#### 技巧4: SSH 超时
 
   ```
 # 客户端设置定时心跳，比如每60秒发一次心跳，失败3次就不再发送
@@ -69,7 +71,7 @@ ServerAliveInterval 60
 ServerAliveCountMax 3
   ```
 
-### 给 ATP 设置代理
+#### 技巧5: 给 apt 设置代理
 
 ```
 sudo vi /etc/apt/apt.conf.d/proxy.conf
