@@ -21,6 +21,7 @@ tags:
 * **HashMap**
   1. 线程不安全；
   2. JDK1.8后使用 **数组 + 链表** 的形式，在链表较大的时候还会转为红黑树。
+  3. key,value 都可以为 null。
 * **~~HashTable(已废弃，推荐 ConcurrentHashMap)~~** 
   1. 继承自已被废弃的 Dictionary。
   2. 线程安全。
@@ -28,6 +29,7 @@ tags:
   1. 线程安全。
   2. 和 HashTable 相比，使用了**分段锁**，高并发情况下相比于 HashTable 的**全表锁**提高不少性能。
   3. 主干是 Segment 数组，而 Segment 是一个继承了 ReentrantLock 的哈希表。
+  4. key, value 都**不可**为 null。
 * **SparseArray**:
   1. 使用上类似于 HashMap，但**在某些情况下**比 HashMap 有更好的性能。这里的“某些情况”指的是：
      1. 数据量不是很大；（数据量大的时候，查找的时候二分法效率明显没有 hash 高）。
