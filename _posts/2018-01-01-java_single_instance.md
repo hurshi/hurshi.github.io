@@ -45,7 +45,7 @@ public class Singleton {
 ```
 
 ### 单例模式第三版
-`volatile :`防止指令重排
+
 ```java
 public class Singleton {
     private Singleton() {}  //私有构造函数
@@ -63,6 +63,14 @@ public class Singleton {
       }
 }
 ```
+
+**volatile**：防止指令重排，是很有必要的，`instance = new Singleton();`这段代码其实分为三部执行：
+
+1. 为 instance 分配内存空间；
+2. 初始化 instance;
+3. 将 instance 指向分配的内存地址；
+
+如果不添加 volatile ，执行顺序有可能变成 1->3->2，在多线程环境下就容易出问题。
 
 ### 单例模式第四版（推荐使用）
 利用`ClassLoader`的加载机制来实现懒加载，并保证构建的单例线程安全。

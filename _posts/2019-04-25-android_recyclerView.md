@@ -169,8 +169,8 @@ G -.-> B
 
 #### 其他
 
-* `onViewAttachedToWindow():`Item显示到屏幕上的时候回调
-* `onViewDetachedFromWindow():`Item 离开屏幕时候回调，比较适合资源回收，`setRecycleChildrenDetach(true)`确保页面退出的时候，调用`onViewDetachedFromWindow()`方法。
+* onViewAttachedToWindow()：Item显示到屏幕上的时候回调。
+* onViewDetachedFromWindow()：Item 离开屏幕时候回调，比较适合资源回收，setRecycleChildrenDetach(true) 确保页面退出的时候，调用 onViewDetachedFromWindow() 方法。
 * [ItemDecoration深入解析与实战](https://www.jianshu.com/p/f41db270d5fe)
 * 拓展：[github.com/h6ah4i/android-advancedrecyclerview](https://github.com/h6ah4i/android-advancedrecyclerview) (RecyclerView的各种教程，Demo，拖拽，滑动等等)
 
