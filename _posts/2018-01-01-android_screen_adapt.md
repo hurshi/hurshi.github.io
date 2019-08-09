@@ -52,7 +52,7 @@ tags:
 
 * DPI - PPI 都是啥鬼
   1. DPI面向的是印刷受体，PPI面向的是荧屏
-  2. 这篇文章讲的非常好，强烈推荐：[十分钟快速理解DPI和PPI，不再傻傻分不清！](https://www.jianshu.com/p/aaa9fafdbc20)
+  2. 这篇文章讲的非常好，强烈推荐：[十分钟快速理解DPI和PPI，不再傻傻分不清！](https://hurshi.github.io/2019/08/09/android_dpi_ppi/)
   3. 在Android中，不必过多计较DPI/PPI,毕竟官网也没有描述清楚，如下所示，既然是`pixels per inch`那不应该是PPI么？
        ```java
        /**
