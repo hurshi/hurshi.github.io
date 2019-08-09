@@ -4,6 +4,7 @@ title: 单例
 catalog: true
 tags:
     - Java
+    - 设计模式
 ---
 
 
