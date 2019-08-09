@@ -110,7 +110,21 @@ tags:
 
 为 ImageView 添加属性`andorid:tint="@color/colorAccent"`即可改变 ImageView 上图片的显示颜色。
 
-#### 技巧5: 移除无用 String
+#### 技巧5: 复用图片
+
+* 一张图片明明旋转下就满足要求了，就不要再创建另一张了：
+
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <rotate xmlns:android="http://schemas.android.com/apk/res/android"
+      android:drawable="@mipmap/ic_launcher"
+      android:fromDegrees="90"
+      android:toDegrees="90" />
+  ```
+
+* 参考：[Android性能优化典范 - 第6季](https://blog.csdn.net/axi295309066/article/details/52658564)
+
+#### 技巧6: 移除无用 String
 
 * `appcompat-v7` 等三方库中包含大量的国际化资源，可以选择性的移除掉：
 
@@ -123,9 +137,8 @@ tags:
 
 * 参考：[Android 性能优化系列一 :APK极致优化](https://www.jianshu.com/p/147b54f53e10)    [使用resConfigs去除无用语言资源](https://www.jianshu.com/p/8796ad90fcc6)
 
-   
 
-#### 技巧6: Android 系统是如何安装 so 文件的？
+#### 技巧7: Android 系统是如何安装 so 文件的？
 
 1. 查看手机支持的架构：
 
@@ -135,3 +148,30 @@ tags:
    ```
 
 2. APK 在安装的时候，会按照上面的顺序查看 apk 中是否有对应的文件夹，找到的话就将该文件夹下的所有 so 文件拷贝到 /data/app/packageName/lib/ 目录下，然后马上就停止查找了。
+
+#### 技巧8: 减少冷启动
+
+1. 用户点击返回键，默认就退出应用了，下次再点击的时候就是冷启动。
+
+2. 在用户点返回的时候，使应用进入后台，而不是退出应用：
+
+   ```java
+   @Override
+   public void onBackPressed(){
+   	moveTaskToBack(true);
+   }
+   ```
+
+3. 参考：[5分钟教你打造一个秒开的 Android App](https://mp.weixin.qq.com/s/a8076txSPIUqGAbe30uEug)
+
+#### 技巧9：如何获得 bitmap 在内存中的大小
+
+1. 系统方法：
+
+   ```java
+   public final int getByteCount() {
+       return getRowBytes() * getHeight();
+   }
+   ```
+
+2. 参考：[Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&mid=403263974&idx=1&sn=b0315addbc47f3c38e65d9c633a12cd6&scene=0&key=41ecb04b051110037b72d05bba1495f596e848534fc51afe877d63329a16dc24dc1d3606aaaba3745a05bfdb8c624a74&ascene=0&uin=Mjc3OTU3Nzk1&devicetype=iMac+MacBookPro10%2C1+OSX+OSX+10.10.5+build%2814F27%29&version=11020201&pass_ticket=kK4%2F6316QveG8O0vFtthPfBeKkNjyaL4HapsUAokHL5mUKCgI5hKTIKMc3D8uyqk)

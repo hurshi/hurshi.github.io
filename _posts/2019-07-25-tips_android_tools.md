@@ -92,3 +92,20 @@ rm -rf .idea/ && rm -rf .gradle/ && find ./ -name '*.iml' -type f -delete
 # 5. 然后在 Android Studio 中重新 open 就行了
 ```
 
+#### 技巧5：查看执行时间
+
+1. **查看应用启动时间**：从 Android KitKat 开始，Logcat 中会输出从程序启动到某个 Activity 显示到画面上所花费的时间
+
+   ```
+   ***I/ActivityManager: Displayed io.github.hurshi.androidtest/.MainActivity: +588ms
+   ```
+
+2. **Method Tracing**：能查看方法耗时的细节。
+
+3. 使用 Systrace 的 `trace.beginSection(String name)` 和 `trace.endSection()`。
+
+4. 参考：[Android性能优化典范 - 第6季](http://hukai.me/android-performance-patterns-season-6/)
+
+
+
+   
