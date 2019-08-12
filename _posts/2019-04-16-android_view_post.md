@@ -10,12 +10,14 @@ tags:
 
 ### View.post 使用
 
-1. 可以在将 runnable 丢到 UI 线程去执行
+1. 确保执行 runnable 的时候，View 已经初始化完成。
+
+2. 可以在将 runnable 丢到 UI 线程去执行
 
    > Causes the Runnable to be added to the message queue. The runnable will be run on the user interface thread.
 
-2. 一个例子：
-	```kotlin
+3. 一个例子：
+  ```kotlin
   thread { 
   	//get image from network
   	imageView.post { 
@@ -24,7 +26,7 @@ tags:
   }
   ```
 
-3. 使用场景：在 Activity -> onCreate()中我们获取不到view的长宽，但我们这样的话，我们就能得到啦：
+4. 使用场景：在 Activity -> onCreate()中我们获取不到view的长宽，但我们这样的话，我们就能得到啦：
 
    ```kotlin
    override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +39,9 @@ tags:
 
 ### 源码浅析
 
-1. post 方法是放在 View.java 中的，意味着所有 View 都能用
+1. post 方法是放在 View.java 中的，意味着所有 View 都能用。
 
-2. post 源码
+2. post 源码：
 
    ```kotlin
    /**
@@ -91,3 +93,25 @@ public final void runOnUiThread(Runnable action) {
 ```
 
 源码很简单，可以知道 runOnUiThread 只是把 runable 丢到 UI线程，然后就马上执行了。没有像 View.post 一样只在 dispatchAttachedToWindow之后才会执行。
+
+### 和MessageQueue.IdleHandler 有啥区别？
+
+1. 使用：
+
+   ```java
+   Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+       @Override
+       public boolean queueIdle() {
+           
+           return false;
+       }
+   });
+   ```
+
+2. runnable 会在 MessageQueue 被清空的时候执行，使用场景可以有：
+
+   1. 在 Activity 中等待所以UI显示完，再执行的操作。
+   2. 作为一种懒执行的策略，不用在 CPU 高峰期占用资源。
+
+3. 参考自：[你知道android的MessageQueue.IdleHandler吗？](https://mp.weixin.qq.com/s/KpeBqIEYeOzt_frANoGuSg)
+

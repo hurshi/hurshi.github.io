@@ -13,8 +13,8 @@ tags:
 
 ### onMeasure 流程
 
-1. 调用每个子 View 的 measure()  方法，让子 View 自我测量。
-2. 根据子 View 给出的尺寸，得出子 View 的位置，并把它们的位置和尺寸保存下来。
+1. 父View 调用每个子View的 measure()  方法，让子 View 自我测量。
+2. 父View 根据子 View 给出的尺寸，得出子 View 的位置，并把它们的位置和尺寸保存在 父View。
 3. 根据子 View 的位置和尺寸，计算自己的尺寸，并调用 setMeasuredDimension 保存下来
 4. `View.resolveSize(int size, int measureSpec)`可以修正尺寸，使之符合父 View 的限定规则。
 5. 常规测量在 ViewGroup 中已经提供，比如 `measureChildren`,`measureChildWithMargins()`等，可以用它们快速测量子 View。

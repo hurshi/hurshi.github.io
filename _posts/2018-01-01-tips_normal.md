@@ -6,7 +6,7 @@ tags:
     - tools
 ---
 
-### 科学使用搜索引擎
+#### 科学使用搜索引擎
 
 * 逻辑与或非操作
 
@@ -25,7 +25,7 @@ tags:
 
 * 想知道更多？ Google:  `google search tips`
 
-### Markdown 使用
+#### Markdown 使用
 
 * `~~中划线~~`：~~中划线~~
 
@@ -59,34 +59,41 @@ tags:
     </div>
   ```
 
-### PPT 方案
+#### PPT 方案
 
 1.  [reveal.js](https://github.com/hakimel/reveal.js)： 在线编辑器： https://slides.com/ 
 2. [impress.js](https://github.com/impress/impress.js)： 编辑器： [Strut](http://strut.io/)
 3. [演说.io](https://yanshuo.io/)
 
-### Terminal 在线二维码
+#### Terminal 在线二维码
 
 ```shell
 curl qrenco.de/HELLO_WORLD
 ```
 
-### Android 投屏到 Mac
+#### Android 投屏到 Mac
 
 * Genymobile/scrcpy: https://github.com/Genymobile/scrcpy
 * [ApowerMirror](https://www.apowersoft.com/phone-mirror)
 
-### 文件传递
+#### 文件传递
 
 * [FireFox send](https://send.firefox.com/)
 * [奶牛快传](https://cowtransfer.com/)
 
-### Icon 库
+#### Icon 库
 
 * [iconfont](https://www.iconfont.cn)
 * [easyicon](http://easyicon.net/)
 * [icon8](https://icons8.com/)
 
-### Shell 命令使用
+#### Shell 命令使用
 
 * Shell 解释：[explainshell](https://explainshell.com/)
+
+#### Chrome 效率
+
+* 定位到地址栏：` ⌘ + L`
+* 清空输入内容：` ⌘ + Delete`
+* 下载页：` ⌘ + Shift + J`
+* 跳转到 To p / Bottom：`HOME` / `End`
