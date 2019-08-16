@@ -60,9 +60,11 @@ tags:
 
 2. 查看系统事件日志：`adb -d logcat -b events -v time -d`
 
-3. 清空应用数据：`adb shell pm clean com.package.name`
+3. 系统 logcat 目录：`/system/etc/event-log-tags`
 
-4. 无线调试
+4. 清空应用数据：`adb shell pm clean com.package.name`
+
+5. 无线调试
 
    ```shell
    # 连接设备
