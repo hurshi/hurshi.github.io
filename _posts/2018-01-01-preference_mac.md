@@ -7,7 +7,19 @@ tags:
     - 操作系统
 ---
 
+### Preferences
 
+1. 关闭自动纠错
+
+   系统偏好设置 ==> 键盘 ==> 文本 ==> 关闭自动纠正拼写
+
+2. Active Screen Corners
+
+   | Put Display to Sleep |      Launchpad      |
+   | :------------------: | :-----------------: |
+   |     **Desktop**      | **Mission Control** |
+
+### Softwares
 * **BetterTouchTool**
 
   * 网站：https://folivora.ai/
@@ -15,12 +27,13 @@ tags:
   * 我的配置：[偏好设置文件](/assets/bettertouchtool_20181224.json ':ignore')
 
 * **Alfred**
+  
   * 网站：https://www.alfredapp.com/
   * 介绍：提高效率的黑科技
   * 我的配置：
     1. Advanced --> Force Keyboard --> ABC
-    2. Workflows: [help ++, shorten_url, youdao_translate](https://github.com/hurshi/AlfredWorkflow)
-
+  2. Workflows: [help ++, shorten_url, youdao_translate](https://github.com/hurshi/AlfredWorkflow)
+  
 * **iTerm2**
 
   * 网站：https://www.iterm2.com/
@@ -179,5 +192,7 @@ tags:
 * 音乐
 
   * [Listen1](https://github.com/listen1/listen1)
+
+  
 
     
