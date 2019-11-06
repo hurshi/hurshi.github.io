@@ -1,0 +1,64 @@
+I"�<ol>
+  <li>
+    <p>先看看一段伪代码，以便快速了解 AsyncTask 的架构。</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">MyAsyncTask</span> <span class="p">{</span>
+    <span class="k">private</span> <span class="kd">val</span> <span class="py">callable</span> <span class="p">=</span> <span class="kd">object</span> <span class="err">: </span><span class="nc">Callable</span> <span class="p">{</span>
+        <span class="k">override</span> <span class="k">fun</span> <span class="nf">call</span><span class="p">():</span> <span class="nc">RESULT</span> <span class="p">{</span>
+            <span class="nf">doInBackground</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+   
+    <span class="k">private</span> <span class="kd">val</span> <span class="py">runnable</span> <span class="p">=</span> <span class="kd">object</span> <span class="err">: </span><span class="nc">RunnableFuture</span> <span class="p">{</span>
+        <span class="k">override</span> <span class="k">fun</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">callable</span><span class="p">.</span><span class="nf">call</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+   
+    <span class="k">private</span> <span class="kd">val</span> <span class="py">executor</span> <span class="p">=</span> <span class="kd">object</span> <span class="err">: </span><span class="nc">Executor</span> <span class="p">{</span>
+        <span class="k">override</span> <span class="k">fun</span> <span class="nf">execute</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="nc">Runnable</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">r</span><span class="p">.</span><span class="nf">run</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+   
+    <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">doInBackground</span><span class="p">()</span>
+   
+    <span class="k">fun</span> <span class="nf">execute</span><span class="p">()</span> <span class="p">{</span><span class="c1">//执行入口</span>
+        <span class="n">executor</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">runnable</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>AsyncTask 的主要逻辑就是上面这些，其他的就是细节了。看完这里的逻辑，再去看源码的话就很容易理解了。</p>
+  </li>
+  <li>
+    <p>进一步深入：下一步可以看看 <a href="http://www.cnblogs.com/punkisnotdead/p/4469612.html">正确理解 AsyncTask，Looper,Handler三者之间的关系</a>，或者直接看看源码。</p>
+  </li>
+</ol>
+:ET

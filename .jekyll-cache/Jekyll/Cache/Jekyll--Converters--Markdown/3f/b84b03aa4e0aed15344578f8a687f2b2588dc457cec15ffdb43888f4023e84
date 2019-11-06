@@ -1,0 +1,103 @@
+I"`<h4 id="注解">注解</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">@SerializedName:</code> 配置 JSON 字段名字</li>
+  <li><code class="highlighter-rouge">@Expose:</code>配置是否参与序列化和反序列化
+    <ol>
+      <li>有2个配置项，默认都为 True :  <code class="highlighter-rouge">@Expose(serialize = true,deserialize = false)</code></li>
+      <li><code class="highlighter-rouge">new Gson()</code>不起作用，需要配合 <code class="highlighter-rouge">GsonBuilder.excludeFieldsWithoutExposeAnnotation()</code>使用，并且需要对每个字段都显式暴露出来，不然该字段就不会参与序列化/反序列化</li>
+    </ol>
+  </li>
+</ul>
+
+<h4 id="gsonbuilder">GsonBuilder</h4>
+
+<ul>
+  <li>配置：
+    <ol>
+      <li><code class="highlighter-rouge">.serializeNulls()</code> ：序列化为 null 的字段。</li>
+      <li><code class="highlighter-rouge">.setDateFormat()</code>：设置日期格式，例如：<code class="highlighter-rouge">setDateFormat("yyyy-MM-dd")</code>。</li>
+      <li><code class="highlighter-rouge">.disableInnerClassSerialization()</code>：禁止序列化内部类。</li>
+      <li><code class="highlighter-rouge">.generateNonExcutableJson()</code>：生成不可直接解析的 JSON，会多 <code class="highlighter-rouge">)]}'</code> 这 4 个字符。</li>
+      <li><code class="highlighter-rouge">.disableHtmlEscaping()</code>：禁止转移 HTML 标签</li>
+      <li><code class="highlighter-rouge">.setPrettyPrinting()</code>：格式化输出</li>
+    </ol>
+  </li>
+</ul>
+
+<h4 id="typeadapter">TypeAdapter</h4>
+
+<ul>
+  <li>
+    <p>举个例子：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">IntegerDefault0Adapter</span> <span class="p">:</span> <span class="nc">JsonDeserializer</span><span class="p">&lt;</span><span class="nc">Int</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">deserialize</span><span class="p">(</span><span class="n">json</span><span class="p">:</span> <span class="nc">JsonElement</span><span class="p">?,</span> <span class="n">typeOfT</span><span class="p">:</span> <span class="nc">Type</span><span class="p">?,</span> <span class="n">context</span><span class="p">:</span> <span class="nc">JsonDeserializationContext</span><span class="p">?):</span> <span class="nc">Int</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">!!</span><span class="p">.</span><span class="nf">getAsInt</span><span class="p">()</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">NumberFormatException</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="m">0</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+  
+<span class="kd">val</span> <span class="py">newUser</span> <span class="p">=</span> <span class="nc">GsonBuilder</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">registerTypeAdapter</span><span class="p">(</span><span class="nc">Int</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">,</span> <span class="nc">IntegerDefault0Adapter</span><span class="p">())</span>
+        <span class="p">.</span><span class="nf">create</span><span class="p">().</span><span class="nf">fromJson</span><span class="p">(</span><span class="n">jsonStr</span><span class="p">,</span><span class="nc">User</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <p>例子中的表示：我接管了所有的 Int 型的序列化/反序列化。对 Int 型数据，如果解析出错，则使用默认值0。</p>
+  </li>
+  <li>
+    <p><strong>registerTypeHierarchyAdapter() 的区别</strong></p>
+
+    <p>看看源码，细心的朋友应该发现了，注册 TypeAdapter 的时候，还有<code class="highlighter-rouge">registerTypeHierarchyAdapter()</code> 方法，它和 <code class="highlighter-rouge">registerTypeAdapter()</code> 方法有什么区别呢？</p>
+
+    <p>区别就在于，接管的类型类，是否支持继承。例如前面例子中，我们只接管了 Int 类型，而数字类型还有其他的例如 Long、Float、Double 等并不会命中到。那假如我们注册的是这些数字类型的父类 Number 呢？使用 <code class="highlighter-rouge">registerTypeAdapter()</code> 也不会被命中，因为类型不匹配。</p>
+
+    <p>此时就可以使用 <code class="highlighter-rouge">registerTypeHierarchyAdapter()</code> 方法来注册，它是支持继承的。</p>
+  </li>
+  <li>
+    <p><strong>TypeAdapterFactory 工厂类的使用</strong></p>
+
+    <p>使用 <code class="highlighter-rouge">registerXxx()</code> 方法可以链式调用，注册各种 Adapter。</p>
+
+    <p>如果嫌麻烦，还可以使用 TypeAdapterFacetory 这个 Adapter 工厂，配合<code class="highlighter-rouge">registerTypeAdapterFactory()</code> 方法，根据类型来返回不同的 Adapter。</p>
+
+    <p>其实只是换个了实现方式，并没有什么太大的区别。</p>
+  </li>
+  <li>
+    <p><strong>@JsonAdapter 注解</strong></p>
+
+    <p>@JsonAdapter 和前面介绍的 @SerializedName、@Expose 不同，不是作用在字段上，而是作用在 Java 类上的。</p>
+
+    <p>它指定一个“Adapter” 类，可以是 TypeAdapter、JsonSerializer 和 JsonDeserializer 这三个中的一个。</p>
+
+    <p>@JsonAdapter 注解只是一个更灵活的配置方式而已，了解一下即可。</p>
+  </li>
+</ul>
+
+<h4 id="出处">出处</h4>
+
+<blockquote>
+  <p>作者：HanDrush</p>
+
+  <p>标题：<a href="https://juejin.im/post/5cb72f755188253249739246">接口返回的 JSON，再离谱也有办法，谈谈 JSON 容错！</a></p>
+
+  <p>链接：https://juejin.im/post/5cb72f755188253249739246</p>
+</blockquote>
+
+:ET

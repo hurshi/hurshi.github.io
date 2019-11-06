@@ -1,0 +1,486 @@
+I"7y<hr />
+<p>layout: post
+title: kotlin 笔记
+catalog: false
+tags:
+    - Android
+—</p>
+
+<ol>
+  <li>
+    <p>内联函数：一般在比较小的方法上，以及频繁使用的方法上使用，而不会随意使用。</p>
+  </li>
+  <li>
+    <p>访问修饰符：internal ==&gt; 模块内可访问修饰符，但在 java 中，会被直接当作 public 使用的。</p>
+
+    <p>黑科技：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre><span class="c1">// 在kotlin中是合法的</span>
+<span class="k">fun</span> <span class="err">`1234`(){//是无法兼容</span> <span class="nf">Java</span> <span class="err">的</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"function 1234"</span><span class="p">)</span>
+<span class="p">}</span>
+   
+<span class="c1">//在 kotlin 中可以调用</span>
+<span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nc">Array</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;)</span> <span class="p">{</span>
+    <span class="err">`</span><span class="m">1234</span><span class="err">`</span><span class="p">()</span>
+<span class="p">}</span>
+   
+<span class="c1">// 在Java中不能调用</span>
+<span class="k">public</span> <span class="n">void</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+	<span class="m">1234</span><span class="p">();</span><span class="c1">//ERROR: 不合法调用</span>
+	<span class="err">`</span><span class="m">1234</span><span class="err">`</span><span class="p">();</span><span class="c1">//ERROR: 不合法调用</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>单例：除了 object 来声明单例外，还可以使用伴生对象来实现：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">Single</span> <span class="k">private</span> <span class="k">constructor</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+		<span class="k">fun</span> <span class="nf">get</span><span class="p">():</span> <span class="nc">Single</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nc">Holder</span><span class="p">.</span><span class="n">instance</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">private</span> <span class="kd">object</span> <span class="nc">Holder</span> <span class="p">{</span>
+		<span class="kd">val</span> <span class="py">instance</span> <span class="p">=</span> <span class="nc">Single</span><span class="p">()</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+   
+<span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nc">Array</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;)</span> <span class="p">{</span>
+	<span class="kd">val</span> <span class="py">single</span> <span class="p">=</span> <span class="nc">Single</span><span class="p">.</span><span class="k">get</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <p>伴生对象，可以理解为 匿名内部单例。</p>
+  </li>
+  <li>
+    <p>动态代理：使用 by 关键字就可以实现，参考：<a href="https://time.geekbang.org/course/detail/105-10673">极客时间 – Kotlin</a>。 Kotlin的动态代理会在编译以后转换成静态代理去调用，所以比Java通过反射的方式效率要高。</p>
+
+    <p>❓究竟何为动态代理，如何使用Kotlin动态代理实现 Retrofit❓</p>
+  </li>
+  <li>
+    <p>❗️❗️❗️密闭类完全可以代替枚举类，并且实现<strong><em>更多的扩展</em></strong>，比如</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="k">sealed</span> <span class="kd">class</span> <span class="nc">SuperCommand</span> <span class="p">{</span>
+    <span class="kd">object</span> <span class="nc">UP</span> <span class="p">:</span> <span class="nc">SuperCommand</span><span class="p">()</span>
+    <span class="kd">object</span> <span class="nc">LEFT</span> <span class="p">:</span> <span class="nc">SuperCommand</span><span class="p">()</span>
+    <span class="kd">object</span> <span class="nc">RIGHT</span> <span class="p">:</span> <span class="nc">SuperCommand</span><span class="p">()</span>
+    <span class="kd">object</span> <span class="nc">DOWN</span> <span class="p">:</span> <span class="nc">SuperCommand</span><span class="p">()</span>
+    <span class="kd">class</span> <span class="nc">SPEED</span><span class="p">(</span><span class="kd">var</span> <span class="py">speed</span><span class="p">:</span> <span class="nc">Int</span><span class="p">)</span> <span class="p">:</span> <span class="nc">SuperCommand</span><span class="p">()</span>
+<span class="p">}</span>
+   
+<span class="k">fun</span> <span class="nf">exec</span><span class="p">(</span><span class="n">tank</span><span class="p">:</span> <span class="nc">Tank</span><span class="p">,</span> <span class="n">superCommand</span><span class="p">:</span> <span class="nc">SuperCommand</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">when</span> <span class="p">(</span><span class="n">superCommand</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nc">SuperCommand</span><span class="p">.</span><span class="nc">UP</span> <span class="p">-&gt;</span> <span class="n">tank</span><span class="p">.</span><span class="nf">turnUp</span><span class="p">()</span>
+        <span class="nc">SuperCommand</span><span class="p">.</span><span class="nc">LEFT</span> <span class="p">-&gt;</span> <span class="n">tank</span><span class="p">.</span><span class="nf">turnLeft</span><span class="p">()</span>
+        <span class="nc">SuperCommand</span><span class="p">.</span><span class="nc">RIGHT</span> <span class="p">-&gt;</span> <span class="n">tank</span><span class="p">.</span><span class="nf">turnRight</span><span class="p">()</span>
+        <span class="nc">SuperCommand</span><span class="p">.</span><span class="nc">DOWN</span> <span class="p">-&gt;</span> <span class="n">tank</span><span class="p">.</span><span class="nf">turnDown</span><span class="p">()</span>
+        <span class="k">is</span> <span class="nc">SuperCommand</span><span class="p">.</span><span class="nc">SPEED</span> <span class="p">-&gt;</span> <span class="n">tank</span><span class="p">.</span><span class="nf">speed</span><span class="p">(</span><span class="n">superCommand</span><span class="p">.</span><span class="n">speed</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>解构：自动将一个对象拆解成若干个变量分别赋值</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">User</span><span class="p">(</span><span class="k">private</span> <span class="kd">val</span> <span class="py">name</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span> <span class="k">private</span> <span class="kd">val</span> <span class="py">age</span><span class="p">:</span> <span class="nc">Int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">operator</span> <span class="k">fun</span> <span class="nf">component1</span><span class="p">()</span> <span class="p">=</span> <span class="n">age</span>
+    <span class="k">operator</span> <span class="k">fun</span> <span class="nf">component2</span><span class="p">()</span> <span class="p">=</span> <span class="n">name</span>
+<span class="p">}</span>
+   
+<span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nc">Array</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;)</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">user</span> <span class="p">=</span> <span class="nc">User</span><span class="p">(</span><span class="s">"Hurshi"</span><span class="p">,</span> <span class="m">18</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="p">(</span><span class="py">name</span><span class="p">,</span> <span class="py">age</span><span class="p">)</span> <span class="p">=</span> <span class="n">user</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"name = $name"</span><span class="p">)</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"age = $age"</span><span class="p">)</span>
+<span class="p">}</span>
+   
+<span class="c1">//常用场景:</span>
+<span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nc">Array</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;)</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">map</span> <span class="p">=</span> <span class="n">mapOf</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">,</span><span class="nc">String</span><span class="p">&gt;(</span><span class="s">"name"</span> <span class="n">to</span> <span class="s">"Hurshi"</span><span class="p">,</span><span class="s">"age"</span> <span class="n">to</span> <span class="s">"18"</span><span class="p">)</span>
+    <span class="k">for</span><span class="p">((</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span> <span class="k">in</span> <span class="n">map</span><span class="p">){</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"key = $key ,value = $value"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>循环：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">1</span><span class="o">..</span><span class="m">10</span><span class="p">)</span> <span class="p">{</span> <span class="nf">println</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">1</span> <span class="n">until</span> <span class="m">10</span><span class="p">)</span> <span class="p">{</span> <span class="nf">println</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">10</span> <span class="n">downTo</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span> <span class="nf">println</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">1</span><span class="o">..</span><span class="m">10</span> <span class="n">step</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span> <span class="nf">println</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">}</span>
+<span class="nf">repeat</span><span class="p">(</span><span class="m">10</span><span class="p">)</span> <span class="p">{</span> <span class="nf">println</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+   
+<span class="c1">//循环 list with index</span>
+<span class="n">list</span><span class="p">.</span><span class="nf">forEachIndexed</span> <span class="p">{</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="p">-&gt;</span> <span class="nf">println</span><span class="p">(</span><span class="s">"[$index,$value]"</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">for</span> <span class="p">((</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="nf">withIndex</span><span class="p">())</span> <span class="p">{</span>
+  <span class="nf">println</span><span class="p">(</span><span class="s">"[$index,$value]"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>作用域函数</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre><span class="kd">val</span> <span class="py">letResult</span><span class="p">:</span> <span class="nc">String</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">let</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">name</span> <span class="p">}</span>
+<span class="kd">val</span> <span class="py">runResult</span><span class="p">:</span> <span class="nc">String</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">run</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="n">name</span> <span class="p">}</span>
+   
+<span class="kd">val</span> <span class="py">alsoResult</span><span class="p">:</span> <span class="nc">User</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">name</span> <span class="p">}</span>
+<span class="kd">val</span> <span class="py">applyResult</span><span class="p">:</span> <span class="nc">User</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">apply</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="n">name</span> <span class="p">}</span>
+   
+<span class="n">user</span><span class="p">.</span><span class="nf">takeIf</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">name</span><span class="p">.</span><span class="nf">isNotEmpty</span><span class="p">()</span> <span class="p">}</span><span class="o">?.</span><span class="nf">also</span> <span class="p">{</span> <span class="nf">println</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="n">name</span><span class="p">)</span> <span class="p">}</span>
+   
+<span class="nf">with</span><span class="p">(</span><span class="n">user</span><span class="p">){</span>
+  <span class="k">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s">"haha"</span>
+  <span class="k">this</span><span class="p">.</span><span class="n">age</span> <span class="p">=</span> <span class="m">18</span>
+  <span class="k">this</span><span class="p">.</span><span class="n">phone</span> <span class="p">=</span> <span class="m">111111</span>
+<span class="p">}</span>
+<span class="c1">// with 可以替换为：</span>
+<span class="c1">// user.let { </span>
+<span class="c1">//   it.name = "haha"</span>
+<span class="c1">//   it.age = 18</span>
+<span class="c1">//   it.phone = 111111</span>
+<span class="c1">// }</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>中缀表达式（扩展函数）</p>
+
+    <p>使用 <code class="highlighter-rouge">infix</code> 来扩展函数，比如自定义一个 vs 的中缀表达式：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="k">infix</span> <span class="k">fun</span> <span class="nc">Int</span><span class="p">.</span><span class="nf">vs</span><span class="p">(</span><span class="n">num</span><span class="p">:</span><span class="nc">Int</span><span class="p">):</span><span class="nc">Int</span><span class="p">{</span>
+    <span class="k">return</span> <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">&lt;</span><span class="n">num</span><span class="p">)-</span><span class="m">1</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">&gt;</span><span class="n">num</span><span class="p">)</span> <span class="m">1</span> <span class="k">else</span> <span class="m">0</span>
+<span class="p">}</span>
+   
+<span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nc">Array</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;)</span> <span class="p">{</span>
+  <span class="nf">println</span><span class="p">(</span><span class="m">100</span> <span class="n">vs</span> <span class="m">90</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">javap [option] *.class</code> 命令，反编译一个 class 文件，比如：</p>
+  </li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>  javap <span class="nt">-c</span> main.class
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ol>
+  <li>
+    <p>val 变量并不是常量，比如：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">Person</span><span class="p">(</span><span class="kd">val</span> <span class="py">birthYear</span><span class="p">:</span> <span class="nc">Int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="py">currentYear</span> <span class="p">=</span> <span class="m">2019</span>
+    <span class="kd">val</span> <span class="py">age</span><span class="p">:</span> <span class="nc">Int</span>
+        <span class="k">get</span><span class="p">()</span> <span class="p">=</span> <span class="n">currentYear</span> <span class="p">-</span> <span class="n">birthYear</span>
+<span class="p">}</span>
+    
+<span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nc">Array</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;)</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">person</span> <span class="p">=</span> <span class="nc">Person</span><span class="p">(</span><span class="m">1990</span><span class="p">)</span>
+    <span class="nf">println</span><span class="p">(</span><span class="n">person</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+    <span class="n">person</span><span class="p">.</span><span class="n">currentYear</span> <span class="p">=</span> <span class="m">2020</span>
+    <span class="nf">println</span><span class="p">(</span><span class="n">person</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <p>如何真正的声明一个常量？</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="k">const</span> <span class="kd">val</span> <span class="py">a</span> <span class="p">=</span> <span class="m">0</span> <span class="c1">//const 变量的值必须在编译期间确定下来</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>空安全：</p>
+
+    <ol>
+      <li>局部变量可以通过上下文推断，来避免多次判空。</li>
+    </ol>
+  </li>
+  <li>
+    <p>内联函数</p>
+
+    <ol>
+      <li>
+        <p>内联函数可以中断外部调用的。</p>
+
+        <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="k">fun</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">inlineTest</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"hello1"</span><span class="p">)</span>
+        <span class="k">return</span>
+      	<span class="nf">println</span><span class="p">(</span><span class="s">"hello2"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"hello3"</span><span class="p">)</span>
+<span class="p">}</span>
+       
+<span class="k">private</span> <span class="k">inline</span> <span class="k">fun</span> <span class="nf">inlineTest</span><span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nc">Unit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">l</span><span class="p">.</span><span class="nf">invoke</span><span class="p">()</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+       
+<span class="c1">// 输出： </span>
+<span class="c1">// hello1</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p>使用 <code class="highlighter-rouge">crossinline</code>不允许 inline 的 Lambda 中断外部函数的执行。</p>
+
+        <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="k">fun</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">inlineTest</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"hello1"</span><span class="p">)</span>
+        <span class="k">return</span><span class="err">@</span><span class="n">inlineTest</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"hello2"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"hello3"</span><span class="p">)</span>
+<span class="p">}</span>
+       
+<span class="k">private</span> <span class="k">inline</span> <span class="k">fun</span> <span class="nf">inlineTest</span><span class="p">(</span><span class="k">crossinline</span> <span class="n">l</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nc">Unit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">l</span><span class="p">.</span><span class="nf">invoke</span><span class="p">()</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+<span class="c1">//输出：</span>
+<span class="c1">//hello1</span>
+<span class="c1">//hello3</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p>使用 <code class="highlighter-rouge">noinline</code> 拒绝内联。</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>泛型：</p>
+
+    <ol>
+      <li>
+        <p>可以指定多个约束条件，比如</p>
+
+        <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="c1">//要求 T 同时实现了 Callback 和 Runnable 接口</span>
+<span class="kd">class</span> <span class="nc">Test</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;</span> <span class="k">where</span> <span class="nc">T</span>  <span class="p">:</span> <span class="nc">Callback</span><span class="p">,</span> <span class="nc">T</span> <span class="p">:</span> <span class="nc">Runnable</span> <span class="p">{}</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p>真泛型：</p>
+
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="c1">// java 的 fromJson:</span>
+<span class="kd">public</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="no">T</span> <span class="nf">fromJson</span><span class="o">(</span><span class="nc">String</span> <span class="n">json</span><span class="o">,</span> <span class="nc">Class</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">classOfT</span><span class="o">)</span> <span class="k">throw</span> <span class="nc">Json</span><span class="o">...</span><span class="na">Exception</span><span class="o">{}</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1">// Kotlin 的 fromJson:</span>
+<span class="k">inline</span> <span class="k">fun</span> <span class="p">&lt;</span><span class="err">reified</span> <span class="nc">T</span><span class="p">&gt;</span> <span class="nc">Gson</span><span class="p">.</span><span class="nf">fromJson</span><span class="p">(</span><span class="n">json</span><span class="p">:</span> <span class="nc">String</span><span class="p">):</span> <span class="nc">T</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nf">fromJson</span><span class="p">(</span><span class="n">json</span><span class="p">,</span> <span class="nc">T</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p><code class="highlighter-rouge">out / in</code>：相当于 java 中的 <code class="highlighter-rouge">&lt;? extends Class&gt;</code> / <code class="highlighter-rouge">&lt;? super Class&gt;</code>，理解为：</p>
+
+        <ol>
+          <li>out：只读不可写。</li>
+          <li>in：只写不可读。</li>
+        </ol>
+      </li>
+      <li>
+        <p>类型擦除/类型安全 ？？？</p>
+      </li>
+      <li>
+        <p>补充知识：在 Java 中，使用 <code class="highlighter-rouge">? extends</code>定义的比如<code class="highlighter-rouge">List&lt;? extends ClassA&gt; list</code>是不能被修改的，理解为只读。而 <code class="highlighter-rouge">? super</code>则是只能写入而不能读。</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>协程</p>
+
+    <ol>
+      <li>挂起函数 suspend ：非阻塞式的挂起。相当于到新线程去执行任务了。</li>
+      <li><code class="highlighter-rouge">runBlocking {}</code> 是 阻塞的</li>
+      <li><code class="highlighter-rouge">withContext {}</code>可以切到指定线程去执行代码，结束后再切回来</li>
+      <li>Channel：用于2个协程之间的通信。一般可以使用 produce 来使用。</li>
+    </ol>
+  </li>
+  <li>
+    <p>BIO NIO：</p>
+
+    <ol>
+      <li>Blocking IO / Non-blocking IO</li>
+      <li>Kotlin 在对’流’操作有语法糖 – use, 使用者不用写那么多的 try catch，而且不用管 流的close。</li>
+      <li>对象缓存池：DefaultPool，缓存对象。</li>
+    </ol>
+  </li>
+  <li>
+    <p>KTX 扩展库: https://developer.android.com/kotlin/ktx</p>
+
+    <ol>
+      <li>对 LinearLayout  遍历子 View：<code class="highlighter-rouge">linearlayout.foreach { }</code></li>
+      <li>判断字符串是否只包含数字：<code class="highlighter-rouge">"12343.22333.223".isDigistsOnly()</code></li>
+    </ol>
+  </li>
+  <li>
+    <p>修改 Kotlin 类名：</p>
+
+    <ol>
+      <li><code class="highlighter-rouge">@file:JvmName("name")</code>：指定类名。</li>
+      <li><code class="highlighter-rouge">@file:JvmMultifileClass</code>：当类名冲突的时候，会合并为一个 class。</li>
+    </ol>
+  </li>
+  <li>
+    <p>其他</p>
+  </li>
+</ol>
+
+:ET

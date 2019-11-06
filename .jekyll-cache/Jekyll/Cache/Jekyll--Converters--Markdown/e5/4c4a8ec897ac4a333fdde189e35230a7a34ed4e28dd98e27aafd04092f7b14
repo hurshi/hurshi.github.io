@@ -1,0 +1,173 @@
+I"o*<h3 id="序">序</h3>
+
+<ol>
+  <li>这次的MVVM不是传统上的，而是需要配合Google的 ViewModel,LiveData使用的。</li>
+  <li>严重使用了 Dagger2，轻度依赖了ARouter。</li>
+</ol>
+
+<h3 id="viewmodel">ViewModel</h3>
+
+<ol>
+  <li>
+    <p>ViewModel 是要交给 Dagger 来管理的，比如：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">UserActivityVM</span> <span class="nd">@Inject</span> <span class="k">constructor</span><span class="p">(</span><span class="n">application</span><span class="p">:</span> <span class="nc">Application</span><span class="p">):</span> <span class="nc">BaseViewModel</span><span class="p">()</span> <span class="p">{}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>ViewModel 不知道它是给哪个 View (MVVM中的V)提供服务的，也就是说它不能持有 Activity 实例，甚至不能有Context出现，当然ApplicationContext除外。</p>
+  </li>
+  <li>
+    <p>ViewModel的生命周期是要比 Activity/Fragment  长的，所有 ViewModel 中的对 View 的更新都使用 LiveData 让 View 订阅更新。</p>
+  </li>
+</ol>
+
+<h3 id="view">View</h3>
+
+<ol>
+  <li>
+    <p>使用 Dagger2 将需要的 ViewModel Inject进来，因为这个是通用操作，可以写在 BaseActivity/BaseFragment中，例如：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="nd">@Inject</span>
+<span class="k">lateinit</span> <span class="kd">var</span> <span class="py">factory</span><span class="p">:</span> <span class="nc">ViewModelProvider</span><span class="p">.</span><span class="nc">Factory</span>
+   
+<span class="kd">val</span> <span class="py">viewModel</span><span class="p">:</span> <span class="nc">T</span> <span class="k">by</span> <span class="nf">lazy</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">observer</span> <span class="p">=</span> <span class="nc">ViewModelProviders</span><span class="p">.</span><span class="nf">of</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">factory</span><span class="p">).</span><span class="k">get</span><span class="p">((</span><span class="n">javaClass</span><span class="p">.</span><span class="n">genericSuperclass</span> <span class="k">as</span> <span class="nc">ParameterizedType</span><span class="p">).</span><span class="n">actualTypeArguments</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="k">as</span> <span class="nc">Class</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;)</span>
+    <span class="n">lifecycle</span><span class="p">.</span><span class="nf">addObserver</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+    <span class="n">observer</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>在 Activity/Fragment 中订阅 ViewModel 中的 LiveData,以获取需要的数据。比如：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">viewModel</span><span class="p">.</span><span class="n">nickName</span><span class="p">.</span><span class="nf">observe</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nc">Observer</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="k">null</span> <span class="p">!=</span> <span class="n">it</span><span class="p">)</span> <span class="n">nickName</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="n">it</span> <span class="p">})</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Activity/Fragment 不能调用 ViewModel中的耗时方法（因为ViewModel的生命周期是比View长的），Activity/Fragment 从 ViewModel 获取的所有数据都只能通过 LiveData 获取，而不能直接调用返回结果。</p>
+  </li>
+  <li>
+    <p>番外：在View中使用<a href="https://github.com/hurshi/simplifydagger">SimplifyDagger</a>可以少些好几吨 Dagger 代码。</p>
+  </li>
+</ol>
+
+<h3 id="模块化">模块化</h3>
+
+<ol>
+  <li>一些公用模块，比如 Utils,Resources,Widgets等业务逻辑无关的，可以被其他任何一个模块依赖。</li>
+  <li>创建 DaggerModule,用来管理所有业务模块。</li>
+  <li>业务模块A，B，C等，互相之间不能有依赖关系，全部被DaggerModule依赖。</li>
+</ol>
+
+<h3 id="模块间通信api化">模块间通信（api化）</h3>
+
+<ol>
+  <li>
+    <p>若模块A想暴露某个功能给其他模块使用，则在<code class="highlighter-rouge">_apis_</code>文件夹下写一个 interface,然后在其他地方实现这个 interface,然后交给 dagger：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="nd">@AppScope</span>
+<span class="nd">@Binds</span>
+<span class="k">public</span> <span class="k">abstract</span> <span class="nc">UserInfo</span> <span class="nf">privideUserInfo</span><span class="p">(</span><span class="nc">UserInfoImpl</span> <span class="n">impl</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>将 <code class="highlighter-rouge">_apis_</code>文件夹暴露出去：</p>
+
+    <ol>
+      <li>
+        <p>gradle脚本</p>
+
+        <div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="rouge-code"><pre><span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">'maven-publish'</span>
+         
+   <span class="n">task</span> <span class="nf">sourceJar</span><span class="o">(</span><span class="nl">type:</span> <span class="n">Jar</span><span class="o">)</span> <span class="o">{</span>
+       <span class="n">from</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s2">"${project.projectDir.absolutePath}/build/intermediates/javac/debug/classes"</span><span class="o">,</span> <span class="nl">include:</span> <span class="s1">'**/_apis_/**/*.class'</span><span class="o">)</span>
+       <span class="n">from</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s2">"${project.projectDir.absolutePath}/build/tmp/kapt3/incrementalData/debug"</span><span class="o">,</span> <span class="nl">include:</span> <span class="s1">'**/_apis_/**/*.class'</span><span class="o">)</span>
+   <span class="o">}</span>
+         
+   <span class="n">publishing</span> <span class="o">{</span>
+       <span class="n">publications</span> <span class="o">{</span>
+           <span class="n">bar</span><span class="o">(</span><span class="n">MavenPublication</span><span class="o">)</span> <span class="o">{</span>
+               <span class="n">groupId</span> <span class="s1">'io.github.hurshi'</span>
+               <span class="n">artifactId</span> <span class="n">project</span><span class="o">.</span><span class="na">name</span>
+               <span class="n">version</span> <span class="s1">'1.0'</span>
+               <span class="n">artifact</span><span class="o">(</span><span class="n">sourceJar</span><span class="o">)</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+       <span class="n">repositories</span> <span class="o">{</span>
+           <span class="n">maven</span> <span class="o">{</span>
+               <span class="n">url</span> <span class="s2">"${rootProject.projectDir.absolutePath}/repo"</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p>shell 脚本</p>
+
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>./gradlew clean <span class="nt">-p</span> ../
+./gradlew assembleDebug <span class="nt">-p</span> ../
+./gradlew publish <span class="nt">-p</span> ../
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p>在需要使用这个模块的 build.gradle 中添加：</p>
+
+        <div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">compileOnly</span> <span class="s2">"io.github.hurshi:UserInfo:1.0"</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p>这样，我们就将<code class="highlighter-rouge">_apis_</code>文件夹下的 interface 都暴露出去了，以此完成模块间的通信。</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p><strong>模块间通信原理</strong>：我们写一个 interface，然后把实现这个 interface 的<code class="highlighter-rouge">实例Z</code>交给 dagger,当其他模块拿着这个interface 问dagger要实例的时候，dagger 就会把<code class="highlighter-rouge">实例Z</code>返回，其实是Dagger在帮你把<code class="highlighter-rouge">实例Z</code>从模块A拿到了其他模块。而<code class="highlighter-rouge">_apis_</code>相当于把<code class="highlighter-rouge">实例Z</code>的”key”拿到了其他模块（interface相当于是<code class="highlighter-rouge">实例Z</code>的”key”).</p>
+  </li>
+</ol>
+
+<h3 id="其他">其他</h3>
+
+<ol>
+  <li>理论上使用上述的方案已经能完成模块间通信的需求了，但对于 Activity 的跳转，还是使用 ARouter 比较方便。（如果觉得Arouter比较重，完全可以不用，只要Dagger就能实现模块化开发了）</li>
+</ol>
+:ET

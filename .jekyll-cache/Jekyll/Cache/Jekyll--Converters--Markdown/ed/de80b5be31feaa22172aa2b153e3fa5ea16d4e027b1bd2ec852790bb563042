@@ -1,0 +1,73 @@
+I"7<blockquote>
+  <p>没有绝对的安全，只能做到相对更难破解而已。</p>
+</blockquote>
+
+<h4 id="proguard">Proguard：</h4>
+<p>对代码进行压缩(Shrink)，优化(Optimize)，混淆(Obfuscate)，检查(Veirfy)。</p>
+<h4 id="isdebuggerconnected">isDebuggerConnected()：</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1">//用来检查此刻是否有调试挂载到程序上。</span>
+<span class="k">if</span><span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Debug</span><span class="o">.</span><span class="na">isDebuggerConnected</span><span class="o">()){</span>
+	<span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Process</span><span class="o">.</span><span class="na">killProcess</span><span class="o">(</span>	<span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Process</span><span class="o">.</span><span class="na">myPid</span><span class="o">());</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<h4 id="androiddebuggable-属性">android:debuggable 属性：</h4>
+
+<ul>
+  <li>
+    <p>在 application 节点下加入：android:debuggable=”false” 属性，使程序不能被调试。</p>
+  </li>
+  <li>
+    <p>在 Java 中也可以检测该属性：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="k">if</span><span class="o">(</span><span class="n">getApplicationInfo</span><span class="o">().</span><span class="na">flag</span> <span class="o">&amp;=</span> <span class="nc">ApplicationInfo</span><span class="o">.</span><span class="na">FLAG_DEBUGGABLE</span> <span class="o">!=</span><span class="mi">0</span><span class="o">){</span>
+	<span class="nc">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="no">TAG</span><span class="o">,</span><span class="s">"debug debug debug"</span><span class="o">);</span>
+	<span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Process</span><span class="o">.</span><span class="na">killProcess</span><span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Process</span><span class="o">.</span><span class="na">myPid</span><span class="o">());</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="keystore">keystore:</h4>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1">// 获得 keystore 信息</span>
+<span class="kd">val</span> <span class="py">sig</span> <span class="p">=</span> <span class="n">applicationContext</span><span class="p">.</span><span class="n">packageManager</span>
+	<span class="p">.</span><span class="nf">getPackageInfo</span><span class="p">(</span><span class="n">packageName</span><span class="p">,</span> <span class="nc">PackageManager</span><span class="p">.</span><span class="nc">GET_SIGNING_CERTIFICATES</span><span class="p">)</span>
+	<span class="p">.</span><span class="n">signingInfo</span>
+<span class="o">......</span>
+<span class="c1">// 然后在 Java 中比对或者上传服务器比对等方式来验证 keystore 的合法性。</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="敏感信息如何保存">敏感信息如何保存</h4>
+
+<ol>
+  <li>隐藏在 so 文件中。</li>
+  <li>隐藏在图片中。</li>
+  <li>隐藏在逻辑中，可以通过 base64, hash, “异或”等等逻辑操作来隐藏。</li>
+  <li>密钥分布在上面提到的各个地方，在程序中组合起来。</li>
+</ol>
+
+<h4 id="其他">其他：</h4>
+
+<p>比较省心的方式是使用市面上的加固服务</p>
+
+<h3 id="参考">参考</h3>
+
+<ol>
+  <li><a href="https://cloud.tencent.com/developer/article/1427625">Android app反调试与代码保护的一些基本方案</a></li>
+</ol>
+
+:ET

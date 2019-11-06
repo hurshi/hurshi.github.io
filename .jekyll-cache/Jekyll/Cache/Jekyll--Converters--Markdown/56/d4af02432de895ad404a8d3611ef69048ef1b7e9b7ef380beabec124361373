@@ -1,0 +1,47 @@
+I"�<h3 id="view-的绘制流程">View 的绘制流程</h3>
+
+<ol>
+  <li></li>
+</ol>
+
+<h3 id="onmeasure-流程">onMeasure 流程</h3>
+
+<ol>
+  <li>父View 调用每个子View的 measure()  方法，让子 View 自我测量。</li>
+  <li>父View 根据子 View 给出的尺寸，得出子 View 的位置，并把它们的位置和尺寸保存在 父View。</li>
+  <li>根据子 View 的位置和尺寸，计算自己的尺寸，并调用 setMeasuredDimension 保存下来</li>
+  <li><code class="highlighter-rouge">View.resolveSize(int size, int measureSpec)</code>可以修正尺寸，使之符合父 View 的限定规则。</li>
+  <li>常规测量在 ViewGroup 中已经提供，比如 <code class="highlighter-rouge">measureChildren</code>,<code class="highlighter-rouge">measureChildWithMargins()</code>等，可以用它们快速测量子 View。</li>
+  <li>有些 ViewGroup 对子 View 的测量可能需要多次，比如在 vertical 布局的宽度是 wrap_contnet的 Linearlayout 中，有一个子 View  的宽度是 match_parent，而 ViewGroup 的宽度需要将所有子 View 测完才能知道，所以 ViewGroup 会直接不测他或者测为了0，而在 ViewGroup 遍历一遍后，再回来测一遍之前无法确定宽度的子 View。</li>
+</ol>
+
+<h3 id="layout">Layout</h3>
+
+<ol>
+  <li>
+    <p>onLayout 的传入参数注解： 表示当前 View 在父布局中的位置。</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="o">*</span> <span class="nd">@param</span> <span class="n">changed</span> <span class="nc">This</span> <span class="n">is</span> <span class="n">a</span> <span class="k">new</span> <span class="n">size</span> <span class="n">or</span> <span class="n">position</span> <span class="k">for</span> <span class="k">this</span> <span class="n">view</span>
+<span class="o">*</span> <span class="nd">@param</span> <span class="n">left</span> <span class="nc">Left</span> <span class="n">position</span><span class="o">,</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">parent</span>
+<span class="o">*</span> <span class="nd">@param</span> <span class="n">top</span> <span class="nc">Top</span> <span class="n">position</span><span class="o">,</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">parent</span>
+<span class="o">*</span> <span class="nd">@param</span> <span class="n">right</span> <span class="nc">Right</span> <span class="n">position</span><span class="o">,</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">parent</span>
+<span class="o">*</span> <span class="nd">@param</span> <span class="n">bottom</span> <span class="nc">Bottom</span> <span class="n">position</span><span class="o">,</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">parent</span>
+<span class="o">*/</span>
+<span class="kt">void</span> <span class="nf">onLayout</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">changed</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">top</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bottom</span><span class="o">){</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>layout() 对当前 View 进行布局，onLayout()对子 View 布局，所以 onLayout  只有 ViewGroup才有重写的必要。</p>
+  </li>
+</ol>
+
+:ET

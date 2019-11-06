@@ -1,0 +1,2 @@
+I"v<p>在理解Handler跨线程之前，需要先理解下面几个概念：ThreadLocal , MessageQueue , Looper</p>
+:ET

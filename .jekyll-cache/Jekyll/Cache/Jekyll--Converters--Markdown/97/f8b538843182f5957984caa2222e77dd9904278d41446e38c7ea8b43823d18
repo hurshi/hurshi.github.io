@@ -1,0 +1,174 @@
+I")&<h3 id="viewpost-使用">View.post 使用</h3>
+
+<ol>
+  <li>
+    <p>确保执行 runnable 的时候，View 已经初始化完成。</p>
+  </li>
+  <li>
+    <p>可以在将 runnable 丢到 UI 线程去执行</p>
+
+    <blockquote>
+      <p>Causes the Runnable to be added to the message queue. The runnable will be run on the user interface thread.</p>
+    </blockquote>
+  </li>
+  <li>一个例子：
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>  <span class="nf">thread</span> <span class="p">{</span> 
+  	<span class="c1">//get image from network</span>
+  	<span class="n">imageView</span><span class="p">.</span><span class="nf">post</span> <span class="p">{</span> 
+  		<span class="n">imageView</span><span class="p">.</span><span class="nf">setImageDrawable</span><span class="p">(</span><span class="o">..</span><span class="p">.)</span>
+  	<span class="p">}</span>
+  <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>使用场景：在 Activity -&gt; onCreate()中我们获取不到view的长宽，但我们这样的话，我们就能得到啦：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="nc">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+	<span class="n">imageView</span><span class="p">.</span><span class="nf">post</span> <span class="p">{</span>
+		<span class="kd">val</span> <span class="py">imageWidth</span> <span class="p">=</span> <span class="n">imageView</span><span class="p">.</span><span class="n">width</span>
+		<span class="kd">val</span> <span class="py">imageHeight</span> <span class="p">=</span> <span class="n">imageView</span><span class="p">.</span><span class="n">height</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="源码浅析">源码浅析</h3>
+
+<ol>
+  <li>
+    <p>post 方法是放在 View.java 中的，意味着所有 View 都能用。</p>
+  </li>
+  <li>
+    <p>post 源码：</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="rouge-code"><pre><span class="cm">/**</span><span class="err">
+</span><span class="cm"> * Causes the Runnable to be added to the message queue.</span><span class="err">
+</span><span class="cm"> * The runnable will be run on the user interface thread.</span><span class="err">
+</span><span class="cm"> */</span>
+<span class="k">public</span> <span class="n">boolean</span> <span class="nf">post</span><span class="p">(</span><span class="nc">Runnable</span> <span class="n">action</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// mAttachInfo 是在 dispatchAttachedToWindow 方法中赋值的</span>
+    <span class="k">final</span> <span class="nc">AttachInfo</span> <span class="n">attachInfo</span> <span class="p">=</span> <span class="n">mAttachInfo</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">attachInfo</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">attachInfo</span><span class="p">.</span><span class="n">mHandler</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="n">action</span><span class="p">);</span>
+    <span class="p">}</span>
+   
+    <span class="c1">// Postpone the runnable until we know on which thread it needs to run.</span>
+    <span class="c1">// Assume that the runnable will be successfully placed after attach.</span>
+    <span class="c1">// 保存到 View 的变量 mRunQueue 中，等待 dispatchAttachedToWindow 中调用</span>
+    <span class="c1">// executeActions方法，</span>
+    <span class="nf">getRunQueue</span><span class="p">().</span><span class="nf">post</span><span class="p">(</span><span class="n">action</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+   
+<span class="n">void</span> <span class="nf">dispatchAttachedToWindow</span><span class="p">(</span><span class="nc">AttachInfo</span> <span class="n">info</span><span class="p">,</span> <span class="n">int</span> <span class="n">visibility</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mAttachInfo</span> <span class="p">=</span> <span class="n">info</span><span class="p">;</span>
+        <span class="o">..</span><span class="p">.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mRunQueue</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mRunQueue</span><span class="p">.</span><span class="nf">executeActions</span><span class="p">(</span><span class="n">info</span><span class="p">.</span><span class="n">mHandler</span><span class="p">);</span>
+            <span class="n">mRunQueue</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>由上述可知，View.post 方法肯定是在 dispatchAttachedToWindow 时以及之后会被调用。</li>
+  <li>而且，都是通过 mAttachInfo.mHandler 来调用 runnable 的。</li>
+  <li>所以，一切都在 dispatchAttachedToWindow 的调用，经过查找，可以 确定是在 ViewRootImpl -&gt; performTraversals() 中执行的，所以保证了在调用 runnable 之前已经调用过 measure,layout方法了</li>
+  <li>详细源码解析可以参考<a href="https://www.jianshu.com/p/85fc4decc947"> View.post()到底干了啥</a>, 以及<a href="https://www.jianshu.com/p/5f602fd6cd41">View.post() 不靠谱的地方你知道吗？</a></li>
+</ol>
+
+<h3 id="和-runonuithread-有啥区别么">和 runOnUiThread 有啥区别么？</h3>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">final</span> <span class="n">void</span> <span class="nf">runOnUiThread</span><span class="p">(</span><span class="nc">Runnable</span> <span class="n">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nc">Thread</span><span class="p">.</span><span class="nf">currentThread</span><span class="p">()</span> <span class="p">!=</span> <span class="n">mUiThread</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mHandler</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="n">action</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">action</span><span class="p">.</span><span class="nf">run</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>源码很简单，可以知道 runOnUiThread 只是把 runable 丢到 UI线程，然后就马上执行了。没有像 View.post 一样只在 dispatchAttachedToWindow之后才会执行。</p>
+
+<h3 id="和messagequeueidlehandler-有啥区别">和MessageQueue.IdleHandler 有啥区别？</h3>
+
+<ol>
+  <li>
+    <p>使用：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="nc">Looper</span><span class="o">.</span><span class="na">myQueue</span><span class="o">().</span><span class="na">addIdleHandler</span><span class="o">(</span><span class="k">new</span> <span class="nc">MessageQueue</span><span class="o">.</span><span class="na">IdleHandler</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">queueIdle</span><span class="o">()</span> <span class="o">{</span>
+           
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>runnable 会在 MessageQueue 被清空的时候执行，使用场景可以有：</p>
+
+    <ol>
+      <li>在 Activity 中等待所以UI显示完，再执行的操作。</li>
+      <li>作为一种懒执行的策略，不用在 CPU 高峰期占用资源。</li>
+    </ol>
+  </li>
+  <li>
+    <p>参考自：<a href="https://mp.weixin.qq.com/s/KpeBqIEYeOzt_frANoGuSg">你知道android的MessageQueue.IdleHandler吗？</a></p>
+  </li>
+</ol>
+
+:ET

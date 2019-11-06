@@ -1,10 +1,10 @@
 ---
 layout: post
-title: 笔记 kotlin
-catalog: true
+title: kotlin 学习笔记
 tags:
-	- notes
+    - notes
 ---
+
 
 1. 内联函数：一般在比较小的方法上，以及频繁使用的方法上使用，而不会随意使用。
 

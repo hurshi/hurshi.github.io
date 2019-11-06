@@ -1,0 +1,85 @@
+I"<h3 id="bitmap">Bitmap</h3>
+
+<ol>
+  <li>
+    <p>如何计算一张 Bitmap 在内存中的大小呢？</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">bitmap</span><span class="o">.</span><span class="na">getByteCount</span><span class="o">();</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>一张图片占用的内存和什么有关？</p>
+
+    <ol>
+      <li>图片本身的像素尺寸。</li>
+      <li>加载的格式，ARGB_8888 每像素占4 Byte, 比 RGB_565 大一倍。</li>
+      <li>所放文件夹和手机屏幕dpi的比例，比如放在 mdpi 中的图片，加载在480dpi的设备上，内存占用要乘以480/160，内存占用整整大了3倍，所以这个是<strong>非常重要</strong>的。查看更多有关 <a href="https://hurshi.github.io/2018/01/01/android_screen_adapt/">DPI 的资料</a>。</li>
+    </ol>
+  </li>
+</ol>
+
+<h3 id="图片使用最佳实践">图片使用最佳实践</h3>
+
+<ol>
+  <li>
+    <p>如果是单色的图片，优先考虑 IconFont。</p>
+  </li>
+  <li>
+    <p>如果图片比较简单，考虑使用 Vector Drawable。</p>
+  </li>
+  <li>
+    <p>图片尽可能复用：</p>
+
+    <ol>
+      <li>
+        <p>使用旋转，缩放，动画来复用图片</p>
+
+        <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c">&lt;!--一张图片明明旋转下就满足要求了，就不要再创建另一张了--&gt;</span>
+<span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;rotate</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">android:drawable=</span><span class="s">"@mipmap/ic_launcher"</span>
+    <span class="na">android:fromDegrees=</span><span class="s">"90"</span>
+    <span class="na">android:toDegrees=</span><span class="s">"90"</span> <span class="nt">/&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p>使用 Tint 着色器：为 ImageView 添加属性即可改变 ImageView 上图片的显示颜色。</p>
+
+        <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>andorid:tint="@color/colorAccent"
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>选用合适的色彩模式，如果不用 alpha 通道，就用 RGB_565，否则用 ARGB_8888。</p>
+  </li>
+  <li>
+    <p>大图小用用采样，计算合适的 inSampleSize 值，不浪费内存。比如</p>
+
+    <blockquote>
+      <p>ImageView 的尺寸只有 100*100，而图片是1080*500 的，完全没有必要将原图加载进来，可以计算合适的 inSampleSize 来加载图片，不用花“冤枉内存”。</p>
+    </blockquote>
+
+    <p><strong>使用 Glide</strong>，它已经把这些事情做好了，即使是加载 R.drawable / R.mipmap 中的图片，也推荐使用 Glide 来加载。</p>
+  </li>
+  <li>
+    <p>小图大用用矩阵（Matrix）：加载小尺寸的图片，通过 Matrix 放大后给再显示。</p>
+  </li>
+</ol>
+
+<h4 id="参考">参考</h4>
+
+<ol>
+  <li><a href="https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&amp;mid=403263974&amp;idx=1&amp;sn=b0315addbc47f3c38e65d9c633a12cd6&amp;scene=0&amp;key=41ecb04b05111003d79189315d2ebdda9a5dc312d579a616c9358c3994f94eaf700ba910fb56c37d348fbe317cbce872&amp;ascene=0&amp;uin=NTMyODkxMDE1&amp;devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.11.2+build(15C50)&amp;version=11020201&amp;pass_ticket=uq%2BZUPewIgxSiSrWWGqLMnd8%2Fy8eclx6vr92bs5s8Q9YVusWCl2cgRirA7iVDRu%2B">Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？</a></li>
+  <li><a href="https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&amp;mid=2653578016&amp;idx=1&amp;sn=d997d1142bac09e3764c075392468ae5&amp;chksm=84b3b127b3c4383197c7d1cf15ecec44d66a1119b033ae383f9e2126bb1be0abc93416622dc0&amp;scene=21#wechat_redirect">Android性能优化典范 - 第6季</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/2MsEAR9pQfMr1Sfs7cPdWQ">Android 内存优化总结&amp;实践</a></li>
+</ol>
+:ET

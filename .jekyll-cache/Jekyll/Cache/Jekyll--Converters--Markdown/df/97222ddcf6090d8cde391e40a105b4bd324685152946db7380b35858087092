@@ -1,0 +1,145 @@
+I"A!<h5 id="先上源码">先上源码：</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+</pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">IntentService</span> <span class="kd">extends</span> <span class="nc">Service</span> <span class="o">{</span>
+      <span class="kd">private</span> <span class="kd">volatile</span> <span class="nc">Looper</span> <span class="n">mServiceLooper</span><span class="o">;</span>
+      <span class="kd">private</span> <span class="kd">volatile</span> <span class="nc">ServiceHandler</span> <span class="n">mServiceHandler</span><span class="o">;</span>
+      <span class="kd">private</span> <span class="nc">String</span> <span class="n">mName</span><span class="o">;</span>
+      <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">mRedelivery</span><span class="o">;</span>
+  
+      <span class="kd">private</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ServiceHandler</span> <span class="kd">extends</span> <span class="nc">Handler</span> <span class="o">{</span>
+          <span class="kd">public</span> <span class="nf">ServiceHandler</span><span class="o">(</span><span class="nc">Looper</span> <span class="n">looper</span><span class="o">)</span> <span class="o">{</span>
+              <span class="kd">super</span><span class="o">(</span><span class="n">looper</span><span class="o">);</span>
+          <span class="o">}</span>
+  
+          <span class="nd">@Override</span>
+          <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handleMessage</span><span class="o">(</span><span class="nc">Message</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+              <span class="n">onHandleIntent</span><span class="o">((</span><span class="nc">Intent</span><span class="o">)</span><span class="n">msg</span><span class="o">.</span><span class="na">obj</span><span class="o">);</span>
+              <span class="n">stopSelf</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">arg1</span><span class="o">);</span><span class="c1">//👈若之后没事就尽快自杀吧</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+  
+      <span class="kd">public</span> <span class="nf">IntentService</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+          <span class="kd">super</span><span class="o">();</span>
+          <span class="n">mName</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+      <span class="o">}</span>
+  
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setIntentRedelivery</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">enabled</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">mRedelivery</span> <span class="o">=</span> <span class="n">enabled</span><span class="o">;</span>
+      <span class="o">}</span>
+  
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
+          <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">();</span>
+          <span class="nc">HandlerThread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HandlerThread</span><span class="o">(</span><span class="s">"IntentService["</span> <span class="o">+</span> <span class="n">mName</span> <span class="o">+</span> <span class="s">"]"</span><span class="o">);</span>
+          <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+  
+          <span class="n">mServiceLooper</span> <span class="o">=</span> <span class="n">thread</span><span class="o">.</span><span class="na">getLooper</span><span class="o">();</span>
+          <span class="c1">//👈关键点：指定handler的在HandlerThread中运行，HandlerThread其实就是一个普通的新线程</span>
+          <span class="n">mServiceHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ServiceHandler</span><span class="o">(</span><span class="n">mServiceLooper</span><span class="o">);</span>
+      <span class="o">}</span>
+  
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="nc">Intent</span> <span class="n">intent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">startId</span><span class="o">)</span> <span class="o">{</span>
+          <span class="nc">Message</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">mServiceHandler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">();</span>
+          <span class="n">msg</span><span class="o">.</span><span class="na">arg1</span> <span class="o">=</span> <span class="n">startId</span><span class="o">;</span>
+          <span class="n">msg</span><span class="o">.</span><span class="na">obj</span> <span class="o">=</span> <span class="n">intent</span><span class="o">;</span>
+          <span class="n">mServiceHandler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+      <span class="o">}</span>
+  
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">int</span> <span class="nf">onStartCommand</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="nc">Intent</span> <span class="n">intent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="o">,</span> <span class="kt">int</span> <span class="n">startId</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">startId</span><span class="o">);</span>
+          <span class="k">return</span> <span class="n">mRedelivery</span> <span class="o">?</span> <span class="no">START_REDELIVER_INTENT</span> <span class="o">:</span> <span class="no">START_NOT_STICKY</span><span class="o">;</span>
+      <span class="o">}</span>
+  
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onDestroy</span><span class="o">()</span> <span class="o">{</span>
+          <span class="n">mServiceLooper</span><span class="o">.</span><span class="na">quit</span><span class="o">();</span>
+      <span class="o">}</span>
+  
+      <span class="nd">@Override</span>
+      <span class="nd">@Nullable</span>
+      <span class="kd">public</span> <span class="nc">IBinder</span> <span class="nf">onBind</span><span class="o">(</span><span class="nc">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+      <span class="o">}</span>
+  
+      <span class="nd">@WorkerThread</span>
+      <span class="kd">protected</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">onHandleIntent</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="nc">Intent</span> <span class="n">intent</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="自己的理解">自己的理解：</h4>
+
+<ol>
+  <li>新建Thread HandlerThread；</li>
+  <li>指定ServiceHandler运行在HandlerThread中；👈关键点</li>
+  <li>onStartCommand接收到消息全都send到ServiceHandler中；</li>
+  <li>ServiceHandler在新线程中handleMessage然后调用onHandleIntent;</li>
+</ol>
+:ET

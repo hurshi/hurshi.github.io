@@ -1,0 +1,7 @@
+I"|<div class="mermaid">
+graph TD
+A[RecyclerView] --&gt; B(LayoutManager)
+A --&gt; C(Item Animator)
+A --&gt; D(Adapter)
+</div>
+:ET

@@ -1,0 +1,114 @@
+I"�<h3 id="string--stringbuilder--stringbuffer">String / StringBuilder / StringBuffer</h3>
+
+<ul>
+  <li><strong>StringBuffer</strong> 是线程安全的，在并发情况下可以使用 StringBuffer</li>
+  <li>
+    <p><strong>StringBuilder</strong> 是线程不安全的，相比于 StringBuffer 拥有更好的性能，大多数情况下可以使用 StringBuilder.</p>
+
+    <blockquote>
+      <p>在 Java8 中，字符串相加会被转换为 StringBuilder 操作，而在 Java9 中，字符串相加会被 StringConcatFactory 统一优化。</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h3 id="hashmap--hashtable--concurrenthashmap">HashMap / <del>HashTable</del> / ConcurrentHashMap</h3>
+
+<ul>
+  <li><strong>HashMap</strong>
+    <ol>
+      <li>线程不安全；</li>
+      <li>JDK1.8后使用 <strong>数组 + 链表</strong> 的形式，在链表较大的时候还会转为红黑树。</li>
+      <li>key,value 都可以为 null。</li>
+    </ol>
+  </li>
+  <li><strong><del>HashTable(已废弃，推荐 ConcurrentHashMap)</del></strong>
+    <ol>
+      <li>继承自已被废弃的 Dictionary。</li>
+      <li>线程安全。</li>
+    </ol>
+  </li>
+  <li><strong>ConcurrentHashMap</strong>:
+    <ol>
+      <li>线程安全。</li>
+      <li>和 HashTable 相比，使用了<strong>分段锁</strong>，高并发情况下相比于 HashTable 的<strong>全表锁</strong>提高不少性能。</li>
+      <li>主干是 Segment 数组，而 Segment 是一个继承了 ReentrantLock 的哈希表。</li>
+      <li>key, value 都<strong>不可</strong>为 null。</li>
+    </ol>
+  </li>
+  <li><strong>SparseArray</strong>:
+    <ol>
+      <li>使用上类似于 HashMap，但<strong>在某些情况下</strong>比 HashMap 有更好的性能。这里的“某些情况”指的是：
+        <ol>
+          <li>数据量不是很大；（数据量大的时候，查找的时候二分法效率明显没有 hash 高）。</li>
+          <li>key 值是 int 类型；</li>
+        </ol>
+      </li>
+      <li>使用数组存储，使用2个数组分别存放 Key、value。</li>
+      <li>使用二分法查找 key ，这点和 HashMap 相比是不足之处。</li>
+    </ol>
+  </li>
+  <li><strong>LinkedHashMap</strong>:
+    <ol>
+      <li>在 HashMap 的基础上，使用双向链表实现了保留插入顺序的功能。</li>
+    </ol>
+  </li>
+  <li><strong>HashSet</strong>:
+    <ol>
+      <li>底层使用 HashMap 实现，将数据保存在 HashMap 的 key 中。</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="vector--arraylist--linkedlist--copyonwritearraylist">Vector / ArrayList / LinkedList / CopyOnWriteArrayList</h3>
+
+<ul>
+  <li><strong>Vector</strong>:
+    <ol>
+      <li>线程安全。</li>
+    </ol>
+  </li>
+  <li><strong>ArrayList</strong>:
+    <ol>
+      <li>线程不安全。</li>
+      <li>内部使用数组实现。</li>
+    </ol>
+  </li>
+  <li><strong>LinkedList</strong>:
+    <ol>
+      <li>线程不安全。</li>
+      <li>内部使用链表实现。</li>
+    </ol>
+  </li>
+  <li><strong>CopyOnWriteArrayList</strong>:
+    <ol>
+      <li>线程安全。使用 ReentrantLock。</li>
+      <li>内部使用的是用 volatile transient 声明的数组Array。</li>
+      <li>读写分离，写时复制出一个新数组，完成插入、修改或移除操作后将新的数组赋值给 array。</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="乐观锁--悲观锁">乐观锁 / 悲观锁</h3>
+
+<ul>
+  <li>乐观锁：总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会阻塞直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。Java中<code class="highlighter-rouge">synchronized</code>和<code class="highlighter-rouge">ReentrantLock</code>等独占锁就是悲观锁思想的实现。</li>
+  <li>悲观锁：总是假设最好的情况，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号机制和CAS算法实现。<strong>乐观锁适用于多读的应用类型，这样可以提高吞吐量</strong>，在Java中<code class="highlighter-rouge">java.util.concurrent.atomic</code>包下面的原子变量类就是使用了乐观锁的一种实现方式<strong>CAS</strong>实现的。</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>摘录自： [可能是全网最好的MySQL重要知识点</td>
+          <td>面试必备](https://mp.weixin.qq.com/s/S9jiO_e-_CKRgNnzAU5Z0Q)   /    <a href="https://github.com/Snailclimb/JavaGuide/tree/master/docs/essential-content-for-interview">面试必备之乐观锁与悲观锁</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h3 id="参考">参考</h3>
+
+<ol>
+  <li><a href="http://wiki.jikexueyuan.com/project/java-collection/">极客学院 – Java集合学习指南</a></li>
+  <li>鱼哥的知识星球</li>
+</ol>
+:ET

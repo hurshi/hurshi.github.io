@@ -1,0 +1,13 @@
+I"p<h5 id="上图">上图：</h5>
+
+<p><img src="/img/posts/touch_event.png" alt="" /></p>
+
+<h5 id="总结">总结</h5>
+
+<ol>
+  <li><code class="highlighter-rouge">dispatchTouchEvent:</code>事件分发</li>
+  <li><code class="highlighter-rouge">onInterceptTouchEvent:</code>事件拦截</li>
+  <li><code class="highlighter-rouge">onTouchEvent:</code>事件处理，ACTION_DOWN的时候return true表示我要处理该事件，接下来的MOVE,UP等事件就会传进来，否则就不会再有其他事件传入。</li>
+  <li>看看视频就会了,<a href="https://v.qq.com/x/page/a0684ijwxzr.html">点我点我</a></li>
+</ol>
+:ET

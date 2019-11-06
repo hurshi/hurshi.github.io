@@ -1,0 +1,270 @@
+I"�:<h4 id="技巧1toolsnoderemove">技巧1：tools:node=”remove”</h4>
+
+<ol>
+  <li>
+    <p>WorkManager 初始化是这样的</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="nc">WorkManager</span><span class="o">.</span><span class="na">initialize</span><span class="o">(</span><span class="n">context</span><span class="o">,</span><span class="n">configuration</span><span class="o">)</span>
+   
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">initialize</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">,</span> <span class="nc">Configuration</span> <span class="n">configuration</span><span class="o">)</span> <span class="o">{</span>
+   <span class="kd">synchronized</span> <span class="o">(</span><span class="n">sLock</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">sDelegatedInstance</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">sDefaultInstance</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">(</span><span class="s">"WorkManager is already initialized.  Did you "</span>
+            <span class="o">+</span> <span class="s">"try to initialize it manually without disabling "</span>
+            <span class="o">+</span> <span class="s">"WorkManagerInitializer? See "</span>
+            <span class="o">+</span> <span class="s">"WorkManager#initialize(Context, Configuration) or the class level"</span>
+            <span class="o">+</span> <span class="s">"Javadoc for more information."</span><span class="o">);</span>
+ <span class="o">}</span>
+ <span class="o">...</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <p>这里可以看到，WorkManager是不能被重复初始化的</p>
+  </li>
+  <li>
+    <p>那么有没有对 AndroidManifest.xml 中的这段代码存在疑惑？</p>
+
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;provider</span>
+    <span class="na">android:name=</span><span class="s">"androidx.work.impl.WorkManagerInitializer"</span>
+    <span class="na">android:authorities=</span><span class="s">"${applicationId}.workmanager-init"</span>
+    <span class="na">android:directBootAware=</span><span class="s">"false"</span>
+    <span class="na">android:exported=</span><span class="s">"false"</span>
+    <span class="na">android:multiprocess=</span><span class="s">"true"</span>
+    <span class="na">tools:node=</span><span class="s">"remove"</span>
+    <span class="na">tools:targetApi=</span><span class="s">"n"</span> <span class="nt">/&gt;</span>
+
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WorkManagerInitializer</span> <span class="kd">extends</span> <span class="nc">ContentProvider</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// Initialize WorkManager with the default configuration.</span>
+        <span class="nc">WorkManager</span><span class="o">.</span><span class="na">initialize</span><span class="o">(</span><span class="n">getContext</span><span class="o">(),</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">.</span><span class="na">Builder</span><span class="o">().</span><span class="na">build</span><span class="o">());</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <p>说到底，这个 provider 也是执行初始化作用的，那么在 AndroidManifest.xml  中写这个 provider 不是重复初始化了么？</p>
+  </li>
+  <li>
+    <p>这里的秘诀在于  tools:node=”remove” 添加这个标签意味着将不会出现在 Merged Menifest 中，拓展一下，这个方法可以删除第三方SDK中申明的权限，比如</p>
+
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.INTERNET"</span> <span class="na">tools:node=</span><span class="s">"remove"</span><span class="nt">/&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>参考自</p>
+    <ol>
+      <li><a href="https://juejin.im/entry/5c0f10496fb9a04a102f1f50">掘金 tools:node=”remove”</a></li>
+      <li><a href="https://developer.android.com/studio/build/manifest-merge">官方文档</a></li>
+    </ol>
+  </li>
+</ol>
+
+<h4 id="技巧2开发第三方类库自己初始化">技巧2：开发第三方类库自己初始化</h4>
+
+<ol>
+  <li>知识普及：ContentProvider 是在 Application 之前就去初始化的。</li>
+  <li>能干啥事：利用这点可以干很多事，尤其是 SDK 开发，很多时候都要在文档中要求开发者在 Application 初始化，这时候完全可以定义一个 ContentProvider 自己去初始化，对接入的<strong>开发者无感</strong>了。</li>
+  <li>有攻就有防：对付它就用上面的 <strong>技巧1</strong>。</li>
+</ol>
+
+<h4 id="技巧3messageobtain">技巧3：Message.obtain()</h4>
+
+<ol>
+  <li>
+    <p>使用 <code class="highlighter-rouge">Message.obtain()</code> 来<strong>复用</strong> Message 对象。</p>
+  </li>
+  <li>
+    <p>简单源码：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">Message</span> <span class="kd">implements</span> <span class="nc">Parcelable</span> <span class="o">{</span>
+   
+    <span class="nc">Message</span> <span class="n">next</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Message</span> <span class="n">sPool</span><span class="o">;</span>
+   
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">Message</span> <span class="nf">obtain</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">synchronized</span> <span class="o">(</span><span class="n">sPoolSync</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">sPool</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">Message</span> <span class="n">m</span> <span class="o">=</span> <span class="n">sPool</span><span class="o">;</span>
+                <span class="n">sPool</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+                <span class="n">m</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="n">m</span><span class="o">.</span><span class="na">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="c1">// clear in-use flag</span>
+                <span class="n">sPoolSize</span><span class="o">--;</span>
+                <span class="k">return</span> <span class="n">m</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Message</span><span class="o">();</span>
+    <span class="o">}</span>
+   
+    <span class="c1">//回收Message</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">recycle</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h4 id="技巧4-tint-着色器">技巧4: Tint 着色器</h4>
+
+<p>为 ImageView 添加属性<code class="highlighter-rouge">andorid:tint="@color/colorAccent"</code>即可改变 ImageView 上图片的显示颜色。</p>
+
+<h4 id="技巧5-复用图片">技巧5: 复用图片</h4>
+
+<ul>
+  <li>
+    <p>一张图片明明旋转下就满足要求了，就不要再创建另一张了：</p>
+
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;rotate</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">android:drawable=</span><span class="s">"@mipmap/ic_launcher"</span>
+    <span class="na">android:fromDegrees=</span><span class="s">"90"</span>
+    <span class="na">android:toDegrees=</span><span class="s">"90"</span> <span class="nt">/&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>参考：<a href="https://blog.csdn.net/axi295309066/article/details/52658564">Android性能优化典范 - 第6季</a></p>
+  </li>
+</ul>
+
+<h4 id="技巧6-移除无用-string">技巧6: 移除无用 String</h4>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">appcompat-v7</code> 等三方库中包含大量的国际化资源，可以选择性的移除掉：</p>
+
+    <div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">defaultConfig</span> <span class="o">{</span>
+	<span class="o">...</span>
+	<span class="n">resConfigs</span><span class="o">(</span><span class="s1">'zh-rCN'</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>参考：<a href="https://www.jianshu.com/p/147b54f53e10">Android 性能优化系列一 :APK极致优化</a>    <a href="https://www.jianshu.com/p/8796ad90fcc6">使用resConfigs去除无用语言资源</a></p>
+  </li>
+</ul>
+
+<h4 id="技巧7-android-系统是如何安装-so-文件的">技巧7: Android 系统是如何安装 so 文件的？</h4>
+
+<ol>
+  <li>
+    <p>查看手机支持的架构：</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>✗ adb shell getprop ro.product.cpu.abilist
+➜ arm64-v8a,armeabi-v7a,armeabi
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>APK 在安装的时候，会按照上面的顺序查看 apk 中是否有对应的文件夹，找到的话就将该文件夹下的所有 so 文件拷贝到 /data/app/packageName/lib/ 目录下，然后马上就停止查找了。</p>
+  </li>
+</ol>
+
+<h4 id="技巧8-减少冷启动">技巧8: 减少冷启动</h4>
+
+<ol>
+  <li>
+    <p>用户点击返回键，默认就退出应用了，下次再点击的时候就是冷启动。</p>
+  </li>
+  <li>
+    <p>在用户点返回的时候，使应用进入后台，而不是退出应用：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBackPressed</span><span class="o">(){</span>
+	<span class="n">moveTaskToBack</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>参考：<a href="https://mp.weixin.qq.com/s/a8076txSPIUqGAbe30uEug">5分钟教你打造一个秒开的 Android App</a></p>
+  </li>
+</ol>
+
+<h4 id="技巧9如何获得-bitmap-在内存中的大小">技巧9：如何获得 bitmap 在内存中的大小</h4>
+
+<ol>
+  <li>
+    <p>系统方法：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">getByteCount</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nf">getRowBytes</span><span class="o">()</span> <span class="o">*</span> <span class="n">getHeight</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>参考：<a href="https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&amp;mid=403263974&amp;idx=1&amp;sn=b0315addbc47f3c38e65d9c633a12cd6&amp;scene=0&amp;key=41ecb04b051110037b72d05bba1495f596e848534fc51afe877d63329a16dc24dc1d3606aaaba3745a05bfdb8c624a74&amp;ascene=0&amp;uin=Mjc3OTU3Nzk1&amp;devicetype=iMac+MacBookPro10%2C1+OSX+OSX+10.10.5+build%2814F27%29&amp;version=11020201&amp;pass_ticket=kK4%2F6316QveG8O0vFtthPfBeKkNjyaL4HapsUAokHL5mUKCgI5hKTIKMc3D8uyqk">Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？</a></p>
+  </li>
+</ol>
+:ET

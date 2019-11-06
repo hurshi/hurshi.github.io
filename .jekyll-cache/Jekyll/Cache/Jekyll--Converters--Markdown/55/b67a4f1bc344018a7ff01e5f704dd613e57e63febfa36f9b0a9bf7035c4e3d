@@ -1,0 +1,191 @@
+I"�<h4 id="技巧1-定时任务-crontab">技巧1: 定时任务 Crontab</h4>
+
+<ol>
+  <li>
+    <p>打开：<code class="highlighter-rouge">sudo crontab -e</code></p>
+  </li>
+  <li>
+    <p>使用规则</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">m</th>
+          <th style="text-align: center">h</th>
+          <th style="text-align: center">dom</th>
+          <th style="text-align: center">mon</th>
+          <th style="text-align: center">dow</th>
+          <th style="text-align: center">command</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">分钟</td>
+          <td style="text-align: center">小时</td>
+          <td style="text-align: center">日</td>
+          <td style="text-align: center">月</td>
+          <td style="text-align: center">星期(0~6,0表示周日)</td>
+          <td style="text-align: center">命令</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">0</td>
+          <td style="text-align: center">6,11,17,22</td>
+          <td style="text-align: center">*/5</td>
+          <td style="text-align: center">*</td>
+          <td style="text-align: center">*</td>
+          <td style="text-align: center">sh autosend.sh</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>符号</th>
+          <th>意义</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>*</td>
+          <td>代表所有的取值范围内的数字；</td>
+        </tr>
+        <tr>
+          <td>/</td>
+          <td>代表”每”（“*/5”，表示每5个单位）</td>
+        </tr>
+        <tr>
+          <td>-</td>
+          <td>代表从某个数字到某个数字（“1-4”，表示1-4个单位）</td>
+        </tr>
+        <tr>
+          <td>,</td>
+          <td>分开几个离散的数字；</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ol>
+
+<h4 id="技巧2-ubuntu-1804-启动服务开机自启">技巧2: Ubuntu 18.04 启动服务/开机自启</h4>
+
+<ol>
+  <li>
+    <p>systemctl 命令：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>描述</th>
+          <th>命令</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>启动/关闭/重启 服务</td>
+          <td><code class="highlighter-rouge">systemctl start/stop/restart service-name</code></td>
+        </tr>
+        <tr>
+          <td>查看状态</td>
+          <td><code class="highlighter-rouge">systemctl status service-name</code></td>
+        </tr>
+        <tr>
+          <td>开机启动</td>
+          <td><code class="highlighter-rouge">systemctl enable service-name</code></td>
+        </tr>
+        <tr>
+          <td>取消开机启动</td>
+          <td><code class="highlighter-rouge">systemctl disable service-name</code></td>
+        </tr>
+        <tr>
+          <td>开机启动状态</td>
+          <td><code class="highlighter-rouge">systemctl is-enabled service-name</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>参考自：<a href="https://linoxide.com/linux-how-to/enable-disable-services-ubuntu-systemd-upstart/">How to Enable or Disable Services in Ubuntu Systemd/Upstart</a></p>
+  </li>
+</ol>
+
+<h4 id="技巧3-ubuntu-1804-启动执行-shell-脚本">技巧3: Ubuntu 18.04 启动执行 shell 脚本</h4>
+
+<ol>
+  <li>
+    <p>新建 shell 脚本，并赋予执行权限 `chmod u+x /path/to/shell/start.sh</p>
+  </li>
+  <li>
+    <p>在 <code class="highlighter-rouge">/etc/systemd/system</code>文件夹下新建 <code class="highlighter-rouge">.service</code> 文件 <code class="highlighter-rouge">start.service</code>,格式如下：</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>[Unit]
+Description=Auto Start service
+   
+[Service]
+ExecStart=/path/to/shell/start.sh
+   
+[Install]
+WantedBy=multi-user.target
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>开机启动：<code class="highlighter-rouge">sudo systemctl enable first</code></p>
+  </li>
+  <li>
+    <p>参考自：<a href="https://askubuntu.com/questions/919054/how-do-i-run-a-single-command-at-startup-using-systemd">How do I run a single command at startup using systemd?</a></p>
+  </li>
+</ol>
+
+<h4 id="技巧4-ssh-超时">技巧4: SSH 超时</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre># 客户端设置定时心跳，比如每60秒发一次心跳，失败3次就不再发送
+# /etc/ssh/ssh_config
+  
+ServerAliveInterval 60
+ServerAliveCountMax 3
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="技巧5-给-apt-设置代理">技巧5: 给 apt 设置代理</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>sudo vi /etc/apt/apt.conf.d/proxy.conf
+# paste
+Acquire {
+  HTTP::proxy "http://127.0.0.1:8080";
+  HTTPS::proxy "http://127.0.0.1:8080";
+}
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="其他">其他</h4>
+
+<ul>
+  <li>
+    <p><a href="https://websiteforstudents.com/upgrade-ubuntu-16-04-lts-to-ubuntu-18-04-lts-beta-server/">Upgrade Ubuntu 16.04 LTS To Ubuntu 18.04 LTS Server</a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/hwdsl2/setup-ipsec-vpn">V@P@N</a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/shadowsocks/shadowsocks-libev">S@S</a></p>
+  </li>
+</ul>
+
+:ET

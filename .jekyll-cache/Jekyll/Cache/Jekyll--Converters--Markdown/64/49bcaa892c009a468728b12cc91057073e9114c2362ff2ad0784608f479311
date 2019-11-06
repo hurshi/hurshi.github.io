@@ -1,0 +1,30 @@
+I"�<blockquote>
+  <ol>
+    <li>view 的绘制</li>
+    <li>事件分发</li>
+    <li>几种锁，死锁怎么办，如何设置超时时长</li>
+    <li>多线程</li>
+    <li>recycleView  https://github.com/AlanCheen/Flap</li>
+    <li>mvp vs mvvm</li>
+    <li>retrofit 源码，缓存</li>
+    <li>okhttp 线程池</li>
+    <li>模块化开发如何快速独立编译开发</li>
+    <li>注解如何支持增量编译的</li>
+    <li>Arouter startActivity vs Intent</li>
+    <li>锁屏 如何启动的，如何注册广播，如何干掉系统锁屏，</li>
+    <li>ViewModel 原理， LifeCycle 原理</li>
+    <li>recycleview 分割线，图片回收，拖拽</li>
+    <li>kotlin 派生对象，单利，空指针，可见性，inline函数</li>
+    <li>http header等</li>
+    <li>java 高可用线程安全缓存，线程挂起，</li>
+    <li>Glide 缓存</li>
+    <li>Mediaplayer 的状态，Mediaplayer 的 IlligleException</li>
+    <li>Android MultiDex 的优化</li>
+    <li>binder</li>
+    <li>concurrenthashmap： http://www.jasongj.com/java/concurrenthashmap/</li>
+    <li>Arouter 源码</li>
+    <li>JessYan 的一些文章：https://url.cn/5RdH9ti</li>
+    <li>动态代理 和 反射</li>
+  </ol>
+</blockquote>
+:ET

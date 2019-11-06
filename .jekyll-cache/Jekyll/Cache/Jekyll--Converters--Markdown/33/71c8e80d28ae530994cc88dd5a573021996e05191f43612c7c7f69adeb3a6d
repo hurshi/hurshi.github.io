@@ -1,0 +1,85 @@
+I"�<h3 id="dagger-scope-的生命周期">@Dagger Scope 的生命周期</h3>
+
+<ul>
+  <li>
+    <p>在 Dagger 2 官方文档中我找到一句话，非常清楚地描述了 @Scope 的原理：</p>
+
+    <blockquote>
+      <p>When a binding uses a scope annotation, that means that the component object holds a reference to the bound object until the component object itself is garbage-collected.</p>
+    </blockquote>
+
+    <p>当 Component 与 Module、目标类（需要被注入依赖）使用 Scope 注解绑定时，意味着 Component 对象持有绑定的依赖实例的一个引用直到 Component 对象本身被回收。也就是作用域的原理，其实是让生成的依赖实例的生命周期与 Component 绑定，Scope 注解并不能保证生命周期，要想保证赖实例的生命周期，需要确保 Component 的生命周期。</p>
+  </li>
+  <li>
+    <p>参考: <a href="http://johnnyshieh.me/posts/dagger-advance/">Dagger 2 完全解析（二），进阶使用 Lazy、Qualifier、Scope 等 @ Johnny Shieh</a></p>
+  </li>
+</ul>
+
+<h3 id="binds-初级使用">@Binds 初级使用</h3>
+
+<ul>
+  <li>
+    <p>我的初步理解是：@Binds 是用来简化 @Provides 的，比如：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="nd">@Provides</span>
+<span class="kd">public</span> <span class="n">clsss</span> <span class="nf">Parent</span><span class="o">(</span><span class="nc">Child</span> <span class="n">child</span><span class="o">){</span>
+    <span class="k">return</span> <span class="n">child</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <p>可以替换为：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="nd">@Binds</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="nf">Parent</span><span class="o">(</span><span class="nc">Child</span> <span class="n">child</span><span class="o">);</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="can-provides-and-binds-coexist">Can @Provides and @Binds coexist</h3>
+
+<ul>
+  <li>
+    <p>比较好的解决方案如下：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="nd">@Module</span><span class="o">(</span><span class="n">includes</span> <span class="o">=</span> <span class="nc">ServletRequestAbstractModule</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">final</span> <span class="kd">class</span> <span class="nc">ServletRequestModule</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">HttpServletRequest</span> <span class="n">httpRequest</span><span class="o">;</span>
+  
+	<span class="nd">@Provides</span>
+	<span class="nc">HttpServletRequestModule</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">httpRequest</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">httpRequest</span> <span class="o">=</span> <span class="n">httpRequest</span><span class="o">;</span>
+	<span class="o">}</span>
+  
+	<span class="nd">@Module</span>
+	<span class="kd">interface</span> <span class="nc">ServletRequestAbstractModule</span> <span class="o">{</span>
+		<span class="nd">@Binds</span> <span class="nc">ServletRequest</span> <span class="nf">bindServletRequest</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">httpRequest</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>参考： <a href="https://android.jlelse.eu/dagger-2-annotations-can-provides-and-binds-coexist-88079b9f6d27">Dagger 2 annotations: can @Provides and @Binds coexist?</a></p>
+  </li>
+</ul>
+
+:ET

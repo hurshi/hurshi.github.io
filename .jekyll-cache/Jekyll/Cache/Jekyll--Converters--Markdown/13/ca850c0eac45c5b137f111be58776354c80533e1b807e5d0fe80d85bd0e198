@@ -1,0 +1,42 @@
+I"%<h3 id="操作符">操作符</h3>
+
+<ol>
+  <li><strong>Interval</strong>: 按固定时间间隔发射整数序列，相当于定时器</li>
+  <li><strong>range</strong>: 发射指定范围的整数序列 比如<code class="highlighter-rouge">Observable.range(10,2) 结果 10，11</code></li>
+  <li><strong>concatMap</strong>: 在 map 基础上保持数据的顺序</li>
+  <li><strong>buffer</strong>: 将指定个数的数据包装成数据列表一次性发射</li>
+  <li><strong>groupBy</strong>: 将数据分组排序后依次发射</li>
+  <li><strong>distinct</strong>: 去重，只允许没有发射过的数据通过</li>
+  <li><strong>throttleFirst</strong>: 在指定时间窗口里，只允许第一条数据通过</li>
+  <li><strong>merge/concat</strong>: 就像多车道汇合一样，只是 merge 不保证顺序，concat 保证顺序</li>
+  <li><strong>zip</strong>: 就像拉链一样，2个 Observable 的元素依次结合，返回新的元素。</li>
+  <li><strong>Do</strong>:
+    <ol>
+      <li>doOnEach</li>
+      <li>doOnNext</li>
+      <li>doOnSubscribe</li>
+      <li>doOnUnsubscribe</li>
+      <li>doOnCompleted</li>
+      <li>doOnError</li>
+      <li>doOnTerminate: 当 Observable 终止（无论是正常还是异常终止）<strong><em>之前</em></strong>会被调用</li>
+      <li>finallyDo: 当 Observable 终止（无论是正常还是异常终止）<strong><em>之后</em></strong>会被调用</li>
+    </ol>
+  </li>
+  <li><strong>timeout</strong>: 超时后 onError 或使用备用的 Observable</li>
+  <li><strong>catch</strong>: onErrorReturn…</li>
+  <li><strong>retry/retryWhen</strong>: 遇到 Error 重试</li>
+  <li><strong>条件判断</strong>
+    <ol>
+      <li>all: 对所有数据进行判断，全部满足返回 true, 否则 false</li>
+      <li>contains: 类似于 <code class="highlighter-rouge">list.contains()</code></li>
+    </ol>
+  </li>
+  <li><strong>toMap</strong>: 类似于 toList</li>
+</ol>
+
+<h3 id="线程">线程</h3>
+
+<ol>
+  <li><strong>IO</strong>: 内部实现为 无数量上限的线程池，可重用线程</li>
+</ol>
+:ET

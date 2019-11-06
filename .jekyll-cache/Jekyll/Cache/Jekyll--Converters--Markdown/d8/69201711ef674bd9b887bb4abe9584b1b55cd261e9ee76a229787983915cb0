@@ -1,0 +1,125 @@
+I"J&<h4 id="陷阱1equals">陷阱1：equals</h4>
+
+<ol>
+  <li>避免空指针：
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre> <span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+ <span class="k">if</span><span class="o">(</span><span class="s">"value"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">str</span><span class="o">)){...}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>进一步：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">str</span><span class="o">,</span><span class="s">"value"</span><span class="o">);</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h4 id="陷阱2-float-bigdecemal">陷阱2: float, BigDecemal</h4>
+
+<ol>
+  <li>
+    <p>float 不能使用 == 来比较大小，如：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kt">float</span> <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0f</span> <span class="o">-</span> <span class="mf">0.9f</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">0.9f</span> <span class="o">-</span> <span class="mf">0.8f</span><span class="o">;</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span><span class="c1">// 0.100000024</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span><span class="c1">// 0.099999964</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="o">);</span><span class="c1">// false</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>解决方案：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="nc">BigDecimal</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"1.0"</span><span class="o">);</span>
+<span class="nc">BigDecimal</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.9"</span><span class="o">);</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">b</span><span class="o">));</span><span class="c1">// 1</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>BigDecimal 注意事项：</p>
+
+    <ol>
+      <li>为防止精度损失，禁止使用 BigDecimal(double) 的方式把 double 值转化为 BigDecimal 对象。</li>
+      <li>使用 BigDecimal(String) 的方式初始化，或者 BigDecimal.valueof()。</li>
+    </ol>
+  </li>
+  <li>
+    <p>摘自：<a href="[https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/Java%E7%96%91%E9%9A%BE%E7%82%B9.md](https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/Java疑难点.md)">Java 疑难点</a></p>
+  </li>
+</ol>
+
+<h4 id="陷阱3-arraysaslist">陷阱3: Arrays.asList</h4>
+
+<ol>
+  <li>
+    <p>陷阱：使用<code class="highlighter-rouge">Arrays.asList()</code>把数组转为集合的时候，返回的是 Arrays 的内部 ArrayList, 而这个 ArrayList 并没有实现 add / remove / clear 方法，所以调用它们会报 UnsupportedOperationException 异常。</p>
+  </li>
+  <li>
+    <p>解决方案：</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="c1">// 方法1:</span>
+<span class="nc">List</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span><span class="s">"b"</span><span class="o">,</span><span class="s">"c"</span><span class="o">));</span>
+   
+<span class="c1">// 方法2，使用 Guava:</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">il</span> <span class="o">=</span> <span class="nc">ImmutableList</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span><span class="s">"b"</span><span class="o">);</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">il</span> <span class="o">=</span> <span class="nc">ImmutableList</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">aStringArray</span><span class="o">);</span>
+   
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">l1</span> <span class="o">=</span> <span class="nc">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">(</span><span class="n">anotherListOrCollection</span><span class="o">);</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">l2</span> <span class="o">=</span> <span class="nc">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">(</span><span class="n">aStrignArray</span><span class="o">);</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">l3</span> <span class="o">=</span> <span class="nc">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span><span class="s">"b"</span><span class="o">,</span><span class="s">"c"</span><span class="o">);</span>
+   
+<span class="c1">// 方法3，使用 Apache Commons Collections:</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;();</span>
+<span class="nc">CollectionUtils</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="n">str</span><span class="o">);</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>摘自：<a href="[https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/Java%E7%96%91%E9%9A%BE%E7%82%B9.md](https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/Java疑难点.md)">Java 疑难点</a></p>
+  </li>
+</ol>
+
+<h4 id="陷阱4-arraylistsublist">陷阱4: ArrayList.subList</h4>
+
+<ol>
+  <li>
+    <p>陷阱：使用<code class="highlighter-rouge">ArrayList.subList()</code>返回的 List 是一个实现了 AbstractList 的内部类 – SubList，而这个 SubList 并没有自己的 array，而是直接引用了外部 ArrayList 的一部分，所以称之为“视图”。所以对 SubList 或者外部 ArrayList 的增删操作都会相互影响，甚至报错。</p>
+  </li>
+  <li>
+    <p>解决方案</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="c1">// 需要对 subList 作出修改，又不想影响原 list,可以创建 list 的拷贝</span>
+<span class="n">sublist</span> <span class="o">=</span> <span class="nc">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">(</span><span class="n">subList</span><span class="o">);</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>摘自：<a href="https://mp.weixin.qq.com/s/8II8DrWLxmjKFpGJ7wcxuA">为什么要谨慎使用ArrayList中的subList方法</a></p>
+  </li>
+</ol>
+:ET

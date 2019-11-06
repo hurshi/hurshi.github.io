@@ -1,0 +1,164 @@
+I"�<h3 id="快捷键">快捷键</h3>
+<p><code class="highlighter-rouge">Preferences -&gt; keymap -&gt; </code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>命令</th>
+      <th>name</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">command + d</code></td>
+      <td><code class="highlighter-rouge">delete line</code></td>
+      <td>删除一行</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">command + shift + F</code></td>
+      <td><code class="highlighter-rouge">reformat code</code></td>
+      <td>格式化代码</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">command + shift + R</code></td>
+      <td><code class="highlighter-rouge">File...</code></td>
+      <td>切换代码文件</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">control + R</code></td>
+      <td><code class="highlighter-rouge">Replace in Path...</code></td>
+      <td>全局替换</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">command + shift + o</code></td>
+      <td><code class="highlighter-rouge">Optimize Imports...</code></td>
+      <td>删除无用<code class="highlighter-rouge">import</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">alt + command + 方向下</code></td>
+      <td><code class="highlighter-rouge">duplicate entire lines</code></td>
+      <td>复制选中行到下面</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">command + shift + g</code></td>
+      <td><code class="highlighter-rouge">Find Usages</code></td>
+      <td>搜索引用</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">option + enter</code></td>
+      <td> </td>
+      <td>快速提示</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">command + F12</code></td>
+      <td> </td>
+      <td>查看当前代码文件大纲</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">F3</code></td>
+      <td> </td>
+      <td>添加/删除 书签</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">command + F3</code></td>
+      <td> </td>
+      <td>查看所有书签</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">command + y</code></td>
+      <td> </td>
+      <td>预览光标所在的方法</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">command + option + T</code></td>
+      <td> </td>
+      <td><code class="highlighter-rouge">surround with</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="代码模版">代码模版</h3>
+<p>添加模版 <code class="highlighter-rouge">Preferences -&gt; Live Templates -&gt;</code></p>
+<ol>
+  <li><code class="highlighter-rouge">tmb : Timber.e("&gt;&gt;&gt; $name$"+$value$);</code></li>
+  <li><code class="highlighter-rouge">loge : android.util.Log.e(" &gt;&gt;&gt; ", "$METHOD_NAME$: $content$" + $exception$);</code></li>
+</ol>
+
+<h3 id="字体">字体</h3>
+<ol>
+  <li>更改字体
+<code class="highlighter-rouge">Preferences -&gt; Appearance</code></li>
+  <li>字体推荐
+<a href="https://github.com/google/fonts/blob/master/ofl/inconsolata/Inconsolata-Regular.ttf"><code class="highlighter-rouge">inconsolata</code></a></li>
+</ol>
+
+<h3 id="常用设置">常用设置</h3>
+<ol>
+  <li>
+    <p><strong>设置<code class="highlighter-rouge">command + 左键</code>和<code class="highlighter-rouge">control + 左键</code>同样功能</strong>
+  <code class="highlighter-rouge">Preferences -&gt; Keymap -&gt; Search for "Declaration" -&gt; double click on the search result under the  'Navigate' category -&gt;
+  select "add mouse shortcut" -&gt; and press the shortcut buttons (eg. CMD+left click) and save it</code></p>
+  </li>
+  <li>
+    <p><strong>提示不区分大小写，因此我们要改成大小写不敏感</strong>
+  <code class="highlighter-rouge">Preferences -&gt; code completion -&gt; case sensitive completion: none;</code></p>
+  </li>
+  <li>
+    <p><strong>自动<code class="highlighter-rouge">import</code></strong>
+<code class="highlighter-rouge">Preference -&gt; auto import</code></p>
+  </li>
+  <li>
+    <p><strong>代码提示(alt + /)</strong>
+<code class="highlighter-rouge">Preference -&gt; Keymap -&gt; Completion -&gt; Basic</code></p>
+  </li>
+  <li>
+    <p><strong>鼠标悬浮文档提示</strong></p>
+
+    <p><code class="highlighter-rouge">Editor -&gt; General -&gt; Show quick documention on mouse move</code></p>
+  </li>
+  <li>
+    <p><strong>自定义VM Options</strong></p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c"># custom Android Studio VM options, see https://developer.android.com/studio/intro/studio-config.html</span>
+<span class="nt">-Xmx2g</span>
+<span class="nt">-Xms1g</span>
+<span class="nt">-XX</span>:MaxPermSize<span class="o">=</span>2g
+<span class="nt">-XX</span>:ReservedCodeCacheSize<span class="o">=</span>1g
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>显示内存信息</strong></p>
+
+    <p><code class="highlighter-rouge">Preference -&gt; Appearance -&gt; Show memory indicator</code></p>
+  </li>
+</ol>
+
+<h3 id="断点">断点</h3>
+
+<ol>
+  <li>
+    <p>异常断点</p>
+
+    <p><code class="highlighter-rouge">Run -&gt; View breakpoints</code></p>
+  </li>
+  <li>
+    <p>日志断点</p>
+
+    <p><code class="highlighter-rouge">添加一个普通断点 -&gt; suspend设为false -&gt; Log evaluated expression</code></p>
+  </li>
+</ol>
+
+<h3 id="代码分析">代码分析</h3>
+
+<ol>
+  <li><code class="highlighter-rouge">Analyze -&gt; Inspect Code...</code></li>
+  <li><code class="highlighter-rouge">Analyze -&gt; Code Cleanup...</code></li>
+</ol>
+
+:ET

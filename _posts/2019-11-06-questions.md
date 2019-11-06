@@ -1,10 +1,12 @@
 ---
 layout: post
-title: 慢慢消灭这些问题
-catalog: true
+title: 提问s
+subtitle: 把它吃掉把它吃掉
 tags:
-	- question
+    - questions
 ---
+
+
 
   > 1. view 的绘制
   > 2. 事件分发
