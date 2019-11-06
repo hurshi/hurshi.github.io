@@ -99,3 +99,28 @@ service-worker: true
 # MathJax rendering for layout:page (e.g. post preview)
 page-mathjax: false
 
+# Friends
+friends: [
+  {
+    title: "Gityuan - MiUI",
+    href: "http://gityuan.com/"
+  },{
+    title: "刘望舒",
+    href: "http://liuwangshu.cn/"
+  },{
+    title: "张磊 - 安居客",
+    href: "https://BaronZ88.github.io"
+  },{
+    title: "何家成 - 微信团队",
+    href: "https://blog.csdn.net/carson_ho"
+  },{
+    title: "JessYan",
+    href: "https://juejin.im/user/57a9dbd9165abd0061714613"
+  },{
+    title: "jasongj",
+    href: "http://www.jasongj.com/tags/Java/"
+  },{
+    title: "红橙Darren",
+    href: "https://www.jianshu.com/u/35083fcb7747"
+  }
+]
