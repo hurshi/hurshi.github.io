@@ -1,16 +1,19 @@
 ---
 layout: post
-title: kotlin 学习笔记
+title: Kotlin 学习笔记
+subtitle: 让我们荡起双桨
 tags:
     - notes
 ---
+
+笔记来自学习[即刻时间 -- 快速上手Kotlin开发](https://time.geekbang.org/course/intro/105)，[扔物线 -- 码上开学](https://kaixue.io/kotlin-generics/)，等等...
 
 
 1. 内联函数：一般在比较小的方法上，以及频繁使用的方法上使用，而不会随意使用。
 
 2. 访问修饰符：internal ==> 模块内可访问修饰符，但在 java 中，会被直接当作 public 使用的。
 
-   黑科技：
+3. 黑科技（使用 Kotlin 的特性，不让 Java  调用）：
 
    ```kotlin
    // 在kotlin中是合法的
@@ -30,7 +33,7 @@ tags:
    }
    ```
 
-3. 单例：除了 object 来声明单例外，还可以使用伴生对象来实现：
+4. 单例：除了 object 来声明单例外，还可以使用伴生对象来实现：
 
    ```kotlin
    class Single private constructor() {
@@ -51,11 +54,11 @@ tags:
 
    伴生对象，可以理解为 匿名内部单例。
 
-4. 动态代理：使用 by 关键字就可以实现，参考：[极客时间 -- Kotlin](https://time.geekbang.org/course/detail/105-10673)。 Kotlin的动态代理会在编译以后转换成静态代理去调用，所以比Java通过反射的方式效率要高。
+5. 动态代理：使用 by 关键字就可以实现，参考：[极客时间 -- Kotlin](https://time.geekbang.org/course/detail/105-10673)。 Kotlin的动态代理会在编译以后转换成静态代理去调用，所以比Java通过反射的方式效率要高。
 
    ❓究竟何为动态代理，如何使用Kotlin动态代理实现 Retrofit❓
 
-5. ❗️❗️❗️密闭类完全可以代替枚举类，并且实现***更多的扩展***，比如
+6. ❗️❗️❗️密闭类完全可以代替枚举类，并且实现***更多的扩展***，比如
 
    ```kotlin
    sealed class SuperCommand {
@@ -77,7 +80,7 @@ tags:
    }
    ```
 
-6. 解构：自动将一个对象拆解成若干个变量分别赋值
+7. 解构：自动将一个对象拆解成若干个变量分别赋值
 
    ```kotlin
    class User(private val name: String, private val age: Int) {
@@ -101,7 +104,7 @@ tags:
    }
    ```
 
-7. 循环：
+8. 循环：
 
    ```kotlin
    for(i in 1..10) { println(i) }
@@ -117,7 +120,7 @@ tags:
    }
    ```
 
-8. 作用域函数
+9. 作用域函数
 
    ```kotlin
    val letResult: String = user.let { it.name }
@@ -141,7 +144,7 @@ tags:
    // }
    ```
 
-9. 中缀表达式（扩展函数）
+10. 中缀表达式（扩展函数）
 
    使用 `infix` 来扩展函数，比如自定义一个 vs 的中缀表达式：
 
@@ -155,13 +158,13 @@ tags:
    }
    ```
 
-10. `javap [option] *.class` 命令，反编译一个 class 文件，比如：
+11. `javap [option] *.class` 命令，反编译一个 class 文件，比如：
 
-  ```shell
-  javap -c main.class
-  ```
+   ```shell
+   javap -c main.class
+   ```
 
-11. val 变量并不是常量，比如：
+12. val 变量并不是常量，比如：
 
     ```kotlin
     class Person(val birthYear: Int) {
@@ -184,11 +187,11 @@ tags:
     const val a = 0 //const 变量的值必须在编译期间确定下来
     ```
 
-12. 空安全：
+13. 空安全：
 
     1. 局部变量可以通过上下文推断，来避免多次判空。
 
-13. 内联函数
+14. 内联函数
 
     1. 内联函数可以中断外部调用的。
 
@@ -234,7 +237,7 @@ tags:
 
     3. 使用 `noinline` 拒绝内联。
 
-14. 泛型：
+15. 泛型：
 
     1. 可以指定多个约束条件，比如
 
@@ -266,28 +269,28 @@ tags:
 
     5. 补充知识：在 Java 中，使用 `? extends`定义的比如`List<? extends ClassA> list`是不能被修改的，理解为只读。而 `? super`则是只能写入而不能读。
 
-15. 协程
+16. 协程
 
     1. 挂起函数 suspend ：非阻塞式的挂起。相当于到新线程去执行任务了。
     2. `runBlocking {}` 是 阻塞的
     3.  `withContext {}`可以切到指定线程去执行代码，结束后再切回来
     4. Channel：用于2个协程之间的通信。一般可以使用 produce 来使用。
 
-16. BIO NIO：
+17. BIO NIO：
 
     1. Blocking IO / Non-blocking IO
     2. Kotlin 在对'流'操作有语法糖 -- use, 使用者不用写那么多的 try catch，而且不用管 流的close。
     3. 对象缓存池：DefaultPool，缓存对象。
 
-17. KTX 扩展库: https://developer.android.com/kotlin/ktx
+18. KTX 扩展库: https://developer.android.com/kotlin/ktx
 
     1. 对 LinearLayout  遍历子 View：`linearlayout.foreach { }`
     2. 判断字符串是否只包含数字：`"12343.22333.223".isDigistsOnly()`
 
-18. 修改 Kotlin 类名：
+19. 修改 Kotlin 类名：
 
     1. `@file:JvmName("name")`：指定类名。
     2. `@file:JvmMultifileClass`：当类名冲突的时候，会合并为一个 class。
 
-19. 其他
+20. 其他
 
