@@ -2,295 +2,307 @@
 layout: post
 title: Kotlin 学习笔记
 subtitle: 让我们荡起双桨
+catalog: true
 tags:
-    - notes
+    - 笔记
 ---
 
 笔记来自学习[即刻时间 -- 快速上手Kotlin开发](https://time.geekbang.org/course/intro/105)，[扔物线 -- 码上开学](https://kaixue.io/kotlin-generics/)，等等...
 
+### 内联函数
 
-1. 内联函数：一般在比较小的方法上，以及频繁使用的方法上使用，而不会随意使用。
+1. 一般在比较小的方法上，以及频繁使用的方法上使用，而不会随意使用。
 
-2. 访问修饰符：internal ==> 模块内可访问修饰符，但在 java 中，会被直接当作 public 使用的。
-
-3. 黑科技（使用 Kotlin 的特性，不让 Java  调用）：
+2. 内联函数可以中断外部调用的。
 
    ```kotlin
-   // 在kotlin中是合法的
-   fun `1234`(){//是无法兼容 Java 的
-       println("function 1234")
+   fun test() {
+     inlineTest {
+       println("hello1")
+       return
+       println("hello2")
+     }
+     println("hello3")
    }
    
-   //在 kotlin 中可以调用
-   fun main(args: Array<String>) {
-       `1234`()
+   private inline fun inlineTest(l: () -> Unit) {
+     l.invoke()
+     return
    }
    
-   // 在Java中不能调用
-   public void test() {
-   	1234();//ERROR: 不合法调用
-   	`1234`();//ERROR: 不合法调用
-   }
+   // 输出： 
+   // hello1
    ```
 
-4. 单例：除了 object 来声明单例外，还可以使用伴生对象来实现：
+3. 使用 `crossinline`不允许 inline 的 Lambda 中断外部函数的执行。
 
    ```kotlin
-   class Single private constructor() {
-   	companion object {
-   		fun get(): Single {
-   			return Holder.instance
-   		}
+   fun test() {
+   	inlineTest {
+   		println("hello1")
+   		return@inlineTest
+   		println("hello2")
    	}
-   	private object Holder {
-   		val instance = Single()
-   	}
+   	println("hello3")
    }
    
-   fun main(args: Array<String>) {
-   	val single = Single.get()
+   private inline fun inlineTest(crossinline l: () -> Unit) {
+   	l.invoke()
+   	return
    }
+   //输出：
+   //hello1
+   //hello3
    ```
 
-   伴生对象，可以理解为 匿名内部单例。
+4. 使用 `noinline` 拒绝内联。
 
-5. 动态代理：使用 by 关键字就可以实现，参考：[极客时间 -- Kotlin](https://time.geekbang.org/course/detail/105-10673)。 Kotlin的动态代理会在编译以后转换成静态代理去调用，所以比Java通过反射的方式效率要高。
+### 访问修饰符
+* internal : 模块内可访问修饰符，但在 java 中，会被直接当作 public 使用的。
 
-   ❓究竟何为动态代理，如何使用Kotlin动态代理实现 Retrofit❓
 
-6. ❗️❗️❗️密闭类完全可以代替枚举类，并且实现***更多的扩展***，比如
+### 黑科技（使用 Kotlin 的特性，不让 Java  调用）
 
    ```kotlin
-   sealed class SuperCommand {
-       object UP : SuperCommand()
-       object LEFT : SuperCommand()
-       object RIGHT : SuperCommand()
-       object DOWN : SuperCommand()
-       class SPEED(var speed: Int) : SuperCommand()
-   }
-   
-   fun exec(tank: Tank, superCommand: SuperCommand) {
-       return when (superCommand) {
-           SuperCommand.UP -> tank.turnUp()
-           SuperCommand.LEFT -> tank.turnLeft()
-           SuperCommand.RIGHT -> tank.turnRight()
-           SuperCommand.DOWN -> tank.turnDown()
-           is SuperCommand.SPEED -> tank.speed(superCommand.speed)
-       }
-   }
+// 在kotlin中是合法的
+fun `1234`(){//是无法兼容 Java 的
+  println("function 1234")
+}
+
+//在 kotlin 中可以调用
+fun main(args: Array<String>) {
+  `1234`()
+}
+
+// 在Java中不能调用
+public void test() {
+  1234();//ERROR: 不合法调用
+  `1234`();//ERROR: 不合法调用
+}
    ```
 
-7. 解构：自动将一个对象拆解成若干个变量分别赋值
+### 单例
+除了 object 来声明单例外，还可以使用伴生对象来实现：
 
    ```kotlin
-   class User(private val name: String, private val age: Int) {
-       operator fun component1() = age
-       operator fun component2() = name
-   }
-   
-   fun main(args: Array<String>) {
-       val user = User("Hurshi", 18)
-       val (name, age) = user
-       println("name = $name")
-       println("age = $age")
-   }
-   
-   //常用场景:
-   fun main(args: Array<String>) {
-       val map = mapOf<String,String>("name" to "Hurshi","age" to "18")
-       for((key,value) in map){
-           println("key = $key ,value = $value")
-       }
-   }
-   ```
-
-8. 循环：
-
-   ```kotlin
-   for(i in 1..10) { println(i) }
-   for(i in 1 until 10) { println(i) }
-   for(i in 10 downTo 1) { println(i) }
-   for(i in 1..10 step 2) { println(i) }
-   repeat(10) { println(it) }
-   
-   //循环 list with index
-   list.forEachIndexed { index, value -> println("[$index,$value]") }
-   for ((index, value) in list.withIndex()) {
-     println("[$index,$value]")
-   }
-   ```
-
-9. 作用域函数
-
-   ```kotlin
-   val letResult: String = user.let { it.name }
-   val runResult: String = user.run { this.name }
-   
-   val alsoResult: User = user.also { it.name }
-   val applyResult: User = user.apply { this.name }
-   
-   user.takeIf { it.name.isNotEmpty() }?.also { println(it.name) }
-   
-   with(user){
-     this.name = "haha"
-     this.age = 18
-     this.phone = 111111
-   }
-   // with 可以替换为：
-   // user.let { 
-   //   it.name = "haha"
-   //   it.age = 18
-   //   it.phone = 111111
-   // }
-   ```
-
-10. 中缀表达式（扩展函数）
-
-   使用 `infix` 来扩展函数，比如自定义一个 vs 的中缀表达式：
-
-   ```kotlin
-   infix fun Int.vs(num:Int):Int{
-       return if(this<num)-1 else if(this>num) 1 else 0
-   }
-   
-   fun main(args: Array<String>) {
-     println(100 vs 90)
-   }
-   ```
-
-11. `javap [option] *.class` 命令，反编译一个 class 文件，比如：
-
-   ```shell
-   javap -c main.class
-   ```
-
-12. val 变量并不是常量，比如：
-
-    ```kotlin
-    class Person(val birthYear: Int) {
-        var currentYear = 2019
-        val age: Int
-            get() = currentYear - birthYear
+class Single private constructor() {
+  companion object {
+    fun get(): Single {
+      return Holder.instance
     }
-    
-    fun main(args: Array<String>) {
-        val person = Person(1990)
-        println(person.age)
-        person.currentYear = 2020
-        println(person.age)
-    }
-    ```
+  }
+  private object Holder {
+    val instance = Single()
+  }
+}
 
-    如何真正的声明一个常量？ 
+fun main(args: Array<String>) {
+  val single = Single.get()
+}
+   ```
 
-    ```kotlin
-    const val a = 0 //const 变量的值必须在编译期间确定下来
-    ```
+### 伴生对象
 
-13. 空安全：
+* 可以理解为 匿名内部单例。
 
-    1. 局部变量可以通过上下文推断，来避免多次判空。
+### 动态代理
 
-14. 内联函数
+* 使用 by 关键字就可以实现，参考：[极客时间 -- Kotlin](https://time.geekbang.org/course/detail/105-10673)。 Kotlin的动态代理会在编译以后转换成静态代理去调用，所以比Java通过反射的方式效率要高。
 
-    1. 内联函数可以中断外部调用的。
+* ❓究竟何为动态代理，如何使用Kotlin动态代理实现 Retrofit❓
 
-       ```kotlin
-       fun test() {
-           inlineTest {
-               println("hello1")
-               return
-             	println("hello2")
-           }
-           println("hello3")
-       }
-       
-       private inline fun inlineTest(l: () -> Unit) {
-           l.invoke()
-           return
-       }
-       
-       // 输出： 
-       // hello1
-       ```
+### 密闭类
+完全可以代替枚举类，并且实现***更多的扩展***，比如
 
-    2. 使用 `crossinline`不允许 inline 的 Lambda 中断外部函数的执行。
+   ```kotlin
+sealed class SuperCommand {
+  object UP : SuperCommand()
+  object LEFT : SuperCommand()
+  object RIGHT : SuperCommand()
+  object DOWN : SuperCommand()
+  class SPEED(var speed: Int) : SuperCommand()
+}
 
-       ```kotlin
-       fun test() {
-           inlineTest {
-               println("hello1")
-               return@inlineTest
-               println("hello2")
-           }
-           println("hello3")
-       }
-       
-       private inline fun inlineTest(crossinline l: () -> Unit) {
-           l.invoke()
-           return
-       }
-       //输出：
-       //hello1
-       //hello3
-       ```
+fun exec(tank: Tank, superCommand: SuperCommand) {
+  return when (superCommand) {
+    SuperCommand.UP -> tank.turnUp()
+    SuperCommand.LEFT -> tank.turnLeft()
+    SuperCommand.RIGHT -> tank.turnRight()
+    SuperCommand.DOWN -> tank.turnDown()
+    is SuperCommand.SPEED -> tank.speed(superCommand.speed)
+  }
+}
+   ```
 
-    3. 使用 `noinline` 拒绝内联。
+### 解构
+自动将一个对象拆解成若干个变量分别赋值
 
-15. 泛型：
+   ```kotlin
+class User(private val name: String, private val age: Int) {
+  operator fun component1() = age
+  operator fun component2() = name
+}
 
-    1. 可以指定多个约束条件，比如
+fun main(args: Array<String>) {
+  val user = User("Hurshi", 18)
+  val (name, age) = user
+  println("name = $name")
+  println("age = $age")
+}
 
-       ```kotlin
-       //要求 T 同时实现了 Callback 和 Runnable 接口
-       class Test<T> where T  : Callback, T : Runnable {}
-       ```
+//常用场景:
+fun main(args: Array<String>) {
+  val map = mapOf<String,String>("name" to "Hurshi","age" to "18")
+  for((key,value) in map){
+    println("key = $key ,value = $value")
+  }
+}
+   ```
 
-    2. 真泛型：
+### 循环
 
-       ```java
-       // java 的 fromJson:
-       public <T> T fromJson(String json, Class<T> classOfT) throw Json...Exception{}
-       ```
+   ```kotlin
+for(i in 1..10) { println(i) }
+for(i in 1 until 10) { println(i) }
+for(i in 10 downTo 1) { println(i) }
+for(i in 1..10 step 2) { println(i) }
+repeat(10) { println(it) }
 
-       ```kotlin
-       // Kotlin 的 fromJson:
-       inline fun <reified T> Gson.fromJson(json: String): T {
-       	return fromJson(json, T::class.java)
-       }
-       ```
-       
-    3. `out / in`：相当于 java 中的 `<? extends Class>` / `<? super Class>`，理解为：
+//循环 list with index
+list.forEachIndexed { index, value -> println("[$index,$value]") }
+for ((index, value) in list.withIndex()) {
+  println("[$index,$value]")
+}
+   ```
 
-       1. out：只读不可写。
-       2. in：只写不可读。
+### 作用域函数
 
-    4. 类型擦除/类型安全 ？？？
+   ```kotlin
+val letResult: String = user.let { it.name }
+val runResult: String = user.run { this.name }
 
-    5. 补充知识：在 Java 中，使用 `? extends`定义的比如`List<? extends ClassA> list`是不能被修改的，理解为只读。而 `? super`则是只能写入而不能读。
+val alsoResult: User = user.also { it.name }
+val applyResult: User = user.apply { this.name }
 
-16. 协程
+user.takeIf { it.name.isNotEmpty() }?.also { println(it.name) }
 
-    1. 挂起函数 suspend ：非阻塞式的挂起。相当于到新线程去执行任务了。
-    2. `runBlocking {}` 是 阻塞的
-    3.  `withContext {}`可以切到指定线程去执行代码，结束后再切回来
-    4. Channel：用于2个协程之间的通信。一般可以使用 produce 来使用。
+with(user){
+  this.name = "haha"
+  this.age = 18
+  this.phone = 111111
+}
+// with 可以替换为：
+// user.let { 
+//   it.name = "haha"
+//   it.age = 18
+//   it.phone = 111111
+// }
+   ```
 
-17. BIO NIO：
+### 中缀表达式（扩展函数）
 
-    1. Blocking IO / Non-blocking IO
-    2. Kotlin 在对'流'操作有语法糖 -- use, 使用者不用写那么多的 try catch，而且不用管 流的close。
-    3. 对象缓存池：DefaultPool，缓存对象。
+使用 `infix` 来扩展函数，比如自定义一个 vs 的中缀表达式：
 
-18. KTX 扩展库: https://developer.android.com/kotlin/ktx
+   ```kotlin
+infix fun Int.vs(num:Int):Int{
+  return if(this<num)-1 else if(this>num) 1 else 0
+}
 
-    1. 对 LinearLayout  遍历子 View：`linearlayout.foreach { }`
-    2. 判断字符串是否只包含数字：`"12343.22333.223".isDigistsOnly()`
+fun main(args: Array<String>) {
+  println(100 vs 90)
+}
+   ```
 
-19. 修改 Kotlin 类名：
+### 反编译
+`javap [option] *.class` 命令，反编译一个 class 文件，比如：
 
-    1. `@file:JvmName("name")`：指定类名。
-    2. `@file:JvmMultifileClass`：当类名冲突的时候，会合并为一个 class。
+  ```shell
+javap -c main.class
+  ```
 
-20. 其他
+### val 变量并不是常量
+
+   ```kotlin
+class Person(val birthYear: Int) {
+  var currentYear = 2019
+  val age: Int
+  get() = currentYear - birthYear
+}
+
+fun main(args: Array<String>) {
+  val person = Person(1990)
+  println(person.age)
+  person.currentYear = 2020
+  println(person.age)
+}
+   ```
+
+   如何真正的声明一个常量？ 
+
+   ```kotlin
+const val a = 0 //const 变量的值必须在编译期间确定下来
+   ```
+
+### 空安全
+
+1. 局部变量可以通过上下文推断，来避免多次判空。
+
+### 泛型
+
+1. 可以指定多个约束条件，比如
+
+   ```kotlin
+   //要求 T 同时实现了 Callback 和 Runnable 接口
+   class Test<T> where T  : Callback, T : Runnable {}
+   ```
+
+2. 真泛型：
+
+   ```kotlin
+   // java 的 fromJson:
+   public <T> T fromJson(String json, Class<T> classOfT) throw Json...Exception{}
+   ```
+
+   ```kotlin
+   // Kotlin 的 fromJson:
+   inline fun <reified T> Gson.fromJson(json: String): T {
+   return fromJson(json, T::class.java)
+   }
+   ```
+
+3. `out / in`：相当于 java 中的 `<? extends Class>` / `<? super Class>`，理解为：
+
+   1. out：只读不可写。
+   2. in：只写不可读。
+
+4. 类型擦除/类型安全 ？？？
+
+5. 补充知识：在 Java 中，使用 `? extends`定义的比如`List<? extends ClassA> list`是不能被修改的，理解为只读。而 `? super`则是只能写入而不能读。
+
+### 协程
+
+1. 挂起函数 suspend ：非阻塞式的挂起。相当于到新线程去执行任务了。
+2. `runBlocking {}` 是 阻塞的
+3.  `withContext {}`可以切到指定线程去执行代码，结束后再切回来
+4. Channel：用于2个协程之间的通信。一般可以使用 produce 来使用。
+
+### BIO NIO
+
+1. Blocking IO / Non-blocking IO
+2. Kotlin 在对'流'操作有语法糖 -- use, 使用者不用写那么多的 try catch，而且不用管 流的close。
+3. 对象缓存池：DefaultPool，缓存对象。
+
+### KTX 扩展库
+
+1. https://developer.android.com/kotlin/ktx
+2. 对 LinearLayout  遍历子 View：`linearlayout.foreach { }`
+3. 判断字符串是否只包含数字：`"12343.22333.223".isDigistsOnly()`
+
+### 修改 Kotlin 类名
+
+1. `@file:JvmName("name")`：指定类名。
+2. `@file:JvmMultifileClass`：当类名冲突的时候，会合并为一个 class。
+
+
+
 
