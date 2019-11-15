@@ -108,6 +108,8 @@ rm -rf .idea/ && rm -rf .gradle/ && find ./ -name '*.iml' -type f -delete
 
 4. 参考：[Android性能优化典范 - 第6季](http://hukai.me/android-performance-patterns-season-6/)
 
+#### 技巧6: 某些文件 AS 不识别
 
+> Preferences => File Types => 在 Recognized File Types 中找到 Text => 在 Registered Patterns 中找到有异常的文件 => 把它删掉把它删掉
 
    
