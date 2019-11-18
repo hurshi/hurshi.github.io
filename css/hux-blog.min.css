@@ -3,6 +3,27 @@
  * Copyright 2018 Hux <huxpro@gmail.com>
  */
 
+@font-face {
+  font-family: 'TencentSansw3';
+  src: url('../fonts/TencentSans-W3.eot');
+  src: url('../fonts/TencentSans-W3?#iefix') format('embedded-opentype'),
+       url('../fonts/TencentSans-W3.woff') format('woff'),
+       url('../fonts/TencentSans-W3.ttf') format('truetype'),
+       url('../fonts/TencentSans-W3.svg#webfont34M5alKg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'TencentSansw7';
+  src: url('../fonts/TencentSans-W7.eot');
+  src: url('../fonts/TencentSans-W7?#iefix') format('embedded-opentype'),
+       url('../fonts/TencentSans-W7.woff') format('woff'),
+       url('../fonts/TencentSans-W7.ttf') format('truetype'),
+       url('../fonts/TencentSans-W7.svg#webfont34M5alKg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @media (min-width:1200px) {
 	.post-container,.sidebar-container {
 		padding-right: 5%
@@ -660,7 +681,14 @@ p {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-family: 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+	font-family: 'TencentSansw3','IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+	line-height: 1.7;
+	line-height: 1.1;
+	font-weight: 700
+}
+
+h1,h2 {
+	font-family:'TencentSansw7','IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
 	line-height: 1.7;
 	line-height: 1.1;
 	font-weight: 700
@@ -936,7 +964,7 @@ code,kbd,pre,samp {
 	left: 0;
 	width: 100%;
 	z-index: 3;
-	font-family:'IBM Plex Sans', -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+	font-family:'TencentSansw7','IBM Plex Sans', -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
 	line-height: 1.7
 }
 
@@ -1166,7 +1194,7 @@ code,kbd,pre,samp {
 }
 
 .intro-header .post-heading .subheading {
-	font-family: 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+	font-family: 'TencentSansw3','IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
 	line-height: 1.7;
 	font-size: 17px;
 	line-height: 1.4;
@@ -1176,7 +1204,7 @@ code,kbd,pre,samp {
 }
 
 .intro-header .post-heading .meta {
-	font-family:'IBM Plex Sans', Lora,'Times New Roman',serif;
+	font-family:'TencentSansw3','IBM Plex Sans', Lora,'Times New Roman',serif;
 	font-style: italic;
 	font-weight: 300;
 	font-size: 16px
@@ -1421,7 +1449,7 @@ form .row:first-child .floating-label-form-group {
 }
 
 .pager li>a,.pager li>span {
-	font-family: 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+	font-family: 'TencentSansw3','IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
 	line-height: 1.7;
 	text-transform: uppercase;
 	font-size: 13px;
