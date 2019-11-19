@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Q_A
+title: Android Q-A
 subtitle: 自问自答
 catalog: true
 tags:
@@ -138,3 +138,33 @@ dialog.getWindow().setType(WindowManager.LayoutParams.TPYE_SYSTEM_ALERT)
 4. 参考：[Android Binder原理（一）学习Binder前必须要了解的知识点](http://liuwangshu.cn/framework/binder/1-intro.html)
 
 
+
+
+
+
+
+##### 半成品
+
+1. view 的绘制
+2. 事件分发
+3. 几种锁，死锁怎么办，如何设置超时时长
+4. 多线程
+5. recycleView  https://github.com/AlanCheen/Flap
+6. mvp vs mvvm
+7. retrofit 源码，缓存
+8. okhttp 线程池
+9. 模块化开发如何快速独立编译开发
+10. 注解如何支持增量编译的
+11. Arouter startActivity vs Intent
+12. recycleview 分割线，图片回收，拖拽
+13. kotlin 派生对象，单利，空指针，可见性，inline函数
+14. http header等
+15. java 高可用线程安全缓存，线程挂起，
+16. Glide 缓存
+17. Mediaplayer 的状态，Mediaplayer 的 IlligleException
+18. Android MultiDex 的优化
+19. binder
+20. concurrenthashmap： http://www.jasongj.com/java/concurrenthashmap/
+21. Arouter 源码
+22. JessYan 的一些文章：https://url.cn/5RdH9ti
+23. 动态代理 和 反射
