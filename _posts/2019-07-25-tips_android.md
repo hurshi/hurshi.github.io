@@ -175,3 +175,8 @@ tags:
    ```
 
 2. 参考：[Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&mid=403263974&idx=1&sn=b0315addbc47f3c38e65d9c633a12cd6&scene=0&key=41ecb04b051110037b72d05bba1495f596e848534fc51afe877d63329a16dc24dc1d3606aaaba3745a05bfdb8c624a74&ascene=0&uin=Mjc3OTU3Nzk1&devicetype=iMac+MacBookPro10%2C1+OSX+OSX+10.10.5+build%2814F27%29&version=11020201&pass_ticket=kK4%2F6316QveG8O0vFtthPfBeKkNjyaL4HapsUAokHL5mUKCgI5hKTIKMc3D8uyqk)
+
+#### 技巧10：FragmentTransaction.commit 的正确姿势
+
+1. 不要随意使用 `FragmentTransaction.commitAllowingStateLoss()`来代替。
+2. 推荐在 `onPostResume()` ,`onResumeFragment()`或`onCreate()`中调用 commit。

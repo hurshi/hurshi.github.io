@@ -97,3 +97,7 @@ curl qrenco.de/HELLO_WORLD
 * 清空输入内容：` ⌘ + Delete`
 * 下载页：` ⌘ + Shift + J`
 * 跳转到 To p / Bottom：`HOME` / `End`
+
+### MagicMouse 卡滞延迟
+
+* 系统偏好设置 → 通用 → 取消 “允许在这台Mac 和 iCloud 设备之间使用接力“
