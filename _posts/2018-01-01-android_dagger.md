@@ -57,5 +57,60 @@ tags:
   }
   ```
 
+### Component 和 Subcomponent
+
+> Subcomponent 和我们理解的 “依赖”/“继承” 都不一样，最好不要进行类比以免入沟。
+
+1. `dependencies` 
+
+   ```kotlin
+   @AppScope
+   @Component
+   interface AppComponent {
+   	fun proviceCar() : Car
+   }
+   
+   @ActivityScope
+   @Component(dependencies = [AppComponent::class])
+   interface ActivityComponent{}
+   ```
+
+   `AppComponent` 不会感知到依赖它的 component 的存在，而 `ActivityComponent`不能直接访问 `AppComponent` 中的内容，需要 `AppComponent` 主动暴露出来才行。
+
+2. `Subcomponent`
+
+   `Subcomponent` 是对一个已知的 `AppComponent` 的扩展，需要将 `Subcomponent` 显示的写入到 `AppComponent` 中去；`Subcomponent`可以访问 `AppComponent` 中的所有内容。
+
+   ```kotlin
+   @AppScope
+   @Component(modules = [SubcomponentsModule::class])
+   interface AppComponent {
+   	fun activityComponent(): ActivityComponent.Factory
+   }
+   
+   @Module(subcomponents = ActivityComponent::class)
+   class SubcomponentsModule {
+     
+   }
+   
+   @ActivityScope
+   @Subcomponent
+   interface ActivityComponent {
+     
+     @Subcomponent.Factory
+     interface Factory {
+       fun create(): ActivityComponent
+     }
+   }
+   ```
+
+   
+
+   
+
+   
+
+3. 
+
 * 参考： [Dagger 2 annotations: can @Provides and @Binds coexist?](https://android.jlelse.eu/dagger-2-annotations-can-provides-and-binds-coexist-88079b9f6d27)
 
