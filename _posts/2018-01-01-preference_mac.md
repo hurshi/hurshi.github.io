@@ -96,7 +96,7 @@ tags:
     [alias]
         st = status
         co = checkout
-        pl = pull
+        pl = pull --rebase
         ps = push
         br = branch
         cm = commit -m
