@@ -47,6 +47,31 @@ GlobalScope.launch(Dispatchers.Main) {
    scope.launch { ... }
    scope.cancel() // 取消所有使用 scope 的协程
    ```
+   
+3. 协程被取消后，任务并没有中止
+
+   1. 在协程任务中判断当前协程是否被取消：
+
+      ```kotlin
+      GlobalScope.launch {
+          var i = 0
+          while (i < 5 && isActive) { // isActive 判断当前协程是否被取消
+              println("say hello $i times")
+          }
+      }
+      ```
+
+   2. 使用默认的检查器：
+
+      ```kotlin
+      GlobalScope.launch {
+          var i = 0
+          while (i < 5) {
+              ensureActive() // 如果当前协程处于 cancel 状态，则直接抛 CancellationException 
+              println("say hello $i times")
+          }
+      }
+      ```
 
 ### 在 Architecture components 中使用协程
 
