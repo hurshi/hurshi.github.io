@@ -1,0 +1,726 @@
+{
+  "BTTPresetName" : "bettertouchtool_FEBB840E-7518-49E3-86DC-33EE6CE63F56",
+  "BTTPresetUUID" : "5619ECDA-A32D-4D48-B5B6-E5278D347C42",
+  "BTTPresetContent" : [
+    {
+      "BTTAppBundleIdentifier" : "com.google.android.studio-EAP",
+      "BTTAppName" : "Android Studio",
+      "BTTAppProcessMatchMode" : 2,
+      "BTTAppProcessName" : "Android Studio",
+      "BTTTriggers" : [
+        {
+          "BTTTriggerType" : 40,
+          "BTTTriggerTypeDescription" : "1 Finger Touch Top",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "56,55,103",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 0,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : 624,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,25",
+          "BTTTriggerOnDown" : 1,
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : -1,
+          "BTTShortcutModifierKeys" : -1,
+          "BTTOrder" : 0,
+          "BTTKeySequence" : {
+            "BTTPauseBetween" : 0.29999999999999999,
+            "BTTKeyCount" : 4,
+            "BTTKeySequenceDownKeys" : [
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYDown" : 1,
+                "BTTKEYOrderRelevant" : 1,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYDown" : 1,
+                "BTTKEYOrderRelevant" : 1,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              }
+            ],
+            "BTTKeySequenceMixedKeys" : [
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYDown" : 1,
+                "BTTKEYOrderRelevant" : 1,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYDown" : 1,
+                "BTTKEYOrderRelevant" : 1,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              }
+            ],
+            "BTTKeySequenceUpKeys" : [
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              }
+            ]
+          }
+        },
+        {
+          "BTTTriggerType" : 36,
+          "BTTTriggerTypeDescription" : "1 Finger Swipe Right",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,30",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 75,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : 35,
+          "BTTTriggerTypeDescription" : "1 Finger Swipe Left",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,33",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 74,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,58,49",
+          "BTTAdditionalConfiguration" : "524288",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 44,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 1,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier" : "com.google.android.studio",
+      "BTTAppName" : "Android Studio",
+      "BTTAppSpecificSettings" : {
+
+      },
+      "BTTTriggers" : [
+        {
+          "BTTTriggerType" : 35,
+          "BTTTriggerTypeDescription" : "1 Finger Swipe Left",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,33",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 1,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : 36,
+          "BTTTriggerTypeDescription" : "1 Finger Swipe Right",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,30",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 2,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : 40,
+          "BTTTriggerTypeDescription" : "1 Finger Touch Top",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "56,55,103",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 0,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 624,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,25",
+          "BTTTriggerOnDown" : 1,
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : -1,
+          "BTTShortcutModifierKeys" : -1,
+          "BTTOrder" : 0,
+          "BTTKeySequence" : {
+            "BTTPauseBetween" : 0.29999999999999999,
+            "BTTKeyCount" : 4,
+            "BTTKeySequenceDownKeys" : [
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYDown" : 1,
+                "BTTKEYOrderRelevant" : 1,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYDown" : 1,
+                "BTTKEYOrderRelevant" : 1,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              }
+            ],
+            "BTTKeySequenceMixedKeys" : [
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYDown" : 1,
+                "BTTKEYOrderRelevant" : 1,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYDown" : 1,
+                "BTTKEYOrderRelevant" : 1,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              }
+            ],
+            "BTTKeySequenceUpKeys" : [
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              },
+              {
+                "BTTKEYCode" : 59,
+                "BTTKEYRequired" : 1,
+                "BTTKEYTime" : 566893952
+              }
+            ]
+          }
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,58,49",
+          "BTTAdditionalConfiguration" : "524288",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 44,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 1,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier" : "com.microsoft.VSCode",
+      "BTTAppName" : "Code",
+      "BTTAppProcessMatchMode" : 2,
+      "BTTAppProcessName" : "Code",
+      "BTTTriggers" : [
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "58,56,3",
+          "BTTAdditionalConfiguration" : "1179658",
+          "BTTTriggerOnDown" : 1,
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 3,
+          "BTTShortcutModifierKeys" : 1179648,
+          "BTTOrder" : 0
+        },
+        {
+          "BTTTriggerType" : 6,
+          "BTTTriggerTypeDescription" : "2 Finger Swipe Right",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,56,27",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 2,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : 5,
+          "BTTTriggerTypeDescription" : "2 Finger Swipe Left",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,27",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 1,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : 40,
+          "BTTTriggerTypeDescription" : "1 Finger Touch Top",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "96",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 0,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier" : "BT.G",
+      "BTTAppName" : "Global",
+      "BTTAppSpecificSettings" : {
+
+      },
+      "BTTTriggers" : [
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 49,
+          "BTTPredefinedActionName" : "Open Application \/ File \/ Apple Script …",
+          "BTTLaunchPath" : "file:\/\/\/Applications\/Sublime%20Text.app",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 53,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 10,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,55,13",
+          "BTTAdditionalConfiguration" : "524288",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 0,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 11,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 36,
+          "BTTTriggerTypeDescription" : "1 Finger Swipe Right",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,48",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 3,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 21,
+          "BTTTriggerTypeDescription" : "3 Finger Click",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : 1,
+          "BTTPredefinedActionName" : "Middle Click",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 8,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 35,
+          "BTTTriggerTypeDescription" : "1 Finger Swipe Left",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,56,48",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 2,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 49,
+          "BTTPredefinedActionName" : "Open Application \/ File \/ Apple Script …",
+          "BTTLaunchPath" : "file:\/\/\/Applications\/Android%20Studio.app",
+          "BTTAdditionalConfiguration" : "1048576",
+          "BTTTriggerOnDown" : 1,
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 19,
+          "BTTShortcutModifierKeys" : 1048576,
+          "BTTOrder" : 2
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 59,
+          "BTTPredefinedActionName" : "Open URL \/ Open URL With Selection",
+          "BTTOpenURL" : "https:\/\/cn.bing.com\/",
+          "BTTAdditionalConfiguration" : "524288",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 18,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 5,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 49,
+          "BTTPredefinedActionName" : "Open Application \/ File \/ Apple Script …",
+          "BTTLaunchPath" : "file:\/\/\/Applications\/iTerm.app",
+          "BTTAdditionalConfiguration" : "1048576",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 53,
+          "BTTShortcutModifierKeys" : 1048576,
+          "BTTOrder" : 8,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 14,
+          "BTTTriggerTypeDescription" : "Pinch In",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : 12,
+          "BTTPredefinedActionName" : "Zoom Out",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 5,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 113,
+          "BTTTriggerTypeDescription" : "TipTap Left (1 Finger Fix)",
+          "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,56,48",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 0,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 10,
+          "BTTPredefinedActionName" : "Open Finder",
+          "BTTAdditionalConfiguration" : "524288",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 49,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 0,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 114,
+          "BTTTriggerTypeDescription" : "TipTap Right (1 Finger Fix)",
+          "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "59,48",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 1,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 116,
+          "BTTPredefinedActionName" : "Lookup Word Under Cursor",
+          "BTTAdditionalConfiguration" : "262144",
+          "BTTTriggerOnDown" : 0,
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 0,
+          "BTTShortcutModifierKeys" : 262144,
+          "BTTOrder" : 12
+        },
+        {
+          "BTTTriggerType" : 15,
+          "BTTTriggerTypeDescription" : "Pinch Out",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : 11,
+          "BTTPredefinedActionName" : "Zoom In",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 4,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 59,
+          "BTTPredefinedActionName" : "Open URL \/ Open URL With Selection",
+          "BTTOpenURL" : "http:\/\/developer.android.com\/index.html",
+          "BTTAdditionalConfiguration" : "1048584",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 21,
+          "BTTShortcutModifierKeys" : 1048576,
+          "BTTOrder" : 4,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 59,
+          "BTTPredefinedActionName" : "Open URL \/ Open URL With Selection",
+          "BTTOpenURL" : "http:\/\/translate.google.cn",
+          "BTTAdditionalConfiguration" : "524320",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 20,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 7,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 8,
+          "BTTTriggerTypeDescription" : "2 Finger Swipe Down",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : 49,
+          "BTTPredefinedActionName" : "Open Application \/ File \/ Apple Script …",
+          "BTTLaunchPath" : "file:\/\/localhost\/Applications\/Google%20Chrome.app",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 7,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,50",
+          "BTTAdditionalConfiguration" : "524288",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 48,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 9,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 11,
+          "BTTTriggerTypeDescription" : "3 Finger Swipe Right",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,30",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 1,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 40,
+          "BTTTriggerTypeDescription" : "1 Finger Touch Top",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,15",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 9,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 10,
+          "BTTTriggerTypeDescription" : "3 Finger Swipe Left",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,33",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 0,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 59,
+          "BTTPredefinedActionName" : "Open URL \/ Open URL With Selection",
+          "BTTOpenURL" : "http:\/\/dict.youdao.com\/w\/%@",
+          "BTTAdditionalConfiguration" : "524288",
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 19,
+          "BTTShortcutModifierKeys" : 524288,
+          "BTTOrder" : 6,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : 7,
+          "BTTTriggerTypeDescription" : "2 Finger Swipe Up",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,13",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 6,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : ""
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 49,
+          "BTTPredefinedActionName" : "Open Application \/ File \/ Apple Script …",
+          "BTTLaunchPath" : "file:\/\/\/Applications\/Google%20Chrome.app",
+          "BTTAdditionalConfiguration" : "1048576",
+          "BTTTriggerOnDown" : 1,
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 18,
+          "BTTShortcutModifierKeys" : 1048576,
+          "BTTOrder" : 1
+        },
+        {
+          "BTTTriggerType" : -1,
+          "BTTTriggerClass" : "BTTTriggerTypeKeyboardShortcut",
+          "BTTPredefinedActionType" : 49,
+          "BTTPredefinedActionName" : "Open Application \/ File \/ Apple Script …",
+          "BTTLaunchPath" : "file:\/\/\/Applications\/IntelliJ%20IDEA%20CE.app",
+          "BTTAdditionalConfiguration" : "1048576",
+          "BTTTriggerOnDown" : 1,
+          "BTTEnabled" : 1,
+          "BTTShortcutKeyCode" : 20,
+          "BTTShortcutModifierKeys" : 1048576,
+          "BTTOrder" : 3
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier" : "com.jetbrains.intellij.ce",
+      "BTTAppName" : "IntelliJ IDEA CE",
+      "BTTAppSpecificSettings" : {
+
+      },
+      "BTTTriggers" : [
+        {
+          "BTTTriggerType" : 36,
+          "BTTTriggerTypeDescription" : "1 Finger Swipe Right",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,30",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 81,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : 40,
+          "BTTTriggerTypeDescription" : "1 Finger Touch Top",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "56,55,103",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 79,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        },
+        {
+          "BTTTriggerType" : 35,
+          "BTTTriggerTypeDescription" : "1 Finger Swipe Left",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTPredefinedActionType" : -1,
+          "BTTPredefinedActionName" : "No Action",
+          "BTTShortcutToSend" : "55,33",
+          "BTTEnabled" : 1,
+          "BTTOrder" : 80,
+          "BTTIconData" : "",
+          "BTTAlternateIconData" : "",
+          "BTTKeySequence" : {
+
+          }
+        }
+      ]
+    }
+  ],
+  "BTTPresetSnapAreas" : [
+
+  ]
+}

@@ -24,7 +24,7 @@ tags:
 
   * 网站：https://folivora.ai/
   * 介绍：解锁鼠标键盘各种姿势
-  * 我的配置：[偏好设置文件](/assets/bettertouchtool_20181224.json ':ignore')
+  * 我的配置：[偏好设置文件](/assets/bettertouchtool_20201103.json ':ignore')
 
 * **Alfred**
   
