@@ -18,40 +18,40 @@ tags:
 ### Etag / If-None-Match 策略
 <div class="mermaid">
 sequenceDiagram
-	rect rgba(100,200,100,.4)
-		客户端->>+服务器: http 请求
-		服务器-->>-客户端: ETag: W/"5886c231-8d9"
-	end
-	rect rgba(200,200,150,.3)
-		客户端->>+服务器: If-None-Match:  W/"5886c231-8d9"
-		participant 服务器
-		Note right of 服务器: 通过 If-None-Match 判断客户端缓存是否过期
-		alt 过期
-		服务器->>客户端:返回200 + 新数据
-		else 没过期
-		服务器->>-客户端:返回 304.
-		end
-	end
+  Note right of 客户端: 第一次请求：
+  客户端->>+服务器: http 请求
+  服务器-->>-客户端: ETag: W/"5886c231-8d9"
+  Note right of 客户端: 第二次请求：
+  客户端->>+服务器: If-None-Match:  W/"5886c231-8d9"
+  loop 判断客户端缓存是否过期
+		服务器->>服务器: 通过 If-None-Match 判断客户端缓存是否过期
+  end
+  alt 过期
+  服务器-->>客户端:返回200 + 新数据
+  else 没过期
+  服务器-->>-客户端:返回 304.
+  end
 </div>
+
 
 ### Last-Modified / If-Modified-Since 策略
 <div class="mermaid">
 sequenceDiagram
-	rect rgba(100,200,100,.4)
-		客户端->>+服务器: http 请求
-		服务器-->>-客户端: Last-Modified: Tue, 24 Jan 2020 02:02:02 GMT
-	end
-	rect rgba(200,200,150,.3)
-		客户端->>+服务器: If-Modified-Since: Tue, 24 Jan 2020 02:02:02 GMT
-		participant 服务器
-		Note right of 服务器: 通过 If-Modified-Since 判断客户端缓存是否过期
-		alt 过期
-		服务器->>客户端:返回200 + 新数据
-		else 没过期
-		服务器->>-客户端:返回 304.
-		end
-	end
+  Note right of 客户端: 第一次请求：
+  客户端->>+服务器: http 请求
+  服务器-->>-客户端: Last-Modified: Tue, 24 Jan 2020 02:02:02 GMT
+  Note right of 客户端: 第二次请求：
+  客户端->>+服务器: If-Modified-Since: Tue, 24 Jan 2020 02:02:02 GMT
+  loop 判断客户端缓存是否过期
+		服务器->>服务器: 通过 If-Modified-Since 判断客户端缓存是否过期
+  end
+  alt 过期
+  服务器-->>客户端:返回200 + 新数据
+  else 没过期
+  服务器-->>-客户端:返回 304.
+  end
 </div>
+
 
 
 
