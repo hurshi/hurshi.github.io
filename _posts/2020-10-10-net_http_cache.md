@@ -16,7 +16,7 @@ tags:
 
 
 ### Etag / If-None-Match 策略
-```mermaid
+<div class="mermaid">
 sequenceDiagram
 	rect rgba(100,200,100,.4)
 		客户端->>+服务器: http 请求
@@ -32,10 +32,10 @@ sequenceDiagram
 		服务器->>-客户端:返回 304.
 		end
 	end
-```
+</div>
 
 ### Last-Modified / If-Modified-Since 策略
-```mermaid
+<div class="mermaid">
 sequenceDiagram
 	rect rgba(100,200,100,.4)
 		客户端->>+服务器: http 请求
@@ -51,7 +51,7 @@ sequenceDiagram
 		服务器->>-客户端:返回 304.
 		end
 	end
-```
+</div>
 
 
 
