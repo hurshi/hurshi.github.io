@@ -91,9 +91,18 @@ volatile 防止指令重排，保证有序性。
 ### 参考
 
 * [JVM内存结构 VS Java内存模型 VS Java对象模型](https://www.hollischuang.com/archives/2509)
+
 * [深入理解JVM(一)——JVM内存模型](https://blog.csdn.net/qq_34173549/article/details/79612540)
+
 * [再问你Java内存模型的时候别再给我讲堆栈方法区了](https://www.hollischuang.com/archives/3781)
+
 * [再有人问你Java内存模型是什么，就把这篇文章发给他。](https://www.hollischuang.com/archives/2550)
+
 * [Java虚拟机是如何执行线程同步的](https://www.hollischuang.com/archives/1876)
+
 * [细说Java多线程之内存可见性](https://www.imooc.com/learn/352)
+
 * [深入理解多线程（二）—— Java的对象模型](https://www.hollischuang.com/archives/1910)
+
+* [ **JVM调优总结（一）-- 一些概念**](https://www.iteye.com/blog/pengjiaheng-518623)
+
