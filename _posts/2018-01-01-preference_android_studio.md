@@ -26,6 +26,7 @@ tags:
 |`command + F3`||查看所有书签|
 |`command + y`||预览光标所在的方法|
 |`command + option + T`||`surround with`|
+|`control + Enter`|Show Intention Actions|查看AS提供的推荐写法|
 
 ### 代码模版
 添加模版 `Preferences -> Live Templates ->`
@@ -40,11 +41,11 @@ tags:
 
 ### 常用设置
 1. **设置`command + 左键`和`control + 左键`同样功能**
-  `Preferences -> Keymap -> Search for "Declaration" -> double click on the search result under the  'Navigate' category ->
+    `Preferences -> Keymap -> Search for "Declaration" -> double click on the search result under the  'Navigate' category ->
      select "add mouse shortcut" -> and press the shortcut buttons (eg. CMD+left click) and save it`
 
 2. **提示不区分大小写，因此我们要改成大小写不敏感**
-  `Preferences -> code completion -> case sensitive completion: none;`
+    `Preferences -> code completion -> case sensitive completion: none;`
 
 3. **自动`import`**
    `Preference -> auto import`
@@ -85,4 +86,12 @@ tags:
 
 1. `Analyze -> Inspect Code...`
 2. `Analyze -> Code Cleanup...`
+
+### 自动 UML 图
+
+1. `Android Studio` -> `Plugins` -> `Sketch It!`
+2. `Android Studio` -> `Plugins` -> `PlantUML integration`
+3. `Restart Android Studio`
+4. `Terminal` -> `brew install graphviz`
+5. `Android Studio` -> `Tools` -> `Sketch It!`
 
