@@ -144,8 +144,7 @@ dialog.getWindow().setType(WindowManager.LayoutParams.TPYE_SYSTEM_ALERT)
 4. 对 SharedPreference  的使用，普遍存在滥用：
    1. 仅保存轻量数据，因为 SharedPreference 会将所有数据读进缓存中去，如果是大量数据会很耗内存；
    2. SharedPreference 中的  commit/apply 方法不能滥用，当需要多次写入时候，尽量复用 commit/apply，而不是每提交一次就 commit/apply 一次；
-
-
+5. 参考：[字节跳动 - 剖析 SharedPreference apply 引起的 ANR 问题](https://mp.weixin.qq.com/s/IFgXvPdiEYDs5cDriApkxQ)
 
 ##### 半成品
 
