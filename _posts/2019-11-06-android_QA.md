@@ -137,9 +137,13 @@ dialog.getWindow().setType(WindowManager.LayoutParams.TPYE_SYSTEM_ALERT)
    2. Binder 是 C/S 架构，职责明确，架构清晰，稳定性高。
 4. 参考：[Android Binder原理（一）学习Binder前必须要了解的知识点](http://liuwangshu.cn/framework/binder/1-intro.html)
 
-
-
-
+### SharedPreference 导致 ANR 的原因
+1. SharedPreference 的 apply 方法，目的在于将数据持久化到本地；虽然持久化数据的操作在异步线程，但它会创建等待锁放到 QueuedWork 中，等持久化到本地执行完毕才会释放；
+2. 而 `Activity#onStop`,`Service#onStop` 等方法都会调用 `QueuedWork.waitToFinish` 方法，导致阻塞，从而导致 ANR；
+3. 猜测 SharedPreference 的意图，应该在于保证本地持久化数据的完整性以及可靠性，所以使用了 QueuedWork；
+4. 对 SharedPreference  的使用，普遍存在滥用：
+   1. 仅保存轻量数据，因为 SharedPreference 会将所有数据读进缓存中去，如果是大量数据会很耗内存；
+   2. SharedPreference 中的  commit/apply 方法不能滥用，当需要多次写入时候，尽量复用 commit/apply，而不是每提交一次就 commit/apply 一次；
 
 
 
