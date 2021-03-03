@@ -126,6 +126,10 @@ tags:
     alias fq="export all_proxy=socks5://127.0.0.1:8889;export http_proxy=http://127.0.0.1:8888;export https_proxy=http://127.0.0.1:8888;"
     alias bfq="unset ALL_PROXY"
     alias brew="fq;brew"
+    
+    export LSCOLORS="GxFxCxDxBxegedabagaced"
+    export CLICOLOR=1
+    alias ls='ls -G'
     ```
 
 * 反编译工具
