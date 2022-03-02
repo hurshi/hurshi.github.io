@@ -2,6 +2,7 @@
 layout: post
 title: C++入门
 catalog: true
+subtitle:   "C++不完全入门指南"
 tags:
     - cpp
 ---
@@ -47,29 +48,20 @@ tags:
 
 
 
-
 ## 指针
 
-* Demo：
+* 指针与引用
 
   ```cpp
-  #include <iostream>
-  int main()
-  {
-  	using namespace std;
-  	
-  	int a = 1;
-  	int *b = &a;
-  	int &c = a;
-  	int d = a;
+  int a = 1;
+  int *b = &a;
+  int &c = a;
+  int d = a;
   
-  	cout << "a:" << a << "," << &a << endl;
-  	cout << "b:" << b << "," << &b << endl;
-  	cout << "c:" << c << "," << &c << endl;
-  	cout << "d:" << d << "," << &d << endl;
-  
-  	return 0;
-  }
+  cout << "a:" << a << "," << &a << endl;
+  cout << "b:" << b << "," << &b << endl;
+  cout << "c:" << c << "," << &c << endl;
+  cout << "d:" << d << "," << &d << endl;
   
   //输出
   a:1,0x7ffeee1a2378
@@ -78,29 +70,46 @@ tags:
   d:1,0x7ffeee1a2364
   ```
 
-* 指针与取址
+  * pointer & reference：
 
-  1. pointer & reference：
-  
      ![](/img/posts/cpp_induction/pointer.png){:width="70%"}
-  
-  2. `int *`: 定义一个指针类型：
+
+  * `int *`: 定义一个指针类型：
 
      1. 它的值只能存地址，不能存其他的东西；
      2. 地址只能保存在 `*x` 这样的对象中，其他比如 `int c = &a`是<font color=red>不合法</font>的
      3. `*b`自己也有地址，可以通过 `&b` 获取；
-  
-  3. `int &`：定义了一个引用类型
-  
+
+  * `int &`：定义了一个引用类型
+
      1. `int &c = a` 表示 c 共用 a 的地址，c 的值当然也是和 a 是一致的；
      2. `int &c = a` 和 `int d = a`的区别在于：
         1. d 的地址和 a 的地址是不一样的，只是它们的值是一样的而已，相当于是个拷贝；
         2. 但 c 完全等价于 a；
+
+* 取值与取址
+
+  ```cpp
+  int a = 10086;
+  // 取址：
+  int *b = &a;
+  // 取值：
+  int c = *b;
   
+  cout << "a:" << a << endl;
+  cout << "b:" << b << endl;
+  cout << "c:" << c << endl;
+  
+  // 输出：
+  a:10086
+  b:0x7ffeef8b33d8
+  c:10086
+  ```
+
 * 经典用法：
 
   1. 参数传递
-  
+
      ```cpp
      // 使用 &value，传递的是引用，而非拷贝；
      void swap(int &val1, int &val2)
@@ -110,7 +119,7 @@ tags:
      	val2 = temp;
      }
      ```
-  
+
   2. 
 
 ## 作用域
