@@ -30,11 +30,16 @@ tags:
 >    | LLVM-GCC      | GCC          | LLVM                     |
 >    | LLVM Compiler | Clang        | LLVM                     |
 >
-> 1. 现状：
+> 1. 比较：
 >
->       1. Apple 目前使用的是 LLVM 编译器，早已摒弃 GCC；
->   1. Android NDK 从 r17 开始不再支持 GCC，而使用 Clang；
->    
+>       1. GCC vs Clang：
+>       
+>          1. Apple 目前使用的是 LLVM 编译器，早已摒弃 GCC；
+>          2. Android NDK 从 r17 开始不再支持 GCC，而使用 Clang；
+>       
+>       2. CMake vs ndk-build：
+>       
+>          功能相近，CMake 更具有普遍性，所以优先使用 CMake；
 >
 
 ## 编译
@@ -45,8 +50,6 @@ tags:
    clang --version
    clang *.cpp -lstdc++;./a.out
    ```
-
-
 
 ## 指针
 
@@ -118,9 +121,43 @@ tags:
      	val1 = val2;
      	val2 = temp;
      }
+     
+     // 新建一个 “int 指针”类型的 val1,并把需要的地址“拷贝到 val1 的值”中：
+     void swap(int *val1, int *val2);
      ```
 
-  2. 
+  2. 数组
+
+     ```cpp
+     // 数组作为参数传递，传的是首地址，所有会丢失“size”；因此一般需要传 size;
+     void exeIntArray(int *array, int size)
+     {
+     	int firstEle = array[0];
+     	int firstEle2 = *array;
+     	int secEle = array[1];
+       // 地址先往后挪一个，然后取址；结果和 array[1] 是等价的（前提是地址的连续性，所以对 数组 和 vector 是可用的，对 list 不能这么干）：
+     	int secEle2 = *(array + 1); 
+     
+     	cout << "firstEle : " << firstEle << endl;
+     	cout << "firstEle2: " << firstEle2 << endl;
+     	cout << "secEle : " << secEle << endl;
+     	cout << "secEle2: " << secEle2 << endl;
+     }
+     
+     int main()
+     {
+     	int intArray[] = {1, 2, 3, 4};
+     	exeIntArray(intArray, 4);
+     }
+     
+     // 输出：
+     firstEle : 1
+     firstEle2: 1
+     secEle : 2
+     secEle2: 2
+     ```
+
+     
 
 ## 作用域
 
@@ -148,13 +185,8 @@ tags:
       248037413
       ```
 
-2. 
-
       
 
-      
-
-   
 
 
 
