@@ -2,6 +2,7 @@
 layout: post
 title: 树莓派耍耍
 catalog: true
+subtitle: 初始化树莓派
 tags:
     - 操作系统
     - shell
