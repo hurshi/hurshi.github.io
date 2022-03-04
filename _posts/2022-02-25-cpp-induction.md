@@ -20,27 +20,26 @@ tags:
 | [CMake](https://www.hahack.com/codes/cmake/) |                           | 高级编译配置工具，用来定制整个编译流程<br>1. 编写 CMake 配置文件 CMakeLists.txt <br>2. 执行 CMakeLists.txt 生成 makefile（平台相关）<br>3. 使用 make 命令，配合 makefile 编译代码 |
 | ndk-build                                    |                           | 与 CMake 类似，也是系统构建工具；                            |
 
-> 1. 传统编译器的工作原理：
->
->    传统编译器的工作原理基本上都是三段式的，可以分为前端（Frontend）、优化器（Optimizer）、后端（Backend）。前端负责解析源代码，检查语法错误，并将其翻译为抽象的语法树（Abstract Syntax Tree）。优化器对这一中间代码进行优化，试图使代码更高效。后端则负责将优化器优化后的中间代码转换为目标机器的代码，这一过程后端会最大化的利用目标机器的特殊指令，以提高代码的性能。
->
->    | 编译器        | 前端（解析） | 后端（优化，生成机器码） |
->    | ------------- | ------------ | ------------------------ |
->    | GCC 4.2       | GCC          | GCC                      |
->    | LLVM-GCC      | GCC          | LLVM                     |
->    | LLVM Compiler | Clang        | LLVM                     |
->
-> 1. 比较：
->
->       1. GCC vs Clang：
->       
->          1. Apple 目前使用的是 LLVM 编译器，早已摒弃 GCC；
->          2. Android NDK 从 r17 开始不再支持 GCC，而使用 Clang；
->       
->       2. CMake vs ndk-build：
->       
->          功能相近，CMake 更具有普遍性，所以优先使用 CMake；
->
+##### 传统编译器的工作原理：
+
+传统编译器的工作原理基本上都是三段式的，可以分为前端（Frontend）、优化器（Optimizer）、后端（Backend）。前端负责解析源代码，检查语法错误，并将其翻译为抽象的语法树（Abstract Syntax Tree）。优化器对这一中间代码进行优化，试图使代码更高效。后端则负责将优化器优化后的中间代码转换为目标机器的代码，这一过程后端会最大化的利用目标机器的特殊指令，以提高代码的性能。
+
+| 编译器        | 前端（解析） | 后端（优化，生成机器码） |
+| ------------- | ------------ | ------------------------ |
+| GCC 4.2       | GCC          | GCC                      |
+| LLVM-GCC      | GCC          | LLVM                     |
+| LLVM Compiler | Clang        | LLVM                     |
+
+##### 比较：
+
+1. GCC vs Clang：
+
+   1. Apple 目前使用的是 LLVM 编译器，早已摒弃 GCC；
+   2. Android NDK 从 r17 开始不再支持 GCC，而使用 Clang；
+
+2. CMake vs ndk-build：
+
+   功能相近，CMake 更具有普遍性，所以优先使用 CMake；
 
 ## 编译
 
@@ -70,7 +69,7 @@ tags:
 
 ## 指针
 
-* 指针与引用
+##### 指针与引用
 
   ```cpp
   int a = 1;
@@ -107,7 +106,7 @@ tags:
         1. d 的地址和 a 的地址是不一样的，只是它们的值是一样的而已，相当于是个拷贝；
         2. 但 c 完全等价于 a；
 
-* 取值与取址
+##### 取值与取址
 
   ```cpp
   int a = 10086;
@@ -126,7 +125,7 @@ tags:
   c:10086
   ```
 
-* 经典用法：
+##### 经典用法：
 
   1. 参数传递
 
