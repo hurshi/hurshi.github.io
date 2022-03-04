@@ -20,7 +20,7 @@ tags:
 | [CMake](https://www.hahack.com/codes/cmake/) |                           | 高级编译配置工具，用来定制整个编译流程<br>1. 编写 CMake 配置文件 CMakeLists.txt <br>2. 执行 CMakeLists.txt 生成 makefile（平台相关）<br>3. 使用 make 命令，配合 makefile 编译代码 |
 | ndk-build                                    |                           | 与 CMake 类似，也是系统构建工具；                            |
 
-##### 传统编译器的工作原理：
+##### 传统编译器的工作原理
 
 传统编译器的工作原理基本上都是三段式的，可以分为前端（Frontend）、优化器（Optimizer）、后端（Backend）。前端负责解析源代码，检查语法错误，并将其翻译为抽象的语法树（Abstract Syntax Tree）。优化器对这一中间代码进行优化，试图使代码更高效。后端则负责将优化器优化后的中间代码转换为目标机器的代码，这一过程后端会最大化的利用目标机器的特殊指令，以提高代码的性能。
 
@@ -30,7 +30,7 @@ tags:
 | LLVM-GCC      | GCC          | LLVM                     |
 | LLVM Compiler | Clang        | LLVM                     |
 
-##### 比较：
+##### 比较
 
 1. GCC vs Clang：
 
@@ -125,7 +125,7 @@ tags:
   c:10086
   ```
 
-##### 经典用法：
+##### 经典用法
 
   1. 参数传递
 
