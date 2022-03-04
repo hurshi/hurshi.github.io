@@ -130,7 +130,7 @@ tags:
   1. 参数传递
 
      ```cpp
-     // 使用 &value，传递的是引用，而非拷贝；
+     // 👉 使用 &value，传递的是引用，而非拷贝；
      void swap(int &val1, int &val2)
      {
      	int temp = val1;
@@ -138,20 +138,20 @@ tags:
      	val2 = temp;
      }
      
-     // 新建一个 “int 指针”类型的 val1,并把需要的地址“拷贝到 val1 的值”中：
+     // 👉 新建一个 “int 指针”类型的 val1,并把需要的地址“拷贝到 val1 的值”中：
      void swap(int *val1, int *val2);
      ```
 
   2. 数组
 
      ```cpp
-     // 数组作为参数传递，传的是首地址，所有会丢失“size”；因此一般需要传 size;
+     // 👉 数组作为参数传递，传的是首地址，所有会丢失“size”；因此一般需要传 size;
      void exeIntArray(int *array, int size)
      {
      	int firstEle = array[0];
      	int firstEle2 = *array;
      	int secEle = array[1];
-     	// 地址先往后挪一个，然后取址；结果和 array[1] 是等价的（前提是地址的连续性，所以对 数组 和 vector 是可用的，对 list 不能这么干）：
+     	// 👉 地址先往后挪一个，然后取址；结果和 array[1] 是等价的（前提是地址的连续性，所以对 数组 和 vector 是可用的，对 list 不能这么干）：
      	int secEle2 = *(array + 1); 
      
      	cout << "firstEle : " << firstEle << endl;
@@ -175,32 +175,31 @@ tags:
 
 
 
-
 ## 静态持续变量
 
 ```cpp
 ...
-// [外部链接]性[静态]持续性变量；类比于 java 中的 `public static`
-// 会被默认初始化
+// 👉 [外部链接]性[静态]持续性变量；类比于 java 中的 `public static`
+// 👉 会被默认初始化
 int global = 1000; 
 
-// 内部链接性，只有当前文件能访问；类比 java 中的 `private static`
-// 相比于上面的‘外部链接性静态变量’，static 限制了作用域；
-// 会被默认初始化
+// 👉 内部链接性，只有当前文件能访问；类比 java 中的 `private static`
+// 👉 相比于上面的‘外部链接性静态变量’，static 限制了作用域；
+// 👉 会被默认初始化
 static int one_file = 50; 
 
-// 效果和上述 static 一样
+// 👉 效果和上述 static 一样
 const int one_file2 = 100;
 
 void func()
 {
-  // 作用域为局部，无链接性；
-  // 会被初始化为默认值，函数执行完毕不会自动释放内存；
-  // 相比之下，static 改变了内存空间，count 被存储在‘静态存储区’
+  // 👉 作用域为局部，无链接性；
+  // 👉 会被初始化为默认值，函数执行完毕不会自动释放内存；
+  // 👉 相比之下，static 改变了内存空间，count 被存储在‘静态存储区’
   static int count; 
   
-  // 不会被默认初始化
-  // 内存空间在‘栈’中
+  // 👉 不会被默认初始化
+  // 👉 内存空间在‘栈’中
   int llama = 0;
 }
 ...
@@ -214,6 +213,67 @@ void func()
 
 1. 在类声明中定义的变量，函数默认都是 `private` 的;
 2. 在类声明中定义的函数，默认为内联 `inline`函数；
+
+##### Sample
+
+* 示例
+
+  ```cpp
+  // C++ Primer Plus # 370
+  // stock00.h
+  ...
+  class Stock
+  {
+  private: // 👉 默认为 private，所以这个可以省略
+      string _company;
+      double _share_val;
+      void set_tot()
+      {
+          ...
+      }
+  public:
+      // 👉 构造函数，可以添加默认参数，如果没有显式定义，会有默认无参构造函数
+      Stock(const string &company = "Bob", long share_val = 20);
+      void update(double price);
+      // 👉 析构函数
+      ~Stock();
+  };
+  
+  // stock00.cpp
+  // 👉 实现构造函数
+  Stock::Stock(const string &company, long share_val)
+  {
+      ...
+  }
+  
+  void Stock::update(double price)
+  {
+      ...
+  }
+  
+  // 👉 实现析构函数
+  Stock::~Stock()
+  {
+      cout << "bye, stock" << endl;
+  }
+  ```
+
+  ```cpp
+  int main()
+  {
+      // 👉 和 Java 不一样，这样写就已经调用构造函数初始化了；
+      Stock kate; // 调用无参构造函数（如果有的话），或者全部使用默认值
+      kate.show();
+  
+      Stock s = Stock{"CompanyName"};
+    
+      Stock *s2 = new Stock;
+  
+      return 0;
+  }
+  ```
+
+  
 
 
 
