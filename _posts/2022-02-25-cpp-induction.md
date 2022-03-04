@@ -50,6 +50,23 @@ tags:
    clang --version
    clang *.cpp -lstdc++;./a.out
    ```
+   
+1. `#ifndef` (`if not defined`)
+
+   仅当以前没有使用与处理器编译指令`#define`定义名称 `COORDIN_H_` 时，才处理 `#ifndef` 和 `#ifend` 之间的语句。
+   
+   为防止多次 `#include 'coordin.h'`的时候，下面 “something” 被多次定义；
+   
+   ```cpp
+   // C++ Primer Plus # 318
+   // coordin.h
+   #ifndef COORDIN_H_
+   #define COORDIN_H_
+   
+   // something
+   
+   #endif
+   ```
 
 ## 指针
 
@@ -135,7 +152,7 @@ tags:
      	int firstEle = array[0];
      	int firstEle2 = *array;
      	int secEle = array[1];
-       // 地址先往后挪一个，然后取址；结果和 array[1] 是等价的（前提是地址的连续性，所以对 数组 和 vector 是可用的，对 list 不能这么干）：
+     	// 地址先往后挪一个，然后取址；结果和 array[1] 是等价的（前提是地址的连续性，所以对 数组 和 vector 是可用的，对 list 不能这么干）：
      	int secEle2 = *(array + 1); 
      
      	cout << "firstEle : " << firstEle << endl;
@@ -157,39 +174,61 @@ tags:
      secEle2: 2
      ```
 
-     
 
-## 作用域
 
-1. file scope & local scope：
 
-   1. file scope ：会默认初始化；
+## 静态持续变量
 
-   2. local scope：默认不会初始化；
+```cpp
+...
+// [外部链接]性[静态]持续性变量；类比于 java 中的 `public static`
+// 会被默认初始化
+int global = 1000; 
 
-      ```cpp
-      #include <iostream>
-      
-      int fileScope; // 会默认初始化为0；
-      int main()
-      {
-      	using namespace std;
-      	int localScope; // 不会初始化，为野指针；
-      	cout << fileScope << endl;
-      	cout << localScope << endl;
-      	return 0;
-      }
-      
-      // 输出：
-      0
-      248037413
-      ```
+// 内部链接性，只有当前文件能访问；类比 java 中的 `private static`
+// 相比于上面的‘外部链接性静态变量’，static 限制了作用域；
+// 会被默认初始化
+static int one_file = 50; 
 
-      
+// 效果和上述 static 一样
+const int one_file2 = 100;
+
+void func()
+{
+  // 作用域为局部，无链接性；
+  // 会被初始化为默认值，函数执行完毕不会自动释放内存；
+  // 相比之下，static 改变了内存空间，count 被存储在‘静态存储区’
+  static int count; 
+  
+  // 不会被默认初始化
+  // 内存空间在‘栈’中
+  int llama = 0;
+}
+...
+```
+
+
+
+## 类
+
+##### 潜规则
+
+1. 在类声明中定义的变量，函数默认都是 `private` 的;
+2. 在类声明中定义的函数，默认为内联 `inline`函数；
+
+
+
+
+
+
+
+
 
 
 
 
 ### 参考
 
-[LLVM 与 GCC @知乎用户](https://www.zhihu.com/question/20039402/answer/67652398)
+* [LLVM 与 GCC @知乎用户](https://www.zhihu.com/question/20039402/answer/67652398)
+
+* C++ Primer Plus 
