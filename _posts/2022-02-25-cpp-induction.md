@@ -225,7 +225,7 @@ void func()
   class Stock
   {
   private: // 👉 默认为 private，所以这个可以省略
-      string _company;
+      string _company;// 👉 这里是声明，不会初始化
       double _share_val;
       void set_tot()
       {
@@ -234,6 +234,8 @@ void func()
   public:
       // 👉 构造函数，可以添加默认参数，如果没有显式定义，会有默认无参构造函数
       Stock(const string &company = "Bob", long share_val = 20);
+      Stock(Stock &stock);// 👉 ‘复制’构造函数
+      Stock &operator=(const Stock &stock);// 👉 ‘赋值’构造函数
       void update(double price);
       // 👉 析构函数
       ~Stock();
@@ -257,7 +259,7 @@ void func()
       cout << "bye, stock" << endl;
   }
   ```
-
+  
   ```cpp
   int main()
   {
@@ -272,7 +274,7 @@ void func()
       return 0;
   }
   ```
-
+  
   
 
 
