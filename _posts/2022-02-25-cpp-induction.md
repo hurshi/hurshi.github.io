@@ -274,7 +274,36 @@ void func()
   }
   ```
   
+
+##### 虚方法
+
+* 经验：
+
+  1. 如果要在派生类中重新定义基类的方法，通常应将基类方法声明为虚的。这样，程序将根据对象类型（而不是引用或指针的类型）来选择方法版本；
+  2. 为基类声明一个虚**析构函数**也是一种惯例；
+
+* 举例：
+
+  ```cpp
+  class Animal{
+  public:
+      virtual void bark();
+  }
   
+  class Dog{
+  public:
+      virtual void bark();
+  }
+  
+  int main(){
+      Dog dog;
+      dog.bark(); // 调用 Dog 类下的方法（没啥毛病）
+    
+      Animal & dog2 = dog;
+      // 👇 如果 bark 不是虚方法，这里会调用 Animal 中的 bark 方法；
+      dog2.bark(); 
+  }
+  ```
 
 
 
