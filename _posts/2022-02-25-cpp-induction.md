@@ -96,7 +96,7 @@ tags:
   * `int *`: 定义一个指针类型：
 
      1. 它的值只能存地址，不能存其他的东西；
-     2. 地址只能保存在 `*x` 这样的对象中，其他比如 `int c = &a`是<font color=red>不合法</font>的
+     2. 地址只能保存在 `*x` 这样的对象中，其他比如 `int c = &a`是<font color=red>不合法</font>的（由继承带来的强制转换除外）
      3. `*b`自己也有地址，可以通过 `&b` 获取；
 
   * `int &`：定义了一个引用类型
@@ -285,17 +285,20 @@ void func()
 * 举例：
 
   ```cpp
-  class Animal{
+  class Animal
+  {
   public:
       virtual void bark();
   }
   
-  class Dog{
+  class Dog
+  {
   public:
       virtual void bark();
   }
   
-  int main(){
+  int main()
+  {
       Dog dog;
       dog.bark(); // 调用 Dog 类下的方法（没啥毛病）
     
@@ -305,7 +308,25 @@ void func()
   }
   ```
 
+* 注意：
 
+  ```cpp
+  class Parent
+  {
+  public:
+      virtual void say(string msg);
+      virtual void say(int i);
+  }
+  
+  class Child
+  {
+  public:
+      // 👇 会把 Parent 中的所有 say 方法隐藏掉；
+      virtual void say();
+  }
+  ```
+
+  
 
 
 
