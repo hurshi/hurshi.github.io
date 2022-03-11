@@ -206,7 +206,45 @@ void func()
 ...
 ```
 
+## 关键字
 
+##### const
+
+1. ~~指针常量 & 常量指针~~；<font color=red>把这破名字忘了吧，它只会扰乱你</font>
+
+   ```cpp
+   int intValue = 100;
+   int other = 10086;
+   
+   // 👇 *b = xxx 都不被允许
+   const int *b = &intValue;
+   // 👇 c = xxx 都不被允许
+   int *const c = &intValue;
+   
+   *b = other; // 👈 Error
+   b = &other;
+   
+   *c = other;
+   c = &other; // 👈 Error
+   ```
+
+2. const 函数
+
+   ```cpp
+   class C {
+   public:
+       void func1();
+       void func2() const;
+   };
+   
+   int main() {
+       const C c;
+       c.func1(); // 👈 Error
+       c.func2();
+   }
+   ```
+
+   
 
 ## Cpp 类
 
