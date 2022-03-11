@@ -20,7 +20,7 @@ tags:
 | [CMake](https://www.hahack.com/codes/cmake/) |                           | 高级编译配置工具，用来定制整个编译流程<br>1. 编写 CMake 配置文件 CMakeLists.txt <br>2. 执行 CMakeLists.txt 生成 makefile（平台相关）<br>3. 使用 make 命令，配合 makefile 编译代码 |
 | ndk-build                                    |                           | 与 CMake 类似，也是系统构建工具；                            |
 
-##### 传统编译器的工作原理
+##### 编译器的工作原理
 
 传统编译器的工作原理基本上都是三段式的，可以分为前端（Frontend）、优化器（Optimizer）、后端（Backend）。前端负责解析源代码，检查语法错误，并将其翻译为抽象的语法树（Abstract Syntax Tree）。优化器对这一中间代码进行优化，试图使代码更高效。后端则负责将优化器优化后的中间代码转换为目标机器的代码，这一过程后端会最大化的利用目标机器的特殊指令，以提高代码的性能。
 
@@ -43,29 +43,29 @@ tags:
 
 ## 编译
 
-1. 使用 Clang 编译运行：
+##### 使用 Clang
 
-   ```shell
-   clang --version
-   clang *.cpp -lstdc++;./a.out
-   ```
-   
-1. `#ifndef` (`if not defined`)
+```shell
+clang --version
+clang *.cpp -lstdc++;./a.out
+```
 
-   仅当以前没有使用与处理器编译指令`#define`定义名称 `COORDIN_H_` 时，才处理 `#ifndef` 和 `#ifend` 之间的语句。
-   
-   为防止多次 `#include 'coordin.h'`的时候，下面 “something” 被多次定义；
-   
-   ```cpp
-   // C++ Primer Plus # 318
-   // coordin.h
-   #ifndef COORDIN_H_
-   #define COORDIN_H_
-   
-   // something
-   
-   #endif
-   ```
+##### `#ifndef` (`if not defined`)
+
+仅当以前没有使用与处理器编译指令`#define`定义名称 `COORDIN_H_` 时，才处理 `#ifndef` 和 `#ifend` 之间的语句。
+
+为防止多次 `#include 'coordin.h'`的时候，下面 “something” 被多次定义；
+
+```cpp
+// C++ Primer Plus # 318
+// coordin.h
+#ifndef COORDIN_H_
+#define COORDIN_H_
+
+// something
+
+#endif
+```
 
 ## 指针
 
@@ -175,7 +175,9 @@ tags:
 
 
 
-## 静态持续变量
+## 变量
+
+##### 静态持续变量
 
 ```cpp
 ...
@@ -198,7 +200,6 @@ void func()
   // 👇 相比之下，static 改变了内存空间，count 被存储在‘静态存储区’
   static int count; 
   
-  // 👇 不会被默认初始化
   // 👇 内存空间在‘栈’中
   int llama = 0;
 }
@@ -207,7 +208,7 @@ void func()
 
 
 
-## 类
+## Cpp 类
 
 ##### 潜规则
 
@@ -278,12 +279,12 @@ int main()
 
 ## 虚方法
 
-##### 经验：
+##### 经验
 
 1. 如果要在派生类中重新定义基类的方法，通常应将基类方法声明为虚的。这样，程序将根据对象类型（而不是引用或指针的类型）来选择方法版本；
 2. 为基类声明一个虚**析构函数**也是一种惯例；如果基类的析构函数是虚的，调用派生类的析构函数后会自动调用基类的析构函数；
 
-##### 虚方法在派生类中的应用：
+##### 虚方法在派生类中的应用
 
 ```cpp
 class Animal
@@ -309,7 +310,7 @@ int main()
 }
 ```
 
-##### 重载会隐藏基类中的方法：
+##### 重载会隐藏基类中的方法
 
 ```cpp
 class Parent
@@ -327,14 +328,16 @@ public:
 }
 ```
 
-##### 纯虚函数：
+##### 纯虚函数
+
+包含“纯虚函数”的类称为“抽象类”，它不能被初始化；
 
 ```cpp
 // 👇 结尾处为 ‘=0’
 virtual void say() = 0;
 ```
 
-包含“纯虚函数”的类称为“抽象类”，它不能被初始化；
+
 
 
 
