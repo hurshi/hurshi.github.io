@@ -206,6 +206,38 @@ void func()
 ...
 ```
 
+##### 初始化
+
+1. 自定义类型，需要确保<font color=red>每一个</font>构造函数都将对象的<font color=red>每一个</font>成员初始化，<font color=red>即使是没有初始值</font>，这是一个好习惯；
+
+   ```cpp
+   class Point {
+     int x, y; // 👈 有时候会被初始化（为 0），有时候不会。
+   };
+   ...
+   Point p;
+   ```
+
+2. 在构造函数中初始化：
+
+   ```cpp
+   class MyClass {
+   private:
+     std::string name;
+   }
+   
+   // 👎 方法1: 先初始化 name 为默认值, 然后把 _name 赋值给 name;
+   MyClass::MyClass(std::string _name) {
+     name = _name;
+   }
+   // 👍👍 方法2（推荐）:效率比上面的高 
+   MyClass::MyClass(std::string _name) : name(_name) {}
+   ```
+
+   
+
+
+
 ## 关键字
 
 ##### const
@@ -389,5 +421,5 @@ virtual void say() = 0;
 ### 参考
 
 * [LLVM 与 GCC @知乎用户](https://www.zhihu.com/question/20039402/answer/67652398)
-
 * C++ Primer Plus 
+* Effective C++
