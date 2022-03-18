@@ -420,15 +420,50 @@ int main()
    为防止在使用目标变量的时候没有初始化，通用方案是放到函数中：
 
    ```cpp
-   FileSystem& instance(){
-     static FileSystem fs;
-     return fs;
+   // 在 -std=c++11 条件下，是多线程安全的
+   static &Manager instance(){
+     static Manager mg;
+     return mg;
    }
    ```
 
+## QA
 
+1. 下面例子中，析构函数会被调用几次？
 
+   ```cpp
+   #include <iostream>
+   
+   using namespace std;
+   
+   class P16 {
+   public:
+       ~P16() { cout << "P16 destroy" << endl; }
+   };
+   
+   inline P16 getP16() {
+       P16 p1;
+       return p1;
+   }
+   
+   int main() {
+       P16 pMain = getP16();
+       cout << &pMain << endl;
+   }
+   ```
 
+   > 如果直接运行，析构函数会调用一次，那是因为被编译器优化了；
+   >
+   > 关闭优化`-fno-elide-constructors`，再运行：
+   >
+   > ```cpp
+   > ➜ P16 destroy
+   > ➜ P16 destroy
+   > ➜ 0x7ffee2f88088
+   > ➜ P16 destroy
+   > ```
+   >
+   > 可以在这里查看优化前的代码：https://cppinsights.io
 
 ### 参考
 
