@@ -175,72 +175,14 @@ clang *.cpp -lstdc++;./a.out
 
 
 
-## 变量
-
-##### 静态持续变量
-
-```cpp
-...
-// 👇 [外部链接]性[静态]持续性变量；类比于 java 中的 `public static`
-// 👇 会被默认初始化
-int global = 1000; 
-
-// 👇 内部链接性，只有当前文件能访问；类比 java 中的 `private static`
-// 👇 相比于上面的‘外部链接性静态变量’，static 限制了作用域；
-// 👇 会被默认初始化
-static int one_file = 50; 
-
-// 👇 效果和上述 static 一样
-const int one_file2 = 100;
-
-void func()
-{
-  // 👇 作用域为局部，无链接性；
-  // 👇 会被初始化为默认值，函数执行完毕不会自动释放内存；
-  // 👇 相比之下，static 改变了内存空间，count 被存储在‘静态存储区’
-  static int count; 
-  
-  // 👇 内存空间在‘栈’中
-  int llama = 0;
-}
-...
-```
-
-##### 初始化
-
-1. 自定义类型，需要确保<font color=red>每一个</font>构造函数都将对象的<font color=red>每一个</font>成员初始化，<font color=red>即使是没有初始值</font>，这是一个好习惯；
-
-   ```cpp
-   class Point {
-     int x, y; // 👈 有时候会被初始化（为 0），有时候不会。
-   };
-   ...
-   Point p;
-   ```
-
-2. 在构造函数中初始化：
-
-   ```cpp
-   class MyClass {
-   private:
-     std::string name;
-   }
-   
-   // 👎 方法1: 先初始化 name 为默认值, 然后把 _name 赋值给 name;
-   MyClass::MyClass(std::string _name) {
-     name = _name;
-   }
-   // 👍👍 方法2（推荐）:效率比上面的高 
-   MyClass::MyClass(std::string _name) : name(_name) {}
-   ```
-
-   
-
-
 
 ## 关键字
 
 ##### const
+
+> 编译器：你想要你就说呀，你不说我怎么只要你想要不想要；
+>
+> 尽可能用 const，让编译器帮你尽量避免错误；
 
 1. ~~指针常量 & 常量指针~~；<font color=red>把这破名字忘了吧，它只会扰乱你</font>
 
@@ -276,7 +218,54 @@ void func()
    }
    ```
 
+
+##### static
+
+1. 静态持续变量
+
+   ```cpp
+   ...
+   // 👇 [外部链接]性[静态]持续性变量；类比于 java 中的 `public static`
+   // 👇 会被默认初始化
+   int global = 1000; 
    
+   // 👇 内部链接性，只有当前文件能访问；类比 java 中的 `private static`
+   // 👇 相比于上面的‘外部链接性静态变量’，static 限制了作用域；
+   // 👇 会被默认初始化
+   static int one_file = 50; 
+   
+   // 👇 效果和上述 static 一样
+   const int one_file2 = 100;
+   
+   void func()
+   {
+     // 👇 作用域为局部，无链接性；
+     // 👇 会被初始化为默认值，函数执行完毕不会自动释放内存；
+     // 👇 相比之下，static 改变了内存空间，count 被存储在‘静态存储区’
+     static int count; 
+     
+     // 👇 内存空间在‘栈’中
+     int llama = 0;
+   }
+   ...
+   ```
+
+2. Singleton
+
+   为防止在使用目标变量的时候没有初始化，通用方案是放到函数中：
+
+   ```cpp
+   FileSystem& instance(){
+     static FileSystem fs;
+     return fs;
+   }
+   ```
+
+   
+
+
+
+
 
 ## Cpp 类
 
@@ -347,67 +336,98 @@ int main()
 }
 ```
 
-## 虚方法
+## 函数
 
-##### 经验
+##### 构造函数
 
-1. 如果要在派生类中重新定义基类的方法，通常应将基类方法声明为虚的。这样，程序将根据对象类型（而不是引用或指针的类型）来选择方法版本；
-2. 为基类声明一个虚**析构函数**也是一种惯例；如果基类的析构函数是虚的，调用派生类的析构函数后会自动调用基类的析构函数；
+1. 自定义类，需要确保<font color=red>每一个</font>构造函数都将对象的<font color=red>每一个</font>成员初始化，<font color=red>即使是没有初始值</font>，这是一个好习惯；
 
-##### 虚方法在派生类中的应用
+   ```cpp
+   class Point {
+     int x, y; // 👈 有时候会被初始化（为 0），有时候不会。
+   };
+   ...
+   Point p;
+   ```
 
-```cpp
-class Animal
-{
-public:
-    virtual void bark();
-}
+2. 在构造函数中初始化：
 
-class Dog
-{
-public:
-    virtual void bark();
-}
+   ```cpp
+   class MyClass {
+   private:
+     std::string name;
+     std::int index;
+   }
+   
+   // 👎 方法1: 先初始化 name 为默认值, 然后把 _name 赋值给 name;
+   MyClass::MyClass(std::string _name) {
+     name = _name;
+   }
+   // 👍👍 方法2（推荐）:效率比上面的高 
+   // 初始化顺序以定义顺序为准，而不是这里‘初值列’中的顺序
+   MyClass::MyClass(std::string _name) : name(_name), index() {} // 👈 如‘index’，即使是空的，也要初始化；
+   ```
+   
 
-int main()
-{
-    Dog dog;
-    dog.bark(); // 调用 Dog 类下的方法（没啥毛病）
-  
-    Animal & dog2 = dog;
-    // 👇 如果 bark 不是虚方法，这里会调用 Animal 中的 bark 方法；
-    dog2.bark(); 
-}
-```
+##### 虚函数
 
-##### 重载会隐藏基类中的方法
+1. 经验：
 
-```cpp
-class Parent
-{
-public:
-    virtual void say(string msg);
-    virtual void say(int i);
-}
+   1. 如果要在派生类中重新定义基类的方法，通常应将基类方法声明为虚的。这样，程序将根据对象类型（而不是引用或指针的类型）来选择方法版本；
+   2. 为基类声明一个虚**析构函数**也是一种惯例；如果基类的析构函数是虚的，调用派生类的析构函数后会自动调用基类的析构函数；
 
-class Child
-{
-public:
-    // 👇 会把 Parent 中的所有 say 方法隐藏掉；
-    virtual void say();
-}
-```
+2. 虚方法在派生类中的应用
 
-##### 纯虚函数
+   ```cpp
+   class Animal
+   {
+   public:
+       virtual void bark();
+   }
+   
+   class Dog
+   {
+   public:
+       virtual void bark();
+   }
+   
+   int main()
+   {
+       Dog dog;
+       dog.bark(); // 调用 Dog 类下的方法（没啥毛病）
+     
+       Animal & dog2 = dog;
+       // 👇 如果 bark 不是虚方法，这里会调用 Animal 中的 bark 方法；
+       dog2.bark(); 
+   }
+   ```
 
-包含“纯虚函数”的类称为“抽象类”，它不能被初始化；
+3. 重载会隐藏基类中的方法
 
-```cpp
-// 👇 结尾处为 ‘=0’
-virtual void say() = 0;
-```
+   ```cpp
+   class Parent
+   {
+   public:
+       virtual void say(string msg);
+       virtual void say(int i);
+   }
+   
+   class Child
+   {
+   public:
+       // 👇 会把 Parent 中的所有 say 方法隐藏掉；
+       virtual void say();
+   }
+   ```
 
+4. 纯虚函数
 
+   包含“纯虚函数”的类称为“抽象类”，它不能被初始化；
+
+   ```cpp
+   // 👇 结尾处为 ‘=0’
+   virtual void say() = 0;
+   ```
 
 
 

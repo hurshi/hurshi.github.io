@@ -70,6 +70,10 @@ tags:
 7. **显示内存信息**
 
    `Preference -> Appearance -> Show memory indicator`
+   
+7. 一键“同意”所有 License
+
+   `  yes | ${sdk}/cmdline-tools/latest/bin/sdkmanager --licenses`
 
 
 ### 断点
