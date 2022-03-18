@@ -176,166 +176,6 @@ clang *.cpp -lstdc++;./a.out
 
 
 
-## 关键字
-
-##### const
-
-> 编译器：你想要你就说呀，你不说我怎么只要你想要不想要；
->
-> 尽可能用 const，让编译器帮你尽量避免错误；
-
-1. ~~指针常量 & 常量指针~~；<font color=red>把这破名字忘了吧，它只会扰乱你</font>
-
-   ```cpp
-   int intValue = 100;
-   int other = 10086;
-   
-   // 👇 *b = xxx 都不被允许
-   const int *b = &intValue;
-   // 👇 c = xxx 都不被允许
-   int *const c = &intValue;
-   
-   *b = other; // 👈 Error
-   b = &other;
-   
-   *c = other;
-   c = &other; // 👈 Error
-   ```
-
-2. const 函数
-
-   ```cpp
-   class C {
-   public:
-       void func1();
-       void func2() const;
-   };
-   
-   int main() {
-       const C c;
-       c.func1(); // 👈 Error
-       c.func2();
-   }
-   ```
-
-
-##### static
-
-1. 静态持续变量
-
-   ```cpp
-   ...
-   // 👇 [外部链接]性[静态]持续性变量；类比于 java 中的 `public static`
-   // 👇 会被默认初始化
-   int global = 1000; 
-   
-   // 👇 内部链接性，只有当前文件能访问；类比 java 中的 `private static`
-   // 👇 相比于上面的‘外部链接性静态变量’，static 限制了作用域；
-   // 👇 会被默认初始化
-   static int one_file = 50; 
-   
-   // 👇 效果和上述 static 一样
-   const int one_file2 = 100;
-   
-   void func()
-   {
-     // 👇 作用域为局部，无链接性；
-     // 👇 会被初始化为默认值，函数执行完毕不会自动释放内存；
-     // 👇 相比之下，static 改变了内存空间，count 被存储在‘静态存储区’
-     static int count; 
-     
-     // 👇 内存空间在‘栈’中
-     int llama = 0;
-   }
-   ...
-   ```
-
-2. Singleton
-
-   为防止在使用目标变量的时候没有初始化，通用方案是放到函数中：
-
-   ```cpp
-   FileSystem& instance(){
-     static FileSystem fs;
-     return fs;
-   }
-   ```
-
-   
-
-
-
-
-
-## Cpp 类
-
-##### 潜规则
-
-1. 在类声明中定义的变量，函数默认都是 `private` 的;
-2. 在类声明中定义的函数，默认为内联 `inline`函数；
-2. 在构造函数中使用了 `new` ，一般来说都需要**显式**定义析构函数，复制构造函数，赋值运算符。
-4. 在继承场景中，调用派生类的函数：
-   1. 如果是析构函数，会自动调用基类；
-   2. 如果是构造函数，如果没有指定则调用默认无参构造函数；
-
-##### 代码示例
-
-```cpp
-// C++ Primer Plus # 370
-// stock00.h
-...
-class Stock
-{
-private: // 👈 默认为 private，所以这个可以省略
-    string _company;// 👈 这里是声明，不会初始化
-    double _share_val;
-    void set_tot()
-    {
-        ...
-    }
-public:
-    // 👇 构造函数，可以添加默认参数，如果没有显式定义，会有默认无参构造函数
-    Stock(const string &company = "Bob", long share_val = 20);
-    Stock(Stock &stock);// 👈 ‘复制’构造函数
-    Stock &operator=(const Stock &stock);// 👈 ‘赋值’构造函数
-    void update(double price);
-    ~Stock();// 👈 析构函数
-};
-
-// stock00.cpp
-// 👇 实现构造函数
-Stock::Stock(const string &company, long share_val)
-{
-    ...
-}
-
-void Stock::update(double price)
-{
-    ...
-}
-
-// 👇 实现析构函数
-Stock::~Stock()
-{
-    cout << "bye, stock" << endl;
-}
-```
-
-```cpp
-int main()
-{
-    // 👇 和 Java 不一样，这样写就已经调用构造函数初始化了；
-    Stock kate; // 调用无参构造函数（如果有的话），或者全部使用默认值
-    kate.show();
-
-    Stock s = Stock{"CompanyName"};
-  
-    Stock *s2 = new Stock;
-
-    return 0;
-}
-```
-
 ## 函数
 
 ##### 构造函数
@@ -432,7 +272,159 @@ int main()
 
 
 
+## Cpp 类
 
+##### 潜规则
+
+1. 在类声明中定义的变量，函数默认都是 `private` 的;
+2. 在类声明中定义的函数，默认为内联 `inline`函数；
+2. 在构造函数中使用了 `new` ，一般来说都需要**显式**定义析构函数，复制构造函数，赋值运算符。
+4. 在继承场景中，调用派生类的函数：
+   1. 如果是析构函数，会自动调用基类；
+   2. 如果是构造函数，如果没有指定则调用默认无参构造函数；
+
+##### 代码示例
+
+```cpp
+// C++ Primer Plus # 370
+// stock00.h
+...
+class Stock
+{
+private: // 👈 默认为 private，所以这个可以省略
+    string _company;// 👈 这里是声明，不会初始化
+    double _share_val;
+    void set_tot()
+    {
+        ...
+    }
+public:
+    // 👇 构造函数，可以添加默认参数，如果没有显式定义，会有默认无参构造函数
+    Stock(const string &company = "Bob", long share_val = 20);
+    Stock(Stock &stock);// 👈 ‘复制’构造函数
+    Stock &operator=(const Stock &stock);// 👈 ‘赋值’构造函数
+    void update(double price);
+    ~Stock();// 👈 析构函数
+};
+
+// stock00.cpp
+// 👇 实现构造函数
+Stock::Stock(const string &company, long share_val)
+{
+    ...
+}
+
+void Stock::update(double price)
+{
+    ...
+}
+
+// 👇 实现析构函数
+Stock::~Stock()
+{
+    cout << "bye, stock" << endl;
+}
+```
+
+```cpp
+int main()
+{
+    // 👇 和 Java 不一样，这样写就已经调用构造函数初始化了；
+    Stock kate; // 调用无参构造函数（如果有的话），或者全部使用默认值
+    kate.show();
+
+    Stock s = Stock{"CompanyName"};
+  
+    Stock *s2 = new Stock;
+
+    return 0;
+}
+```
+
+## 关键字
+
+##### const
+
+> 编译器：你想要你就说呀，你不说我怎么只要你想要不想要；
+>
+> 尽可能用 const，让编译器帮你尽量避免错误；
+
+1. ~~指针常量 & 常量指针~~；<font color=red>把这破名字忘了吧，它只会扰乱你</font>
+
+   ```cpp
+   int intValue = 100;
+   int other = 10086;
+   
+   // 👇 *b = xxx 都不被允许
+   const int *b = &intValue;
+   // 👇 c = xxx 都不被允许
+   int *const c = &intValue;
+   
+   *b = other; // 👈 Error
+   b = &other;
+   
+   *c = other;
+   c = &other; // 👈 Error
+   ```
+
+2. const 函数
+
+   ```cpp
+   class C {
+   public:
+       void func1();
+       void func2() const;
+   };
+   
+   int main() {
+       const C c;
+       c.func1(); // 👈 Error
+       c.func2();
+   }
+   ```
+
+
+##### static
+
+1. 静态持续变量
+
+   ```cpp
+   ...
+   // 👇 [外部链接]性[静态]持续性变量；类比于 java 中的 `public static`
+   // 👇 会被默认初始化
+   int global = 1000; 
+   
+   // 👇 内部链接性，只有当前文件能访问；类比 java 中的 `private static`
+   // 👇 相比于上面的‘外部链接性静态变量’，static 限制了作用域；
+   // 👇 会被默认初始化
+   static int one_file = 50; 
+   
+   // 👇 效果和上述 static 一样
+   const int one_file2 = 100;
+   
+   void func()
+   {
+     // 👇 作用域为局部，无链接性；
+     // 👇 会被初始化为默认值，函数执行完毕不会自动释放内存；
+     // 👇 相比之下，static 改变了内存空间，count 被存储在‘静态存储区’
+     static int count; 
+     
+     // 👇 内存空间在‘栈’中
+     int llama = 0;
+   }
+   ...
+   ```
+
+2. Singleton
+
+   为防止在使用目标变量的时候没有初始化，通用方案是放到函数中：
+
+   ```cpp
+   FileSystem& instance(){
+     static FileSystem fs;
+     return fs;
+   }
+   ```
 
 
 
