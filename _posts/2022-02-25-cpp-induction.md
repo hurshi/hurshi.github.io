@@ -133,9 +133,9 @@ clang *.cpp -lstdc++;./a.out
      // 👇 使用 &value，传递的是引用，而非拷贝；
      void swap(int &val1, int &val2)
      {
-     	int temp = val1;
-     	val1 = val2;
-     	val2 = temp;
+         int temp = val1;
+         val1 = val2;
+         val2 = temp;
      }
      
      // 👇 新建一个 “int 指针”类型的 val1,并把需要的地址“拷贝到 val1 的值”中：
@@ -148,22 +148,22 @@ clang *.cpp -lstdc++;./a.out
      // 👇 数组作为参数传递，传的是首地址，所有会丢失“size”；因此一般需要传 size;
      void exeIntArray(int *array, int size)
      {
-     	int firstEle = array[0];
-     	int firstEle2 = *array;
-     	int secEle = array[1];
-     	// 👇 地址先往后挪一个，然后取址；结果和 array[1] 是等价的（前提是地址的连续性，所以对 数组 和 vector 是可用的，对 list 不能这么干）：
-     	int secEle2 = *(array + 1); 
+         int firstEle = array[0];
+         int firstEle2 = *array;
+         int secEle = array[1];
+         // 👇 地址先往后挪一个，然后取址；结果和 array[1] 是等价的（前提是地址的连续性，所以对 数组 和 vector 是可用的，对 list 不能这么干）：
+         int secEle2 = *(array + 1); 
      
-     	cout << "firstEle : " << firstEle << endl;
-     	cout << "firstEle2: " << firstEle2 << endl;
-     	cout << "secEle : " << secEle << endl;
-     	cout << "secEle2: " << secEle2 << endl;
+         cout << "firstEle : " << firstEle << endl;
+         cout << "firstEle2: " << firstEle2 << endl;
+         cout << "secEle : " << secEle << endl;
+         cout << "secEle2: " << secEle2 << endl;
      }
      
      int main()
      {
-     	int intArray[] = {1, 2, 3, 4};
-     	exeIntArray(intArray, 4);
+         int intArray[] = {1, 2, 3, 4};
+         exeIntArray(intArray, 4);
      }
      
      // 输出：
@@ -180,32 +180,86 @@ clang *.cpp -lstdc++;./a.out
 
 ##### 构造函数
 
-1. 自定义类，需要确保<font color=red>每一个</font>构造函数都将对象的<font color=red>每一个</font>成员初始化，<font color=red>即使是没有初始值</font>，这是一个好习惯；
+1. 初始化
 
+   1. 自定义类，需要确保<font color=red>每一个</font>构造函数都将对象的<font color=red>每一个</font>成员初始化，<font color=red>即使是没有初始值</font>，这是一个好习惯；
+
+      ```cpp
+      class Point {
+        int x, y; // 👈 有时候会被初始化（为 0），有时候不会。
+      };
+      ...
+      Point p;
+      ```
+
+   2. 在构造函数中初始化：
+
+      ```cpp
+      class MyClass {
+      private:
+        std::string name;
+        std::int index;
+      }
+      
+      // 👎 方法1: 先初始化 name 为默认值, 然后把 _name 赋值给 name;
+      MyClass::MyClass(std::string _name) {
+        name = _name;
+      }
+      // 👍👍 方法2（推荐）:效率比上面的高 
+      // 初始化顺序以定义顺序为准，而不是这里‘初值列’中的顺序
+      MyClass::MyClass(std::string _name) : name(_name), index() {} // 👈 如‘index’，即使是空的，也要初始化；
+      ```
+
+2. ‘复制’构造函数
+
+   > `P16 &operator=(const P16 &p16)` 通常称为“赋值构造函数”，但这容易造成误解，其他它不是构造函数，不会新创建对象，它只是普通的运算符重载；
+   
    ```cpp
-   class Point {
-     int x, y; // 👈 有时候会被初始化（为 0），有时候不会。
+   class P16 {
+   public:
+       // 默认构造函数
+       P16() { cout << "constructor(default)[" << this << "]" << endl; }
+       // 复制构造函数
+       P16(const P16 &p16) { cout << "constructor(copy)[" << this << "]" << endl; }
+       // "=" 号重载，并非构造函数，不会创建新对象
+       P16 &operator=(const P16 &p16) {
+           cout << "(operator=)[" << this << "]" << endl;
+           return *this;
+       }
+       // 析构函数
+       ~P16() { cout << "~DESTROY[" << this << "]" << endl; }
    };
-   ...
-   Point p;
-   ```
-
-2. 在构造函数中初始化：
-
-   ```cpp
-   class MyClass {
-   private:
-     std::string name;
-     std::int index;
+   
+   P16 getP16() {
+       P16 p1; // 调用默认构造函数
+       return p1; // 将调用复制构造函数（p1 会在这里被析构）
    }
    
-   // 👎 方法1: 先初始化 name 为默认值, 然后把 _name 赋值给 name;
-   MyClass::MyClass(std::string _name) {
-     name = _name;
+   int main() {
+       cout << "====== start:" << endl;
+       P16 pMain = getP16(); // 调用复制构造函数
+       cout << "====== step2:" << endl;
+       P16 pMain2; // 调用复制构造函数
+       cout << "====== step3:" << endl;
+       pMain2 = pMain;// 调用 operator= 运算符重载
+       cout << "====== exit" << endl;
+       return 0;
    }
-   // 👍👍 方法2（推荐）:效率比上面的高 
-   // 初始化顺序以定义顺序为准，而不是这里‘初值列’中的顺序
-   MyClass::MyClass(std::string _name) : name(_name), index() {} // 👈 如‘index’，即使是空的，也要初始化；
+   
+   // 输出：
+   ====== start:
+   constructor(default)[0x7ffeeeb88030]
+   constructor(copy)[0x7ffeeeb88080]
+   ~DESTROY[0x7ffeeeb88030]
+   constructor(copy)[0x7ffeeeb88088]
+   ~DESTROY[0x7ffeeeb88080]
+   ====== step2:
+   constructor(default)[0x7ffeeeb88070]
+   ====== step3:
+   (operator=)[0x7ffeeeb88070]
+   ====== exit
+   ~DESTROY[0x7ffeeeb88070]
+   ~DESTROY[0x7ffeeeb88088]
    ```
    
 
