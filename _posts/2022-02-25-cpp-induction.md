@@ -221,7 +221,7 @@ clang *.cpp -lstdc++;./a.out
        P16() { cout << "constructor(default)[" << this << "]" << endl; }
        // 复制构造函数
        P16(const P16 &p16) { cout << "constructor(copy)[" << this << "]" << endl; }
-       // "=" 号重载，并非构造函数，不会创建新对象
+       // "=" 运算符重载，并非构造函数，不会创建新对象
        P16 &operator=(const P16 &p16) {
            cout << "(operator=)[" << this << "]" << endl;
            return *this;
@@ -247,7 +247,7 @@ clang *.cpp -lstdc++;./a.out
    }
    
    // 输出：
-   ====== start:
+   ====== start: // 👇 这里会调用3次构造函数，创建3个变量，在新的编译器中会被优化，添加`-fno-elide-constructors`参数能避免优化；可以在这里查看优化前的代码：https://cppinsights.io
    constructor(default)[0x7ffeeeb88030]
    constructor(copy)[0x7ffeeeb88080]
    ~DESTROY[0x7ffeeeb88030]
@@ -479,43 +479,6 @@ int main()
    }
    ```
 
-## QA
-
-1. 下面例子中，析构函数会被调用几次？
-
-   ```cpp
-   #include <iostream>
-   
-   using namespace std;
-   
-   class P16 {
-   public:
-       ~P16() { cout << "P16 destroy" << endl; }
-   };
-   
-   inline P16 getP16() {
-       P16 p1;
-       return p1;
-   }
-   
-   int main() {
-       P16 pMain = getP16();
-       cout << &pMain << endl;
-   }
-   ```
-
-   > 如果直接运行，析构函数会调用一次，那是因为被编译器优化了；
-   >
-   > 关闭优化`-fno-elide-constructors`，再运行：
-   >
-   > ```cpp
-   > ➜ P16 destroy
-   > ➜ P16 destroy
-   > ➜ 0x7ffee2f88088
-   > ➜ P16 destroy
-   > ```
-   >
-   > 可以在这里查看优化前的代码：https://cppinsights.io
 
 ### 参考
 
