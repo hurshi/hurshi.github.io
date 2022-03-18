@@ -324,8 +324,6 @@ clang *.cpp -lstdc++;./a.out
    ```
 
 
-
-
 ## Cpp 类
 
 ##### 潜规则
@@ -356,7 +354,7 @@ public:
     // 👇 构造函数，可以添加默认参数，如果没有显式定义，会有默认无参构造函数
     Stock(const string &company = "Bob", long share_val = 20);
     Stock(Stock &stock);// 👈 ‘复制’构造函数
-    Stock &operator=(const Stock &stock);// 👈 ‘赋值’构造函数
+    Stock &operator=(const Stock &stock);// 👈 ‘=’ 运算符重载
     void update(double price);
     ~Stock();// 👈 析构函数
 };
