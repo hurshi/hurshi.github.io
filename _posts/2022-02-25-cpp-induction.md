@@ -479,8 +479,28 @@ int main()
    }
    ```
 
+## 左值&右值
 
-### 参考
+1. 定义：
+
+   * lvalue：具名 & 不可移动
+   * xvalue：具名 & 可移动
+   * prvalue：不具名 & 可移动
+   * gvalue：具名
+   * rvalue：可移动
+
+   ![](/img/posts/cpp_induction/lvalue_rvalue.png){:width="70%"}
+
+2. 参考：（还没完全理解）
+
+   1. [Modern C++ 深入理解左值、右值 @ 高性能架构探索](https://mp.weixin.qq.com/s/_9-0iNUw6KHTF3a-vSMCmg)
+   2. https://cloud.tencent.com/developer/article/1493839
+
+   
+
+
+
+## 参考
 
 * [LLVM 与 GCC @知乎用户](https://www.zhihu.com/question/20039402/answer/67652398)
 * C++ Primer Plus 
