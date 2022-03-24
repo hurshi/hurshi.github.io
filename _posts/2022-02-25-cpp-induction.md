@@ -491,13 +491,21 @@ int main()
 
    ![](/img/posts/cpp_induction/lvalue_rvalue.png){:width="70%"}
 
-2. 参考：（还没完全理解）
+1. 示例：
+
+   ```cpp
+   int &&a = 5; // ‘5’是右值，而‘a’是右值引用；(‘a’接收右值，但它自己是左值)
+   int &&b = a; // ERROR! 因为‘a’是左值，而‘b’被定义为右值引用，所以不合法；
+   ```
+   
+   
+   
+3. 参考：（还没完全理解）
 
    1. [Modern C++ 深入理解左值、右值 @ 高性能架构探索](https://mp.weixin.qq.com/s/_9-0iNUw6KHTF3a-vSMCmg)
-   2. https://cloud.tencent.com/developer/article/1493839
+   2. [什么是 lvalue, rvalue, xvalue @JIFF](https://cloud.tencent.com/developer/article/1493839)
 
    
-
 
 
 ## 参考
