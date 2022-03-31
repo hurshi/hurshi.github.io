@@ -50,6 +50,13 @@ clang --version
 clang *.cpp -lstdc++;./a.out
 ```
 
+##### 查看编译后的汇编代码
+
+```shell
+g++ -S test.cpp -o test.s
+cat test.s
+```
+
 ##### `#ifndef` (`if not defined`)
 
 仅当以前没有使用与处理器编译指令`#define`定义名称 `COORDIN_H_` 时，才处理 `#ifndef` 和 `#ifend` 之间的语句。
@@ -498,14 +505,13 @@ int main()
    int &&b = a; // ERROR! 因为‘a’是左值，而‘b’被定义为右值引用，所以不合法；
    ```
    
-   
-   
 3. 参考：（还没完全理解）
 
    1. [Modern C++ 深入理解左值、右值 @ 高性能架构探索](https://mp.weixin.qq.com/s/_9-0iNUw6KHTF3a-vSMCmg)
    2. [什么是 lvalue, rvalue, xvalue @JIFF](https://cloud.tencent.com/developer/article/1493839)
 
-   
+
+
 
 
 ## 参考
