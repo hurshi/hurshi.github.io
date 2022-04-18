@@ -8,8 +8,8 @@ def replaceContent(File file) {
     } else {
         if (file.getName().toLowerCase().endsWith("md")) {
             String content = file.text
-            if (content.contains("](/img/posts")) {
-                content = content.replaceAll("\\]\\(/img/posts", "\\]\\(\\.\\./img/posts")
+            if (content.contains("/img/posts")) {
+                content = content.replaceAll("/img/posts", "\\.\\./img/posts")
                 file.text = content
             }
         }
