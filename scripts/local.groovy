@@ -1,5 +1,11 @@
 #!/usr/bin/env groovy
 
+// <div class="mermaid">
+// </div><!--mermaid-->
+
+// ``mermaid
+// ```\n<div style="display:none"></div>
+
 def replaceContent(File file) {
     if (file.isDirectory()) {
         for (File f : file.listFiles()) {
@@ -8,8 +14,11 @@ def replaceContent(File file) {
     } else {
         if (file.getName().toLowerCase().endsWith("md")) {
             String content = file.text
-            if (content.contains("../img/posts")) {
-                content = content.replaceAll("\\.\\./img/posts", "/img/posts")
+            if (content.contains("/img/posts")||content.contains("mermaid")) {
+                content = content.replaceAll("/img/posts", "\\.\\./img/posts")
+                content = content.replaceAll('<div class="mermaid">', "```mermaid")
+                content = content.replaceAll('</div><!--mermaid-->', '```\n<div style="display:none"></div>')
+                
                 file.text = content
             }
         }
@@ -22,8 +31,3 @@ if (!f.getParentFile().getName().equals("hurshi.githu.io")) {
 }
 String filePath = f.getAbsolutePath() + "/_posts"
 replaceContent(new File(filePath))
-
-
-
-
-
