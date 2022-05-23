@@ -31,7 +31,21 @@ tags:
 ### 代码模版
 添加模版 `Preferences -> Live Templates ->`
 1. `tmb : Timber.e(">>> $name$"+$value$);`
+
 2. `loge : android.util.Log.e(" >>> ", "$METHOD_NAME$: $content$" + $exception$);`
+
+3. namespace：
+
+   ```c++
+   // nsp:
+   namespace $1$ {
+   
+   $END$
+   
+   } // namespace $1$
+   ```
+
+   
 
 ### 字体
 1. 更改字体
@@ -74,6 +88,10 @@ tags:
 7. 一键“同意”所有 License
 
    `  yes | ${sdk}/cmdline-tools/latest/bin/sdkmanager --licenses`
+   
+7. namespace 行首不空格：
+
+   `Preference -> Editor -> Code Style -> C/C++ -> Tabs and Indents -> Indent members of namespace `
 
 
 ### 断点
