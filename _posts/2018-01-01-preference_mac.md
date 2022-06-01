@@ -116,16 +116,18 @@ tags:
 
     ```
     # git alias:
+    alias grst="git reset --hard"
+    alias gpl="git pull"
+    alias gps="git push"
+    alias gpls="gpl && gps"
+    
+    #gradle alias:
     alias gs="./gradlew --stop"
     alias gc="./gradlew clean"
     alias ga="./gradlew assembleDebug --stacktrace"
     alias gfa="./gradlew assembleFullDebug --stacktrace"
     alias gca="gc && ga && gs"
     alias gcfa="gc && gfa && gs"
-    alias grst="git reset --hard && gs"
-    alias gpl="git pull && gs"
-    alias gps="git push && gs"
-    alias gpls="g pl && g ps"
     
     # repo alias:
     alias rc="repo forall -c"
