@@ -115,18 +115,34 @@ tags:
   * .zshrc
 
     ```
+    # git alias:
+    alias gs="./gradlew --stop"
     alias gc="./gradlew clean"
     alias ga="./gradlew assembleDebug --stacktrace"
-    alias gb="./gradlew build --stacktrace"
-    alias gca="gc && ga"
-    alias gcb="gc && gb"
-    alias apk2jar="sh /Users/hurshi/Documents/dev/dex2jar-2.0/d2j-dex2jar.sh  -f "
-    alias adl="adb devices -l"
-    alias py="python3"
+    alias gfa="./gradlew assembleFullDebug --stacktrace"
+    alias gca="gc && ga && gs"
+    alias gcfa="gc && gfa && gs"
+    alias grst="git reset --hard && gs"
+    alias gpl="git pull && gs"
+    alias gps="git push && gs"
+    alias gpls="g pl && g ps"
+    
+    # repo alias:
+    alias rc="repo forall -c"
+    alias rcrst="rc git reset --hard"
+    alias rcpl="rc git pull"
+    alias rcps="rc git push"
+    alias rcst="rc git status"
+    alias rcstpl="rcrst;rcpl"
+    
+    # other alias:
     alias ls="ls -a"
-    alias fq="export all_proxy=socks5://127.0.0.1:8889;export http_proxy=http://127.0.0.1:8888;export https_proxy=http://127.0.0.1:8888;"
-    alias bfq="unset ALL_PROXY"
-    alias brew="fq;brew"
+    alias op="open ./"
+    alias py="python3"
+    alias ft="flutter"
+    alias adl="adb devices -l"
+    alias fg="fastddsgen"
+    alias apk2jar="sh /Users/hurshi/Documents/dev/dex2jar-2.0/d2j-dex2jar.sh  -f "
     
     export LSCOLORS="GxFxCxDxBxegedabagaced"
     export CLICOLOR=1
