@@ -112,4 +112,38 @@ rm -rf .idea/ && rm -rf .gradle/ && find ./ -name '*.iml' -type f -delete
 
 > Preferences => File Types => 在 Recognized File Types 中找到 Text => 在 Registered Patterns 中找到有异常的文件 => 把它删掉把它删掉
 
-   
+#### 技巧7: 使用 ADB 安装 apk 进阶
+1. 使用 adb+
+
+   ```shell
+   #!/bin/bash
+   adb devices | while read -r line
+   do
+   if [ ! "$line" = "" ] && [ "$(echo "$line" | awk '{print $2}')" = "device" ]
+   then
+       device=$(echo "$line" | awk '{print $1}')
+       echo "$device" "$@" ...
+       adb -s "$device" "$@"
+   fi
+   done
+   ```
+
+2. 使用**自动操作**(双击 apk 直接安装到手机)：
+
+   1. 找到应用程序“自动操作”
+
+   2. 选择“快速操作”
+
+   3. 贴入脚本：
+
+      ```AppleScript
+      on run {input, parameters}
+      	tell application "Terminal"
+      		set thePath to POSIX path of input as string
+      		do script "adb+ install -r -t " & thePath
+      		activate
+      	end tell
+      end run
+      ```
+
+   4. 保存，取名 [InstallApk](/assets/InstallApk.zip ':ignore')；

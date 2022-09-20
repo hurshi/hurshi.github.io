@@ -218,17 +218,5 @@ tags:
 
   
 
-### 自动操作
-* 双击 apk 直接安装到手机：
-
-  ```AppleScript
-  on run {input, parameters}
-  	tell application "Terminal"
-  		set thePath to POSIX path of input as string
-  		do script "adb install -r -t " & thePath
-  		activate
-  	end tell
-  end run
-  ```
 
   
