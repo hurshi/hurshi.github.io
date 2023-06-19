@@ -180,3 +180,17 @@ tags:
 
 1. 不要随意使用 `FragmentTransaction.commitAllowingStateLoss()`来代替。
 2. 推荐在 `onPostResume()` ,`onResumeFragment()`或`onCreate()`中调用 commit。
+
+
+
+### 技巧11：绕过系统反射限制
+1. Native hook 住 ShouldDenyAccessToMember 方法，直接返回 false
+
+2. 破坏调用堆栈绕过去，使 VM 无法识别调用方：通过 JniEnv::AttachCurrentThread(…) 函数创建一个新的 Thread 来完成，
+
+   >  Jni层新建个线程，在这个线程里去反射，去除掉了java调用的信息，从而让安卓系统以为这个是系统调用
+
+3. 参考
+
+   1. [Android 11 绕过反射限制](https://juejin.cn/post/7004723587307290637)
+   2. [另一种绕过 Android P以上非公开API限制的办法](https://weishu.me/2019/03/16/another-free-reflection-above-android-p/)

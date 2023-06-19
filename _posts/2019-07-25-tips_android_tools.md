@@ -89,7 +89,7 @@ tags:
 # 3. 关掉 Android Studio
 # 4. 执行本 Shell 脚本
 
-rm -rf .idea/ && rm -rf .gradle/ && find ./ -name '*.iml' -type f -delete
+find -E . -type d -regex '.*/(build|\.gradle|\.idea|\.cxx)' -exec rm -r "{}" \;; find -E . -type f -regex '.*iml' -delete;
 
 # 5. 然后在 Android Studio 中重新 open 就行了
 ```
@@ -147,3 +147,5 @@ rm -rf .idea/ && rm -rf .gradle/ && find ./ -name '*.iml' -type f -delete
       ```
 
    4. 保存，取名 [InstallApk](/assets/InstallApk.zip ':ignore')；
+#### 技巧8：查看 Android 源码
+1. 替换 jar 包：https://github.com/Reginer/aosp-android-jar
